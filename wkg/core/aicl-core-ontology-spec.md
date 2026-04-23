@@ -22,20 +22,20 @@ The complete, machine-readable TypeScript definition of this ontology is maintai
 8. **Resource ($R$)**: A quantifiable prerequisite consumed, locked, or released by Capabilities.
 9. **Goal ($G$)**: A target state condition or metric optimization objective, acting as the driving force for Capability execution.
 
-## 2. Relation Vocabulary
+## 2. Relation Vocabulary & Reasoning Properties
 
-The AICL ontology restricts graph edges to a predefined, machine-checkable relation vocabulary. This prevents arbitrary semantic drift and ensures deterministic graph traversal.
+The AICL ontology restricts graph edges to a predefined, machine-checkable relation vocabulary. This prevents arbitrary semantic drift and ensures deterministic graph traversal. Each relation carries strict algebraic properties and contradiction implications evaluated by the kernel.
 
-| Relation ($R$) | Domain ($Dom(R)$) | Range ($Ran(R)$) | Description |
-|---|---|---|---|
-| `is_a` | `Anchor` | `Anchor` | Subtyping or instance-of mapping (e.g., Entity -> Entity). |
-| `depends_on` | `Capability` \| `Entity` | `Entity` \| `Resource` \| `Capability` | Asserts a strict execution or existence prerequisite. |
-| `constrains` | `Policy` | `State` \| `Capability` \| `Environment` | Connects an invariant to its target scope. |
-| `consumes` | `Capability` | `Resource` | Denotes a capability allocating/locking a resource. |
-| `satisfies` | `State` \| `Capability` | `Goal` \| `Policy` | Asserts a target has been met or an invariant upheld. |
-| `violates` | `State` \| `Capability` | `Policy` | Asserts a contradiction against a specific invariant. |
-| `evidenced_by` | `State` \| `Mutation` | `Evidence` | Establishes the grounding link between a claim and its proof. |
-| `executed_in` | `Capability` | `Environment` | Maps a capability to its contextual execution boundary. |
+| Relation ($R$) | Domain | Range | Algebraic Properties | Closure Rules | Contradiction Implications | Validity Layer |
+|---|---|---|---|---|---|---|
+| `is_a` | `Anchor` | `Anchor` | Transitive, Reflexive, Antisymmetric | If $A$ `is_a` $B$ and $B$ `is_a` $C$, then $A$ `is_a` $C$ | $A$ `is_a` $B \land B$ `is_a` $A \implies A=B$ | Both |
+| `depends_on` | `Capability`\|`Entity` | `Entity`\|`Resource`\|`Capability` | Transitive, Irreflexive, Asymmetric | If $C_1$ `depends_on` $C_2$, execution order is $C_2 \to C_1$ | Cycle: $A$ `depends_on` $B$ `depends_on` $A \implies$ Scheduling Halt | SHG |
+| `constrains` | `Policy` | `State`\|`Capability`\|`Environment` | Irreflexive, Asymmetric | Policies apply implicitly to all nested sub-environments | Target $S$ transition violates $P \implies$ Kernel Halt | Kernel |
+| `consumes` | `Capability` | `Resource` | Irreflexive, Asymmetric | Resource pool decreases monotonically during capability lock | $\sum \text{consumed} > \text{capacity} \implies \chi_{C,R}$ Fault | SHG |
+| `satisfies` | `State`\|`Capability` | `Goal`\|`Policy` | Irreflexive, Asymmetric | If $S$ `satisfies` $G$, goal is terminated or marked achieved | $S$ `satisfies` $X \land S$ `violates` $X \implies$ Logic Halt | SHG |
+| `violates` | `State`\|`Capability` | `Policy` | Irreflexive, Asymmetric | If $S$ `violates` $P$, the transition is formally invalid | $S$ `violates` $P \implies \chi_{G,P}$ Halt or Escalate | Kernel |
+| `evidenced_by` | `State`\|`Mutation` | `Evidence` | Irreflexive, Asymmetric | Every valid $S$ mutation must map to $\ge 1$ $Ev$ | $\neg \exists Ev$ for $S \implies$ Grounding Halt | Kernel |
+| `executed_in`| `Capability` | `Environment` | Irreflexive, Asymmetric, Functional | $C$ must inherit active policies of $Env$ | $C$ `executed_in` disjoint $Env_1, Env_2 \implies$ Halt | SHG |
 
 ## 3. Multimodal Evidence Semantics & Trust Classes
 
@@ -49,7 +49,20 @@ To prevent hallucination and ensure absolute traceability, the WKG enforces a st
   - **Class C (Opaque Generative)**: LLM/Model outputs (e.g., text, code, generated classifications). Probabilistic confidence scores $\le 0.99$.
   - **Class D (Human Generative)**: User reports, uploaded screenshots without cryptographic signatures.
 
-*Admissibility Rule*: Mutations modifying critical constraints (e.g., bypassing a `strict_halt` policy or allocating $>90\%$ of a `Resource`) strictly require **Class A** or **Class B** evidence. Class C/D evidence requires a secondary human-in-the-loop attestation (escalation) before the delta-log accepts the mutation.
+### 3.1 Admissibility Matrix
+
+The WKG delta-log enforcing governance validates the mutation type against the provided `evidence_refs`. If the evidence trust class is insufficient, the transaction either halts or mandates a Class D (Human) escalation.
+
+| Mutation Type | Minimum Evidence Class | Escalation Requirements | Mandatory Human Approval |
+|---|---|---|---|
+| **ADD_ANCHOR** (Entity, Metric) | Class C (Opaque Generative) | None | No |
+| **ADD_ANCHOR** (Policy, Goal) | Class B (System Generative) | If Class C, escalate to Class D | No (unless Class C origin) |
+| **UPDATE_STATE** (Routine) | Class B | If Class C, flag as probabilistic state | No |
+| **UPDATE_STATE** (Critical Boundary) | Class A (Cryptographic) | If Class B provided, requires Class D | Yes (if Class A unavailable) |
+| **ALLOCATE_RESOURCE** ($<50\%$ Cap) | Class B | None | No |
+| **ALLOCATE_RESOURCE** ($\ge90\%$ Cap) | Class A | Mandatory Escalate to Class D | Yes |
+
+*Critical Boundary*: A state update resulting from a `strict_halt` policy evaluation or an external financial/system-level commit.
 
 ## 4. Capability and Policy Grounding
 

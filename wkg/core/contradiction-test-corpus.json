@@ -1,0 +1,81 @@
+[
+  {
+    "test_id": "test_chi_gp_001",
+    "contradiction_type": "Goal_vs_Policy",
+    "description": "Goal G_DEPLOY requires transition to State S_2. S_1 -> S_2 violates Policy P_NO_PROD_DEPLOY_FRIDAY.",
+    "expected_output": "Halt_Goal",
+    "delta_log_result": {
+      "status": "REJECTED",
+      "fault": "Policy_Violation",
+      "blocking_anchor": "pol-no-prod-deploy-friday"
+    }
+  },
+  {
+    "test_id": "test_chi_cr_001",
+    "contradiction_type": "Capability_vs_Resource",
+    "description": "Cap C_1 requires 60 Res. Cap C_2 requires 50 Res. Environment total capacity is 100.",
+    "expected_output": "Suspend_Capability",
+    "delta_log_result": {
+      "status": "REJECTED",
+      "fault": "Resource_Exhausted",
+      "blocking_anchor": "res-compute-cluster",
+      "resolution": "Lower priority capability suspended."
+    }
+  },
+  {
+    "test_id": "test_chi_pp_001",
+    "contradiction_type": "Policy_vs_Policy",
+    "description": "Policy P_1 (Priority 10) asserts Metric_Mem < 50. Policy P_2 (Priority 10) asserts Metric_Mem > 60.",
+    "expected_output": "System_Halt",
+    "delta_log_result": {
+      "status": "HALT",
+      "fault": "Unresolvable_Policy_Conflict",
+      "blocking_anchors": ["pol-mem-less-50", "pol-mem-greater-60"],
+      "resolution": "Systemic Contradiction Halt. Requires manual intervention or Delta-Log rollback."
+    }
+  },
+  {
+    "test_id": "test_grounding_001",
+    "contradiction_type": "State_Without_Evidence",
+    "description": "Mutation UPDATE_STATE submitted with zero evidence_refs.",
+    "expected_output": "Grounding_Halt",
+    "delta_log_result": {
+      "status": "REJECTED",
+      "fault": "Missing_Evidence",
+      "resolution": "The Grounding Axiom requires >= 1 Evidence anchor."
+    }
+  },
+  {
+    "test_id": "test_dependency_cycle_001",
+    "contradiction_type": "Capability_Dependency_Cycle",
+    "description": "C_1 depends_on C_2. C_2 depends_on C_1. SHG cycle detected.",
+    "expected_output": "Scheduling_Halt",
+    "delta_log_result": {
+      "status": "REJECTED",
+      "fault": "Graph_Cycle_Detected",
+      "blocking_anchors": ["cap-1", "cap-2"]
+    }
+  },
+  {
+    "test_id": "test_admissibility_001",
+    "contradiction_type": "Insufficient_Evidence_Trust",
+    "description": "Mutation ALLOCATE_RESOURCE requesting 95% capacity backed by Class C (Opaque Generative) evidence.",
+    "expected_output": "Escalate_Human",
+    "delta_log_result": {
+      "status": "ESCALATED",
+      "fault": "Trust_Class_Too_Low",
+      "resolution": "Mandatory human approval (Class D) required for >90% allocation."
+    }
+  },
+  {
+    "test_id": "test_chi_pp_override_001",
+    "contradiction_type": "Policy_vs_Policy",
+    "description": "Policy P_1 (Priority 10) asserts X. Policy P_2 (Priority 50) asserts Not X.",
+    "expected_output": "Override",
+    "delta_log_result": {
+      "status": "ACCEPTED",
+      "fault": "None",
+      "resolution": "P_2 supersedes P_1 based on numerical priority precedence."
+    }
+  }
+]
