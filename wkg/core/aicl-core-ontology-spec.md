@@ -2,191 +2,78 @@
 
 **Document Type**: Formal Technical Specification
 **Module**: WKG (World Knowledge Graph) Core
-**Status**: Draft (v1.0)
+**Status**: Draft (v1.1)
 
 ## 1. Ontological Framework & Nominal Type Anchors
 
-The AICL-Core ontology is formalized as a set of nominal anchors $\Omega = \{E, S, G, M, P, C, R\}$. These anchors establish a strict inheritance and relational hierarchy for modeling execution environments.
+The AICL-Core ontology is formalized as a set of nine nominal anchors: $\Omega = \{E, Env, S, Ev, G, M, P, C, R\}$. These anchors establish a strict, machine-checkable structural foundation for the World Knowledge Graph (WKG).
 
-### 1.1 Type Definitions and Schemas
+The complete, machine-readable TypeScript definition of this ontology is maintained in `wkg/core/schema.ts`.
 
-We employ a formalized data-definition language (TypeScript-equivalent) to define the schema and boundaries of each anchor.
+### 1.1 The Nine Pillars of the AICL-Core Ontology
 
-```typescript
-type ID = string;
-type Hash = string;
+1. **Environment ($Env$)**: The contextual boundary or namespace isolating entities, resources, and policies. It defines the physics and constraints of a given execution domain.
+2. **Entity ($E$)**: An identifiable subject/object within an Environment.
+3. **State ($S$)**: A temporal, immutable binding of variables/attributes for an Entity or Environment at a specific timestamp.
+4. **Evidence ($Ev$)**: A cryptographically verifiable grounding proof mapping external data streams to WKG claims.
+5. **Metric ($M$)**: A computable evaluation function returning a scalar or vector based on a State.
+6. **Policy ($P$)**: A strict invariant constraint over state transitions (e.g., $S_t \to S_{t+1}$).
+7. **Capability ($C$)**: An executable state-transition function, bounded by preconditions and resource requirements.
+8. **Resource ($R$)**: A quantifiable prerequisite consumed, locked, or released by Capabilities.
+9. **Goal ($G$)**: A target state condition or metric optimization objective, acting as the driving force for Capability execution.
 
-// Base definition for all WKG nodes
-interface Anchor {
-  id: ID;
-  version_hash: Hash;
-  type: string;
-}
+## 2. Multimodal Evidence Semantics
 
-// 1. Entity: An identifiable subject/object within the WKG.
-interface Entity extends Anchor {
-  type: "Entity";
-  properties: Record<string, unknown>;
-  relations: Relation[]; // Directed edges to other Entities
-}
+To prevent hallucination and ensure absolute traceability, the WKG enforces a strict **Multimodal Evidence Semantic Layer**.
 
-// 2. State: A temporal binding of variables/attributes for an Entity.
-interface State extends Anchor {
-  type: "State";
-  entity_ref: ID; // Reference to Entity
-  snapshot: Record<string, unknown>;
-  timestamp: number;
-}
+- **The Grounding Axiom**: No `State` ($S$) can be added to the WKG without an array of `evidence_refs` mapping to valid `Evidence` ($Ev$) anchors.
+- **Multimodal Streams**: The `stream_type` of Evidence supports heterogeneous inputs (`telemetry`, `log`, `document`, `media`, `human_attestation`).
+- **Cryptographic Provenance**: Every Evidence anchor contains a `raw_payload_hash` (e.g., SHA-256 of the image, log line, or raw sensor telemetry) and a `provenance_uri`. If the underlying data changes or the hash fails, the Evidence—and subsequently the State it justifies—is flagged as corrupted.
 
-// 3. Metric: A computable evaluation function returning a scalar or vector.
-interface Metric extends Anchor {
-  type: "Metric";
-  evaluator: (s: State) => number | number[];
-}
+## 3. Capability and Policy Grounding
 
-// 4. Policy: A strict invariant constraint over state transitions.
-interface Policy extends Anchor {
-  type: "Policy";
-  predicate: (s_current: State, s_next: State) => boolean;
-  priority_level: number;
-}
+### 3.1 Capability Grounding ($\Gamma_C$)
+Capabilities are functionally useless unless grounded in available WKG Resources. The grounding mechanism requires a pre-flight resource validation check:
 
-// 5. Capability: An executable state-transition function.
-interface Capability extends Anchor {
-  type: "Capability";
-  required_resources: Record<ID, number>; // Resource ID -> Quantity required
-  effect: (s_current: State) => State; 
-}
+$$ \Gamma_C(c) = \text{True} \iff \forall r \in \text{Req}(c), \text{Capacity}(r) - \sum \text{Allocations}(r) \ge \text{Quantity}(c, r) $$
 
-// 6. Resource: A quantifiable prerequisite consumed or locked by Capabilities.
-interface Resource extends Anchor {
-  type: "Resource";
-  capacity: number;
-  allocations: Record<ID, number>; // Capability ID -> Quantity allocated
-}
+If $\Gamma_C(c)$ is false, the capability cannot be scheduled or executed. Resource allocation mutations (`ALLOCATE_RESOURCE`, `RELEASE_RESOURCE`) are handled atomically in the Delta-Log.
 
-// 7. Goal: A target state condition or metric optimization objective.
-interface Goal extends Anchor {
-  type: "Goal";
-  target_metrics: Record<ID, { operator: ">" | "<" | "=="; value: number }>;
-  target_states: ID[];
-  deadline_ms?: number;
-}
-```
+### 3.2 Policy Grounding ($\Gamma_P$)
+Policies represent the immutable laws of an Environment. A state transition sequence $\{S_t, S_{t+1}\}$ generated by a Capability is grounded if and only if it satisfies all active policies within the Environment:
 
-## 2. Multimodal Evidence Semantic Layer
+$$ \Gamma_P(S_t, S_{t+1}) = \text{True} \iff \forall p \in \text{ActivePolicies}(Env), \text{Predicate}_p(S_t, S_{t+1}) = \text{True} $$
 
-Every assertion, relation, and state transition in the WKG must be backed by verifiable data. This prevents hallucination and ensures traceability across heterogeneous inputs (e.g., telemetry, unstructured text, visual data).
+Policies can enforce bounds via Metrics (e.g., asserting that the `Network_Latency` Metric remains $< 50ms$).
 
-```typescript
-type StreamType = "telemetry" | "log" | "document" | "media";
+## 4. Contradiction Surfaces ($\chi$)
 
-interface Evidence {
-  evidence_id: ID;
-  stream: StreamType;
-  raw_payload_hash: Hash;
-  confidence_score: number; // Range: [0.0, 1.0]
-  provenance: string;       // Origin of the data stream
-}
-
-interface GroundedClaim {
-  claim_id: ID;
-  subject_anchor_id: ID;
-  assertion_logic: string;  // Formal logic representation of the claim
-  evidence_refs: ID[];      // References to Evidence instances
-  attestation_signature: Hash;
-}
-```
-
-*Semantic Rule*: For any State $S$ to be appended to the WKG, there must exist a `GroundedClaim` mapping evidence to the state's `snapshot`.
-
-## 3. Formal Grounding Mechanism
-
-### 3.1 Capability-to-Resource Mapping
-Capabilities are physically and logically constrained by Resources. Let $C$ be the set of capabilities and $R$ the set of resources. The grounding function requires:
-
-$$ \forall c \in C, \text{Execute}(c) \implies \left( \forall r_i \in \text{Req}(c), \text{Available}(r_i) \ge \text{Req}(c, r_i) \right) $$
-
-Upon capability execution, resource allocations are atomically updated in the WKG delta-log.
-
-### 3.2 Policy-to-State & Metric Thresholds
-Policies constrain the allowable subset of state transitions. A policy $P$ maps to a transition validation function based on metric thresholds:
-
-$$ \text{ValidTransition}(S_i, S_{i+1}) \iff \forall P_k \in \mathcal{P}, P_k(S_i, S_{i+1}) = \text{True} $$
-
-Where $P_k$ often asserts threshold bounds via Metrics:
-$$ P_k \implies \left( \forall m \in M_{constrained}, \text{evaluator}_m(S_{i+1}) \in [m_{min}, m_{max}] \right) $$
-
-## 4. Contradiction Surfaces & Resolution Logic
-
-"Contradiction surfaces" represent points of logical friction within the Semantic Hypergraph (SHG).
+Ontological structure inherently introduces logical friction points. The AICL runtime identifies and handles these "contradiction surfaces" explicitly rather than failing silently.
 
 ### 4.1 Identified Friction Points
-1. **Goal vs. Policy ($\chi_{G,P}$)**: A Goal $G$ requires a state transition sequence $\{S_i \to ... \to S^*\}$ where at least one transition violates Policy $P$.
-2. **Capability vs. Resource ($\chi_{C,R}$)**: Parallel capabilities $C_1, C_2$ request an aggregate resource volume $v$ where $v > \text{capacity}(R)$.
-3. **Policy vs. Policy ($\chi_{P,P}$)**: $P_1$ requires Metric $M_a > x$, while $P_2$ requires Metric $M_a \le x$.
+1. **Goal vs. Policy ($\chi_{G,P}$)**: A Goal requires reaching a target state $S^*$, but the only Capability paths to $S^*$ result in intermediate states that violate an active Policy $P$.
+2. **Capability vs. Resource ($\chi_{C,R}$)**: Parallel active capabilities attempt to lock a volume of resources exceeding the Environment's maximum `capacity_total`.
+3. **Policy vs. Policy ($\chi_{P,P}$)**: $P_1$ asserts Metric $m > x$, while $P_2$ asserts Metric $m \le x$ for the same Environment.
 
-### 4.2 Resolution Logic (The Contradiction Handler)
-
-The AICL interpreter resolves contradictions via strict, verifiable operational semantics, preventing silent failures.
-
-```typescript
-function resolveContradiction(conflict: FrictionPoint): Resolution {
-  match (conflict.type) {
-    case "Goal_vs_Policy":
-      // Policies are strict invariants; Goals are aspirational.
-      return { action: "Halt_Goal", reason: "Policy_Violation", priority_winner: conflict.policy.id };
-    
-    case "Capability_vs_Resource":
-      // Enforce temporal serialization or partial failure based on Capability priority.
-      const winner = max(conflict.capabilities, c => c.priority);
-      return { action: "Suspend_Capability", suspended: conflict.capabilities.filter(c => c !== winner) };
-    
-    case "Policy_vs_Policy":
-      if (conflict.p1.priority_level > conflict.p2.priority_level) {
-        return { action: "Override", active: conflict.p1, overridden: conflict.p2 };
-      }
-      if (conflict.p2.priority_level > conflict.p1.priority_level) {
-        return { action: "Override", active: conflict.p2, overridden: conflict.p1 };
-      }
-      // Unresolvable contradiction triggers systemic halt.
-      return { action: "System_Halt", reason: "Unresolvable_Policy_Conflict" };
-  }
-}
-```
+### 4.2 Resolution Logic
+- **$\chi_{G,P}$**: Policies have strict precedence. The runtime yields a `Goal_Unreachable` fault with the blocking Policy ID.
+- **$\chi_{C,R}$**: Capabilities are serialized by a deterministic priority queue, or the lower-priority Capability yields a `Resource_Exhausted` fault.
+- **$\chi_{P,P}$**: Resolved via the `priority_level` defined on the Policy anchors. If $P_1$ and $P_2$ have equal priority, the WKG engine triggers a systemic halt (`Contradiction_Halt`) to prevent divergent state corruption.
 
 ## 5. Governance & Versioning Model
 
-The WKG operates as a Merkle-tree structured, append-only ledger to ensure cryptographic integrity, proof-of-state, and exact reproducibility.
+The WKG evolves via a Merkle-tree structured, append-only ledger. This ensures cryptographic integrity and temporal reproducability.
 
-### 5.1 Immutable Snapshots and Delta-Logs
-
-- **Snapshot ($W_t$)**: A complete representation of the WKG at time $t$.
-- **Delta-Log ($\Delta_{t+1}$)**: A verified set of mutations applied to $W_t$.
+### 5.1 The Delta-Log
+The WKG state at time $t+1$ is exclusively derived by applying a `DeltaLogEntry` to the state at time $t$.
 
 $$ W_{t+1} = \text{Apply}(W_t, \Delta_{t+1}) $$
 
-### 5.2 Delta-Log Schema
+### 5.2 Commit Validation Rules
+Before a `DeltaLogEntry` is committed to the WKG, the governance engine asserts:
+1. **Hash Chain Continuity**: `parent_wkg_hash` strictly matches the current HEAD of the WKG.
+2. **Evidence Completeness**: Any `UPDATE_STATE` mutation has valid, resolvable `evidence_refs`.
+3. **Resource Conservation**: No `ALLOCATE_RESOURCE` mutation pushes allocations past `capacity_total`.
+4. **Policy Compliance**: No state mutation violates the active Policies ($\Gamma_P = \text{True}$).
 
-```typescript
-interface DeltaLogEntry {
-  transaction_id: ID;
-  parent_wkg_hash: Hash; // Cryptographic link to previous state
-  mutations: Mutation[];
-  evidence_refs: ID[];   // Proofs justifying the mutation
-  timestamp: number;
-  new_wkg_hash: Hash;
-}
-
-type Mutation = 
-  | { type: "ADD_ANCHOR"; anchor: Anchor }
-  | { type: "DEACTIVATE_ANCHOR"; id: ID }
-  | { type: "UPDATE_STATE"; old_state: ID; new_state: State }
-  | { type: "ALLOCATE_RESOURCE"; resource: ID; capability: ID; amount: number };
-```
-
-### 5.3 Governance Execution
-Governance queries the Delta-Log to verify state provenance. Before applying $\Delta_{t+1}$, the WKG engine asserts:
-1. **Continuity**: `parent_wkg_hash` == current HEAD hash.
-2. **Grounding**: All mutations link to valid `evidence_refs`.
-3. **Consistency**: No unhandled contradictions ($\chi$) exist in the resulting $W_{t+1}$.
+By enforcing these constraints at the structural level, AICL guarantees that the Semantic Hypergraph remains logically sound, grounded, and fully verifiable.
