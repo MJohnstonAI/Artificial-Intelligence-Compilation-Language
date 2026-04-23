@@ -1,12 +1,12 @@
 # AGENTS.md
 
-This repository is an **AI-collaboration-friendly project**.
+This repository is designed to be usable by both human contributors and AI agents.
 
-AI coding agents, research agents, and review agents should treat this file as the lightweight operating memory for contributing to AICL.
+Treat this file as the lightweight operating memory for contributing to AICL.
 
 ## Project Identity
 
-- Project: **AICL — Artificial Intelligence Compilation Language**
+- Project: **AICL - Artificial Intelligence Compilation Language**
 - Originator: **Marc Johnston**
 - Organization: **NeuroSync AI Dynamics Pty Ltd**
 - Project type: open research and development
@@ -14,9 +14,50 @@ AI coding agents, research agents, and review agents should treat this file as t
 
 ## Core Rule
 
-Do not rewrite AICL into a generic framework or vague manifesto.
+Do not rewrite AICL into a generic framework, prompt library, or vague manifesto.
 
-The project’s purpose is to define a serious **AI-native semantic programming language**, not just a set of tools.
+The purpose of the project is to define a serious **AI-native semantic programming language**.
+
+## Canonical Files
+
+These are the core documents you should treat as authoritative:
+
+- `README.md`
+- `WHY_AICL.md`
+- `MANIFESTO.md`
+- `ABOUT_THE_ORIGINATOR.md`
+- `AI_CONTRIBUTOR_GUIDE.md`
+- `AGENTS.md`
+- `SKILLS.md`
+- `spec/programming-reference-manual.md`
+- `spec/unified-spec-v1.0-draft.md`
+- `spec/working-draft.md`
+- `commentary/claude/latest-review.md`
+
+## Repository Map for Agents
+
+- `spec/` contains the formal and semi-formal language docs.
+- `spec/schemas/` contains draft machine-readable schemas.
+- `commentary/` contains review and synthesis commentary by model/source.
+- `examples/` contains public examples, with `enterprise-service-resolution/` as the flagship serious example.
+- `kernel/` is reserved for the future formal core.
+- `wkg/core/` and `wkg/domains/` are reserved for ontology and type-grounding work.
+- `tools/` is reserved for validators, parsers, and supporting utilities.
+
+## Read Order
+
+Before proposing changes, read:
+
+1. `README.md`
+2. `WHY_AICL.md`
+3. `MANIFESTO.md`
+4. `ABOUT_THE_ORIGINATOR.md`
+5. `AI_CONTRIBUTOR_GUIDE.md`
+6. `AGENTS.md`
+7. `SKILLS.md`
+8. `spec/programming-reference-manual.md`
+9. `spec/unified-spec-v1.0-draft.md`
+10. `commentary/claude/latest-review.md`
 
 ## Working Priorities
 
@@ -28,53 +69,43 @@ When making contributions, prioritize:
    - constraints
    - budgets
    - proof annotations
-
 2. **SHG semantics**
    - branching
    - parallelism
    - contradiction detection
    - adaptation boundaries
-
 3. **Policy and capability soundness**
    - OpaqueIntent trust boundaries
    - IFC / information flow control
    - explicit policy attestation
-
 4. **Agent / skill / workflow semantics**
    - skills as first-class concepts
    - workflow layer
    - delegation
    - multimodal semantics
-
 5. **Teachability**
    - examples
    - schemas
    - readable manuals
    - human-reviewable canonical text
 
-## Repository Expectations for AI Agents
+## Safe Editing Boundaries
 
-Before proposing changes, read:
+- Preserve origin attribution.
+- Prefer append-only conceptual refinement when editing drafts.
+- Avoid overwriting major philosophical framing unless explicitly instructed.
+- If identifying a flaw, propose a mechanically stronger replacement.
+- Keep vision, formal semantics, runtime behavior, governance, and repo-support material distinct.
+
+High-caution files:
+
 - `README.md`
 - `WHY_AICL.md`
 - `MANIFESTO.md`
 - `ABOUT_THE_ORIGINATOR.md`
 - `spec/programming-reference-manual.md`
 - `spec/unified-spec-v1.0-draft.md`
-- `SKILLS.md`
-
-## Contribution Style
-
-- Preserve origin attribution.
-- Prefer append-only conceptual refinement when editing drafts.
-- Avoid overwriting major philosophical framing unless explicitly instructed.
-- If identifying a flaw, propose a mechanically stronger replacement.
-- Separate:
-  - vision
-  - formal semantics
-  - runtime behavior
-  - governance
-  - repo marketing
+- `commentary/claude/latest-review.md`
 
 ## Things AI Agents Should Avoid
 
@@ -82,7 +113,8 @@ Before proposing changes, read:
 - Do not invent security guarantees the spec does not support.
 - Do not assume external tools are trusted by default.
 - Do not collapse multiple semantics into single scalars when they affect proof obligations.
-- Do not treat AICL as “just another DSL.”
+- Do not treat AICL as "just another DSL."
+- Do not replace the serious enterprise example emphasis with toy or game-first positioning.
 
 ## Current Known Open Problems
 
@@ -99,30 +131,28 @@ Before proposing changes, read:
 ## Good Contribution Pattern
 
 When proposing a change:
+
 1. State the problem.
 2. State why the current form is insufficient.
 3. Propose a precise alternative.
-4. Explain downstream impact on proofs, runtime, and tooling.
-5. Update examples if the change affects syntax.
-
-## Mission
-
-Help make AICL:
-- more exact
-- more implementable
-- more reviewable
-- more credible
-- more useful to future AI and human contributors
-
+4. Explain downstream impact on proofs, runtime, tooling, schemas, and examples.
+5. Update examples if the change affects syntax or semantics.
 
 ## First-Step Checklist for AI Agents
 
 When newly attached to this repository:
 
-1. Read `README.md`
-2. Read `AI_CONTRIBUTOR_GUIDE.md`
-3. Read `spec/programming-reference-manual.md`
-4. Read `commentary/claude/latest-review.md`
-5. Choose one open problem and state it explicitly before changing files
+1. Read the canonical files in the order above.
+2. State one open problem explicitly before changing files.
+3. Identify whether the target file is canonical, supporting, commentary, schema, or example material.
+4. Tighten one part of the language or repository structure instead of widening scope casually.
 
-If your task is unclear, do not improvise by widening scope. Tighten one part of the language.
+## Mission
+
+Help make AICL:
+
+- more exact
+- more implementable
+- more reviewable
+- more credible
+- more useful to future AI and human contributors

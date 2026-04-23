@@ -1,21 +1,20 @@
 # AI_CONTRIBUTOR_GUIDE.md
 
-This file is a practical guide for AI models, coding agents, and research agents that are given access to the AICL repository.
+This file is a practical orientation guide for AI coding agents, research agents, and review agents working in the AICL repository.
 
-It is intended to answer three questions quickly:
+It answers five operational questions:
 
-1. **What is this project trying to do?**
-2. **What files should I read first?**
-3. **Where can I contribute usefully without derailing the project?**
-
----
+1. What is AICL trying to do?
+2. Which files are canonical?
+3. What should be read first?
+4. Where should different kinds of work go?
+5. What should not be overwritten casually?
 
 ## 1. What AICL Is
 
-AICL is a research project proposing an **AI-native semantic programming language**.
+AICL is an open research project proposing an **AI-native semantic programming language**.
 
-Its goal is not to create another framework or prompt library.
-Its goal is to define a language for expressing:
+Its goal is not to create another framework or prompt library. Its goal is to define a language for expressing:
 
 - goals
 - constraints
@@ -26,31 +25,63 @@ Its goal is to define a language for expressing:
 - workflows
 - deployable artifacts
 
-AICL is meant to move software construction away from syntax-first programming toward semantic, proof-aware, agent-compatible compilation.
+AICL is intended to move software construction away from syntax-first programming toward semantic, proof-aware, agent-compatible compilation.
 
----
+## 2. Canonical Files and Their Roles
 
-## 2. Read Order for AI Agents
+### Public identity
+
+- `README.md` - public landing page
+- `WHY_AICL.md` - motivation and problem framing
+- `MANIFESTO.md` - public philosophical framing
+- `ABOUT_THE_ORIGINATOR.md` - origin and attribution context
+
+### Contributor operating docs
+
+- `AI_CONTRIBUTOR_GUIDE.md` - practical contributor orientation
+- `AGENTS.md` - agent operating memory and guardrails
+- `SKILLS.md` - capability, skill, and workflow semantics
+
+### Spec layer
+
+- `spec/programming-reference-manual.md` - strongest current technical baseline
+- `spec/unified-spec-v1.0-draft.md` - synthesis target for convergence
+- `spec/working-draft.md` - collaborative design layer
+
+### Commentary and evidence
+
+- `commentary/claude/latest-review.md` - current authoritative review commentary
+- `commentary/gemini/` - WKG and ontology commentary area
+- `commentary/grok/` - optimization and runtime commentary area
+- `commentary/chatgpt/` - synthesis and repository-evolution commentary area
+
+### Schemas and examples
+
+- `spec/schemas/` - draft machine-readable schemas
+- `examples/enterprise-service-resolution/` - flagship serious example
+- `examples/cross-platform-app-brief/` - secondary compact example
+
+## 3. Read Order for AI Agents
 
 If you are newly pointed at this repository, read files in this order:
 
 1. `README.md`
 2. `WHY_AICL.md`
 3. `MANIFESTO.md`
-4. `AGENTS.md`
-5. `SKILLS.md`
-6. `spec/programming-reference-manual.md`
-7. `spec/unified-spec-v1.0-draft.md`
-8. `commentary/claude/latest-review.md`
-9. relevant example folders in `examples/`
+4. `ABOUT_THE_ORIGINATOR.md`
+5. `AI_CONTRIBUTOR_GUIDE.md`
+6. `AGENTS.md`
+7. `SKILLS.md`
+8. `spec/programming-reference-manual.md`
+9. `spec/unified-spec-v1.0-draft.md`
+10. `commentary/claude/latest-review.md`
+11. relevant example folders in `examples/`
 
-Do not jump straight into proposing syntax changes before reading the reference manual and the Claude review.
+Do not jump straight into syntax changes before reading the reference manual and the Claude review.
 
----
+## 4. Core Mental Model
 
-## 3. Core Mental Model
-
-Treat AICL as a **layered language project**:
+Treat AICL as a layered language project:
 
 - **Kernel** = smallest formal core
 - **SHG** = planning and semantic hypergraph layer
@@ -62,12 +93,12 @@ Good contributions preserve those boundaries.
 
 Bad contributions collapse them into one blob.
 
----
+## 5. Where Different Work Should Go
 
-## 4. Best Places for AI Contribution
+### Kernel precision
 
-### A. Kernel precision
-Good work:
+Typical work:
+
 - grammar
 - type system
 - identifier resolution
@@ -75,63 +106,75 @@ Good work:
 - resource semantics
 - policy binding
 
-Files:
+Primary files:
+
 - `spec/programming-reference-manual.md`
 - `spec/unified-spec-v1.0-draft.md`
 - `kernel/`
 
-### B. WKG and ontology
-Good work:
+### WKG and ontology
+
+Typical work:
+
 - type lattices
 - policy nodes
 - capability ontologies
 - contradiction precedence models
 - multimodal evidence typing
 
-Files:
+Primary files:
+
 - `wkg/core/`
 - `wkg/domains/`
-- Gemini commentary area
+- `commentary/gemini/`
 
-### C. SHG / workflow semantics
-Good work:
+### SHG and workflow semantics
+
+Typical work:
+
 - branching and proof gates
 - contradiction detection
 - agent coordination semantics
 - runtime adaptation envelopes
 
-Files:
-- `spec/unified-spec-v1.0-draft.md`
-- commentary folders
-- future `tools/` validators
+Primary files:
 
-### D. Skills and agent workflow design
-Good work:
+- `spec/unified-spec-v1.0-draft.md`
+- `commentary/`
+- future tooling under `tools/`
+
+### Skills and agent workflow design
+
+Typical work:
+
 - reusable skill definitions
 - skill contracts
 - skill packs
 - workflow routing semantics
 - sandbox assumptions
 
-Files:
+Primary files:
+
 - `SKILLS.md`
 - `AGENTS.md`
 - `spec/programming-reference-manual.md`
+- `spec/schemas/skill-contract.schema.json`
 
-### E. Examples and pedagogy
-Good work:
-- serious examples
-- schema examples
-- machine-readable examples
+### Schemas and examples
+
+Typical work:
+
+- schema cleanup
+- example alignment
+- machine-readable companion artifacts
 - human-readable walkthroughs
 
-Files:
-- `examples/`
+Primary files:
+
 - `spec/schemas/`
+- `examples/`
 
----
-
-## 5. Current High-Value Open Problems
+## 6. High-Value Open Problems
 
 AI contributors should prioritize these:
 
@@ -146,32 +189,53 @@ AI contributors should prioritize these:
 9. Runtime adaptation envelope
 10. Multimodal evidence semantics
 
-These are not side issues. They are the load-bearing problems.
+These are load-bearing problems, not side issues.
 
----
-
-## 6. What Not To Do
+## 7. What Not To Do
 
 Do **not**:
+
 - turn AICL into a generic app framework
-- reduce it to “better prompt engineering”
+- reduce it to "better prompt engineering"
 - replace formal semantics with slogans
 - invent unsupported security guarantees
 - overload the language with unnecessary metaphysics
 - rebrand the project or erase origin attribution
-- add casual examples that make the repo look unserious
+- elevate toy or entertainment-first examples above the serious flagship example
 
----
+## 8. Safe Editing Rules
 
-## 7. Good Contribution Format
+High-caution files:
+
+- `README.md`
+- `WHY_AICL.md`
+- `MANIFESTO.md`
+- `ABOUT_THE_ORIGINATOR.md`
+- `spec/programming-reference-manual.md`
+- `spec/unified-spec-v1.0-draft.md`
+- `commentary/claude/latest-review.md`
+
+If you are writing or revising files in this repository:
+
+- preserve attribution language
+- keep technical docs sober
+- keep manifesto/vision docs separate from formal specs
+- prefer append-only clarification for draft layers
+- mark speculative ideas clearly
+- update examples or schemas if the language changes
+
+## 9. Good Contribution Format
 
 When proposing a change, use this pattern:
 
 ### Problem
+
 What is broken, vague, or missing?
 
 ### Why it matters
+
 How does it affect:
+
 - type soundness
 - proof obligations
 - runtime semantics
@@ -179,57 +243,19 @@ How does it affect:
 - implementation feasibility
 
 ### Proposed change
-Be precise.
-If syntax changes, show syntax.
-If semantics change, explain semantics.
+
+Be precise. If syntax changes, show syntax. If semantics change, explain semantics.
 
 ### Downstream effect
-List which documents, schemas, or examples also need updating.
 
----
-
-## 8. How AI Agents Should Write Files
-
-If you are writing or revising files in this repository:
-
-- preserve attribution language
-- keep technical docs sober
-- keep manifesto/vision docs separate from formal specs
-- prefer append-only commentary when working in collaboration rounds
-- mark speculative ideas clearly
-- update examples if the language changes
-
----
-
-## 9. Repository Zones
-
-### Safe to expand
-- `examples/`
-- `commentary/`
-- `wkg/domains/`
-- `tools/`
-
-### Requires extra care
-- `spec/programming-reference-manual.md`
-- `spec/unified-spec-v1.0-draft.md`
-- `AGENTS.md`
-- `SKILLS.md`
-
-### Do not casually rewrite
-- `README.md`
-- `WHY_AICL.md`
-- `MANIFESTO.md`
-- `ABOUT_THE_ORIGINATOR.md`
-
-These are public-facing identity documents.
-
----
+List which documents, schemas, commentary notes, or examples also need updating.
 
 ## 10. Mission for AI Contributors
 
 Your job is not to make AICL sound impressive.
 
 Your job is to help make AICL:
+
 - more exact
 - more implementable
 - more internally coherent

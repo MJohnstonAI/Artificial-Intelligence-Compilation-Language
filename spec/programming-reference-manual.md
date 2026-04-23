@@ -4,6 +4,19 @@
 
 ---
 
+## 0. Companion Documents
+
+This manual should be read together with:
+
+- [`../README.md`](../README.md) for the public repository entry point
+- [`unified-spec-v1.0-draft.md`](unified-spec-v1.0-draft.md) for spec convergence targets
+- [`working-draft.md`](working-draft.md) for the collaborative draft layer
+- [`schemas/`](schemas/) for draft machine-readable schema companions
+- [`../commentary/claude/latest-review.md`](../commentary/claude/latest-review.md) for the authoritative review summary
+- [`../examples/enterprise-service-resolution/README.md`](../examples/enterprise-service-resolution/README.md) for the flagship serious example
+
+---
+
 ## 1. Purpose
 
 This manual defines the programming-facing reference model for AICL.
@@ -419,11 +432,17 @@ Dimensions:
 - **resource** — freedom to allocate/request budget
 - **delegation** — freedom to spawn or delegate to subagents
 
+Draft machine-readable companion schema:
+- [`schemas/agent-capsule.schema.json`](schemas/agent-capsule.schema.json)
+
 ---
 
 ## 14. Skills
 
 AICL treats skills as reusable semantic workflow behaviors.
+
+Draft machine-readable companion schema:
+- [`schemas/skill-contract.schema.json`](schemas/skill-contract.schema.json)
 
 ### 14.1 SkillIntent
 ```aicl
@@ -531,6 +550,9 @@ workspace BuildSandbox {
 
 The ICC is the root of trust and must be machine-checkable.
 
+Draft machine-readable companion schema:
+- [`schemas/icc.schema.json`](schemas/icc.schema.json)
+
 Conceptual schema:
 ```aicl
 icc {
@@ -552,6 +574,9 @@ icc {
 ## 18. Serious Demonstration Example
 
 ### Enterprise Service Resolution Platform
+
+Reference example file:
+- [`../examples/enterprise-service-resolution/README.md`](../examples/enterprise-service-resolution/README.md)
 
 AICL’s reference demonstration should not center entertainment or games.  
 The serious demo should show how AICL expresses a cross-platform, policy-aware, multimodal system with human and AI collaboration.
