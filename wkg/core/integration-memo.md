@@ -1,40 +1,57 @@
 # AICL Integration Memo for Core AI Agents
 
-**Target**: `Claude`, `Codex`, `Gemini` and future core contributors.
-**Context**: WKG Substrate & Formal Ontology (v1.1)
+**Target**: `Claude`, `Codex`, `Gemini`, `Grok`, and future core contributors
+**Context**: WKG substrate and kernel bridge alignment (v1.2)
 
-## 1. What Formal Assumptions Claude Can Rely On
+## 1. Formal Assumptions for This Integration Pass
 
-When generating or reasoning about AICL execution graphs and the World Knowledge Graph (WKG), Claude must operate under these strict, non-negotiable assumptions:
+The bridge contract for this pass is intentionally narrow.
 
-1. **Policies over Goals**: Goals are aspirational; Policies are immutable invariants. If a path to a Goal violates an active Policy, the kernel will halt the Goal (`Goal_Unreachable`). Do not attempt to bypass or rationalize policy violations.
-2. **The Grounding Axiom**: You cannot invent a `State` transition. Every `UPDATE_STATE` mutation you propose *must* contain `evidence_refs` mapping to an existing `Evidence` anchor.
-3. **Contradictions are Explicit Faults**: If you identify conflicting policies ($P_1$ vs $P_2$) with equal priority, the system will deterministically halt (`Contradiction_Halt`). Your job is to escalate these or formally adjust priorities, not to assume the runtime will "figure it out."
-4. **Resource Conservation**: Capabilities *must* have `required_resources` satisfied by an Environment's `capacity_total` minus current `allocations`. The graph engine will reject execution if this math fails.
+1. **WKG semantic authority**: The WKG is the authoritative source of semantic identity for `Goal`, `StateAnchor`, `Policy`, `Capability`, `Metric`, `Entity`, `Resource`, `Environment`, and `Evidence` anchors. Kernel type classes are compiler-facing category labels over WKG anchors.
+2. **Pinned resolution**: Identifier resolution during compilation runs against a pinned `WKGSnapshot`. The ICC records that provenance in `wkg_snapshot_hash`.
+3. **Policies over goals**: Goals remain aspirational; policies remain invariants. If satisfying a goal would violate an active policy, the path is blocked.
+4. **Grounding axiom applies at runtime**: `StateAnchor` is a compile-time declaration form and does not require evidence. `StateObservation` is a runtime observed fact and must include `evidence_refs`.
+5. **Stage-aware contradiction handling**: Compile-time contradictions discovered during kernel normalization escalate or fail compilation. Runtime contradictions discovered in delta-log mutation validation halt the mutation path.
+6. **Resource conservation**: Capability execution remains subject to resource pre-flight checks against environment capacity and live allocations.
 
-## 2. What Machine-Readable Artifacts Codex Should Validate Against
+## 2. Machine-Readable Artifacts to Validate Against
 
-When generating schemas, JSON objects, or TypeScript definitions, Codex must strictly validate against the committed core artifacts. Do not invent new types, properties, or relations.
+When generating schema changes, fixtures, or related compiler assumptions, validate against the committed WKG core artifacts. Do not invent parallel types or relation names.
 
-- **`wkg/core/aicl-core-ontology.schema.json`**: The definitive JSON draft-07 Schema. Use this for validating any WKG snapshot, mutation, or delta-log.
-- **`wkg/core/schema.ts`**: The TypeScript source of truth for anchor types, `RelationType`, and `WKGMutation` shapes.
-- **`wkg/core/canonical-ontology-registry.md`**: Defines the strict naming conventions (e.g., `ent-[name]-[id]`) and relations vocabulary.
+- **`wkg/core/schema.ts`**: TypeScript source of truth for WKG anchor, snapshot, and mutation shapes.
+- **`wkg/core/aicl-core-ontology.schema.json`**: JSON Schema companion for snapshots, anchors, and delta-log entries.
+- **`wkg/core/aicl-core-ontology-spec.md`**: Textual semantics companion, including relation vocabulary, admissibility, contradiction taxonomy, and snapshot protocol.
+- **`wkg/core/canonical-ontology-registry.md`**: Naming conventions and logical minimums.
 
-## 3. Authoritative vs. Illustrative Components
+## 3. Authoritative vs Illustrative Artifacts
 
-To maintain kernel precision, agents must distinguish between formal rules and examples:
+### Authoritative / normative
 
-- **Authoritative (Do Not Modify Casually)**:
-  - `schema.ts` and `aicl-core-ontology.schema.json`
-  - The Relation Vocabulary and Algebraic Properties (defined in `aicl-core-ontology-spec.md`)
-  - The Evidence Admissibility Matrix
-  - Delta-Log Hash Chaining rules
+- `wkg/core/schema.ts`
+- `wkg/core/aicl-core-ontology.schema.json`
+- relation vocabulary in `wkg/core/aicl-core-ontology-spec.md`
+- evidence admissibility rules in `wkg/core/aicl-core-ontology-spec.md`
+- registry conventions in `wkg/core/canonical-ontology-registry.md`
 
-- **Illustrative (Examples and Test Cases)**:
-  - `example-wkg-snapshot.json`
-  - `example-delta-log.json`
-  - `contradiction-test-corpus.json` (Used for test-driven development of the WKG engine)
+### Illustrative / examples / fixtures
 
-## 4. Best Immediate Coordination Move
+- `wkg/core/example-wkg-snapshot.json`
+- `wkg/core/example-delta-log.json`
+- `wkg/core/contradiction-test-corpus.json`
 
-For future agent turns: Do not widen the scope further into runtime execution semantics until the ontology and WKG JSON-schema validations are fully integrated into the test suite. Prioritize integrating the evidence admissibility matrix into your mutation generation logic.
+The contradiction corpus is machine-readable test input for runtime validation work. It is not normative ontology law.
+
+## 4. Narrow Integration Guardrails
+
+- Do not re-open the nine-pillar ontology taxonomy in this pass.
+- Do not redesign kernel syntax to mirror every WKG runtime object.
+- Do not treat `predicate_signature` or `execution_signature` as a final execution model; they remain implementation placeholders.
+- Do not widen this pass into full runtime execution semantics or skill-resource redesign.
+
+## 5. Best Immediate Coordination Move
+
+Near-term coordination should stay focused on three things:
+
+1. keep schema, JSON examples, and textual spec language aligned,
+2. keep compile-time and runtime semantics distinct,
+3. bind compiler provenance to `wkg_snapshot_hash` so future compiler work remains reproducible.

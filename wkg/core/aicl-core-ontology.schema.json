@@ -1,204 +1,784 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://aicl.dev/schemas/wkg-core-ontology.schema.json",
   "title": "AICL WKG Core Ontology Schema",
-  "type": "object",
+  "description": "Authoritative machine-readable schema for AICL WKG anchors, snapshots, and delta-log mutations.",
   "definitions": {
-    "ID": { "type": "string" },
-    "Hash": { "type": "string" },
+    "ID": {
+      "type": "string"
+    },
+    "Hash": {
+      "type": "string"
+    },
     "RelationType": {
       "type": "string",
-      "enum": ["is_a", "depends_on", "constrains", "consumes", "satisfies", "violates", "evidenced_by", "executed_in"]
+      "enum": [
+        "is_a",
+        "depends_on",
+        "constrains",
+        "consumes",
+        "satisfies",
+        "violates",
+        "evidenced_by",
+        "executed_in"
+      ]
     },
     "Relation": {
       "type": "object",
       "properties": {
-        "type": { "$ref": "#/definitions/RelationType" },
-        "target_id": { "$ref": "#/definitions/ID" }
+        "type": {
+          "$ref": "#/definitions/RelationType"
+        },
+        "target_id": {
+          "$ref": "#/definitions/ID"
+        }
       },
-      "required": ["type", "target_id"]
+      "required": [
+        "type",
+        "target_id"
+      ],
+      "additionalProperties": false
     },
     "AnchorBase": {
       "type": "object",
       "properties": {
-        "id": { "$ref": "#/definitions/ID" },
-        "version_hash": { "$ref": "#/definitions/Hash" },
-        "type": { "type": "string" }
+        "id": {
+          "$ref": "#/definitions/ID"
+        },
+        "version_hash": {
+          "$ref": "#/definitions/Hash"
+        },
+        "type": {
+          "type": "string"
+        }
       },
-      "required": ["id", "version_hash", "type"]
+      "required": [
+        "id",
+        "version_hash",
+        "type"
+      ],
+      "additionalProperties": false
     },
     "Entity": {
       "allOf": [
-        { "$ref": "#/definitions/AnchorBase" },
         {
+          "$ref": "#/definitions/AnchorBase"
+        },
+        {
+          "type": "object",
           "properties": {
-            "type": { "const": "Entity" },
-            "properties": { "type": "object", "additionalProperties": true },
-            "relations": { "type": "array", "items": { "$ref": "#/definitions/Relation" } }
+            "type": {
+              "const": "Entity"
+            },
+            "properties": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "relations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Relation"
+              }
+            }
           },
-          "required": ["properties", "relations"]
+          "required": [
+            "properties",
+            "relations"
+          ],
+          "unevaluatedProperties": false
         }
       ]
     },
     "Environment": {
       "allOf": [
-        { "$ref": "#/definitions/AnchorBase" },
         {
+          "$ref": "#/definitions/AnchorBase"
+        },
+        {
+          "type": "object",
           "properties": {
-            "type": { "const": "Environment" },
-            "env_class": { "type": "string", "enum": ["Runtime", "Deployment", "Legal", "Cohort"] },
-            "parent_env_id": { "$ref": "#/definitions/ID" },
-            "active_policies": { "type": "array", "items": { "$ref": "#/definitions/ID" } },
-            "hosted_entities": { "type": "array", "items": { "$ref": "#/definitions/ID" } }
+            "type": {
+              "const": "Environment"
+            },
+            "env_class": {
+              "type": "string",
+              "enum": [
+                "Runtime",
+                "Deployment",
+                "Legal",
+                "Cohort"
+              ]
+            },
+            "parent_env_id": {
+              "$ref": "#/definitions/ID"
+            },
+            "active_policies": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ID"
+              }
+            },
+            "hosted_entities": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ID"
+              }
+            }
           },
-          "required": ["env_class", "active_policies", "hosted_entities"]
+          "required": [
+            "env_class",
+            "active_policies",
+            "hosted_entities"
+          ],
+          "unevaluatedProperties": false
         }
       ]
     },
-    "State": {
+    "StateAnchor": {
       "allOf": [
-        { "$ref": "#/definitions/AnchorBase" },
         {
+          "$ref": "#/definitions/AnchorBase"
+        },
+        {
+          "type": "object",
           "properties": {
-            "type": { "const": "State" },
-            "subject_ref": { "$ref": "#/definitions/ID" },
-            "snapshot": { "type": "object", "additionalProperties": true },
-            "timestamp_ms": { "type": "number" },
-            "relations": { "type": "array", "items": { "$ref": "#/definitions/Relation" } }
+            "type": {
+              "const": "StateAnchor"
+            },
+            "subject_type": {
+              "type": "string",
+              "enum": [
+                "Entity",
+                "Environment"
+              ]
+            },
+            "anchor_signature": {
+              "type": "string"
+            },
+            "preconditions": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ID"
+              }
+            },
+            "relations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Relation"
+              }
+            }
           },
-          "required": ["subject_ref", "snapshot", "timestamp_ms", "relations"]
+          "required": [
+            "subject_type",
+            "anchor_signature",
+            "relations"
+          ],
+          "unevaluatedProperties": false
+        }
+      ]
+    },
+    "StateObservation": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AnchorBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "StateObservation"
+            },
+            "state_anchor_id": {
+              "$ref": "#/definitions/ID"
+            },
+            "subject_ref": {
+              "$ref": "#/definitions/ID"
+            },
+            "observed_snapshot": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "timestamp_ms": {
+              "type": "number"
+            },
+            "evidence_refs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/ID"
+              }
+            },
+            "relations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Relation"
+              }
+            }
+          },
+          "required": [
+            "state_anchor_id",
+            "subject_ref",
+            "observed_snapshot",
+            "timestamp_ms",
+            "evidence_refs",
+            "relations"
+          ],
+          "unevaluatedProperties": false
         }
       ]
     },
     "Evidence": {
       "allOf": [
-        { "$ref": "#/definitions/AnchorBase" },
         {
+          "$ref": "#/definitions/AnchorBase"
+        },
+        {
+          "type": "object",
           "properties": {
-            "type": { "const": "Evidence" },
-            "stream_type": { "type": "string", "enum": ["telemetry", "log", "document", "screenshot", "api_response", "model_output", "human_report"] },
-            "trust_class": { "type": "string", "enum": ["ClassA_Cryptographic", "ClassB_SystemGenerative", "ClassC_OpaqueGenerative", "ClassD_HumanGenerative"] },
-            "raw_payload_hash": { "$ref": "#/definitions/Hash" },
-            "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
-            "provenance_uri": { "type": "string" }
+            "type": {
+              "const": "Evidence"
+            },
+            "stream_type": {
+              "type": "string",
+              "enum": [
+                "telemetry",
+                "log",
+                "document",
+                "screenshot",
+                "api_response",
+                "model_output",
+                "human_report"
+              ]
+            },
+            "trust_class": {
+              "type": "string",
+              "enum": [
+                "ClassA_Cryptographic",
+                "ClassB_SystemGenerative",
+                "ClassC_OpaqueGenerative",
+                "ClassD_HumanGenerative"
+              ]
+            },
+            "raw_payload_hash": {
+              "$ref": "#/definitions/Hash"
+            },
+            "confidence_score": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "provenance_uri": {
+              "type": "string"
+            }
           },
-          "required": ["stream_type", "trust_class", "raw_payload_hash", "confidence_score", "provenance_uri"]
+          "required": [
+            "stream_type",
+            "trust_class",
+            "raw_payload_hash",
+            "confidence_score",
+            "provenance_uri"
+          ],
+          "unevaluatedProperties": false
         }
       ]
     },
     "Metric": {
       "allOf": [
-        { "$ref": "#/definitions/AnchorBase" },
         {
+          "$ref": "#/definitions/AnchorBase"
+        },
+        {
+          "type": "object",
           "properties": {
-            "type": { "const": "Metric" },
-            "evaluator_signature": { "type": "string" },
-            "target_subject_type": { "type": "string", "enum": ["Entity", "Environment"] }
+            "type": {
+              "const": "Metric"
+            },
+            "evaluator_signature": {
+              "type": "string"
+            },
+            "target_subject_type": {
+              "type": "string",
+              "enum": [
+                "Entity",
+                "Environment"
+              ]
+            }
           },
-          "required": ["evaluator_signature", "target_subject_type"]
+          "required": [
+            "evaluator_signature",
+            "target_subject_type"
+          ],
+          "unevaluatedProperties": false
         }
       ]
     },
     "Policy": {
       "allOf": [
-        { "$ref": "#/definitions/AnchorBase" },
         {
+          "$ref": "#/definitions/AnchorBase"
+        },
+        {
+          "type": "object",
           "properties": {
-            "type": { "const": "Policy" },
-            "predicate_signature": { "type": "string" },
-            "priority_level": { "type": "number" },
-            "enforcement_mode": { "type": "string", "enum": ["strict_halt", "compensate", "audit"] }
+            "type": {
+              "const": "Policy"
+            },
+            "predicate_signature": {
+              "type": "string"
+            },
+            "priority_level": {
+              "type": "number"
+            },
+            "enforcement_mode": {
+              "type": "string",
+              "enum": [
+                "strict_halt",
+                "compensate",
+                "audit"
+              ]
+            }
           },
-          "required": ["predicate_signature", "priority_level", "enforcement_mode"]
+          "required": [
+            "predicate_signature",
+            "priority_level",
+            "enforcement_mode"
+          ],
+          "unevaluatedProperties": false
         }
       ]
     },
     "Capability": {
       "allOf": [
-        { "$ref": "#/definitions/AnchorBase" },
         {
+          "$ref": "#/definitions/AnchorBase"
+        },
+        {
+          "type": "object",
           "properties": {
-            "type": { "const": "Capability" },
+            "type": {
+              "const": "Capability"
+            },
             "required_resources": {
               "type": "array",
               "items": {
                 "type": "object",
                 "properties": {
-                  "resource_id": { "$ref": "#/definitions/ID" },
-                  "quantity": { "type": "number" }
+                  "resource_id": {
+                    "$ref": "#/definitions/ID"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  }
                 },
-                "required": ["resource_id", "quantity"]
+                "required": [
+                  "resource_id",
+                  "quantity"
+                ],
+                "additionalProperties": false
               }
             },
-            "expected_state_delta": { "type": "object" },
-            "execution_signature": { "type": "string" },
-            "relations": { "type": "array", "items": { "$ref": "#/definitions/Relation" } }
+            "expected_state_delta": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "execution_signature": {
+              "type": "string"
+            },
+            "relations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Relation"
+              }
+            }
           },
-          "required": ["required_resources", "expected_state_delta", "execution_signature", "relations"]
+          "required": [
+            "required_resources",
+            "expected_state_delta",
+            "execution_signature",
+            "relations"
+          ],
+          "unevaluatedProperties": false
         }
       ]
     },
     "Resource": {
       "allOf": [
-        { "$ref": "#/definitions/AnchorBase" },
         {
+          "$ref": "#/definitions/AnchorBase"
+        },
+        {
+          "type": "object",
           "properties": {
-            "type": { "const": "Resource" },
-            "environment_id": { "$ref": "#/definitions/ID" },
-            "capacity_total": { "type": "number" },
+            "type": {
+              "const": "Resource"
+            },
+            "environment_id": {
+              "$ref": "#/definitions/ID"
+            },
+            "capacity_total": {
+              "type": "number"
+            },
             "allocations": {
               "type": "array",
               "items": {
                 "type": "object",
                 "properties": {
-                  "capability_id": { "$ref": "#/definitions/ID" },
-                  "quantity": { "type": "number" },
-                  "lock_timestamp": { "type": "number" }
+                  "capability_id": {
+                    "$ref": "#/definitions/ID"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  },
+                  "lock_timestamp": {
+                    "type": "number"
+                  }
                 },
-                "required": ["capability_id", "quantity", "lock_timestamp"]
+                "required": [
+                  "capability_id",
+                  "quantity",
+                  "lock_timestamp"
+                ],
+                "additionalProperties": false
               }
             }
           },
-          "required": ["environment_id", "capacity_total", "allocations"]
+          "required": [
+            "environment_id",
+            "capacity_total",
+            "allocations"
+          ],
+          "unevaluatedProperties": false
         }
       ]
     },
     "Goal": {
       "allOf": [
-        { "$ref": "#/definitions/AnchorBase" },
         {
+          "$ref": "#/definitions/AnchorBase"
+        },
+        {
+          "type": "object",
           "properties": {
-            "type": { "const": "Goal" },
+            "type": {
+              "const": "Goal"
+            },
             "target_metrics": {
               "type": "array",
               "items": {
                 "type": "object",
                 "properties": {
-                  "metric_id": { "$ref": "#/definitions/ID" },
-                  "operator": { "type": "string", "enum": [">", "<", "==", ">=", "<="] },
-                  "value": { "type": "number" }
+                  "metric_id": {
+                    "$ref": "#/definitions/ID"
+                  },
+                  "operator": {
+                    "type": "string",
+                    "enum": [
+                      ">",
+                      "<",
+                      "==",
+                      ">=",
+                      "<="
+                    ]
+                  },
+                  "value": {
+                    "type": "number"
+                  }
                 },
-                "required": ["metric_id", "operator", "value"]
+                "required": [
+                  "metric_id",
+                  "operator",
+                  "value"
+                ],
+                "additionalProperties": false
               }
             },
-            "target_states": { "type": "array", "items": { "$ref": "#/definitions/ID" } },
-            "deadline_ms": { "type": "number" },
-            "priority_level": { "type": "number" }
+            "target_state_anchors": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ID"
+              }
+            },
+            "deadline_ms": {
+              "type": "number"
+            },
+            "priority_level": {
+              "type": "number"
+            }
           },
-          "required": ["target_metrics", "target_states", "priority_level"]
+          "required": [
+            "target_metrics",
+            "target_state_anchors",
+            "priority_level"
+          ],
+          "unevaluatedProperties": false
         }
       ]
+    },
+    "AnchorNode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Entity"
+        },
+        {
+          "$ref": "#/definitions/Environment"
+        },
+        {
+          "$ref": "#/definitions/StateAnchor"
+        },
+        {
+          "$ref": "#/definitions/StateObservation"
+        },
+        {
+          "$ref": "#/definitions/Evidence"
+        },
+        {
+          "$ref": "#/definitions/Metric"
+        },
+        {
+          "$ref": "#/definitions/Policy"
+        },
+        {
+          "$ref": "#/definitions/Capability"
+        },
+        {
+          "$ref": "#/definitions/Resource"
+        },
+        {
+          "$ref": "#/definitions/Goal"
+        }
+      ]
+    },
+    "WKGSnapshot": {
+      "type": "object",
+      "properties": {
+        "snapshot_id": {
+          "$ref": "#/definitions/ID"
+        },
+        "wkg_snapshot_hash": {
+          "$ref": "#/definitions/Hash"
+        },
+        "parent_wkg_snapshot_hash": {
+          "$ref": "#/definitions/Hash"
+        },
+        "timestamp_ms": {
+          "type": "number"
+        },
+        "purpose": {
+          "type": "string",
+          "enum": [
+            "compile",
+            "audit",
+            "deploy",
+            "runtime"
+          ]
+        },
+        "ontology_registry_ref": {
+          "type": "string"
+        },
+        "anchors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AnchorNode"
+          }
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "wkg_snapshot_hash",
+        "timestamp_ms",
+        "purpose",
+        "ontology_registry_ref",
+        "anchors"
+      ],
+      "additionalProperties": false
+    },
+    "AddAnchorMutation": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "ADD_ANCHOR"
+        },
+        "anchor": {
+          "$ref": "#/definitions/AnchorNode"
+        }
+      },
+      "required": [
+        "type",
+        "anchor"
+      ],
+      "additionalProperties": false
+    },
+    "DeactivateAnchorMutation": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "DEACTIVATE_ANCHOR"
+        },
+        "id": {
+          "$ref": "#/definitions/ID"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "UpdateStateMutation": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "UPDATE_STATE"
+        },
+        "old_observation_id": {
+          "$ref": "#/definitions/ID"
+        },
+        "new_observation": {
+          "$ref": "#/definitions/StateObservation"
+        }
+      },
+      "required": [
+        "type",
+        "old_observation_id",
+        "new_observation"
+      ],
+      "additionalProperties": false
+    },
+    "AllocateResourceMutation": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "ALLOCATE_RESOURCE"
+        },
+        "resource_id": {
+          "$ref": "#/definitions/ID"
+        },
+        "capability_id": {
+          "$ref": "#/definitions/ID"
+        },
+        "amount": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "type",
+        "resource_id",
+        "capability_id",
+        "amount"
+      ],
+      "additionalProperties": false
+    },
+    "ReleaseResourceMutation": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "RELEASE_RESOURCE"
+        },
+        "resource_id": {
+          "$ref": "#/definitions/ID"
+        },
+        "capability_id": {
+          "$ref": "#/definitions/ID"
+        },
+        "amount": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "type",
+        "resource_id",
+        "capability_id",
+        "amount"
+      ],
+      "additionalProperties": false
+    },
+    "WKGMutation": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/AddAnchorMutation"
+        },
+        {
+          "$ref": "#/definitions/DeactivateAnchorMutation"
+        },
+        {
+          "$ref": "#/definitions/UpdateStateMutation"
+        },
+        {
+          "$ref": "#/definitions/AllocateResourceMutation"
+        },
+        {
+          "$ref": "#/definitions/ReleaseResourceMutation"
+        }
+      ]
+    },
+    "DeltaLogEntry": {
+      "type": "object",
+      "properties": {
+        "transaction_id": {
+          "$ref": "#/definitions/ID"
+        },
+        "parent_wkg_snapshot_hash": {
+          "$ref": "#/definitions/Hash"
+        },
+        "timestamp_ms": {
+          "type": "number"
+        },
+        "mutations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WKGMutation"
+          }
+        },
+        "new_wkg_snapshot_hash": {
+          "$ref": "#/definitions/Hash"
+        }
+      },
+      "required": [
+        "transaction_id",
+        "parent_wkg_snapshot_hash",
+        "timestamp_ms",
+        "mutations",
+        "new_wkg_snapshot_hash"
+      ],
+      "additionalProperties": false
     }
   },
   "oneOf": [
-    { "$ref": "#/definitions/Entity" },
-    { "$ref": "#/definitions/Environment" },
-    { "$ref": "#/definitions/State" },
-    { "$ref": "#/definitions/Evidence" },
-    { "$ref": "#/definitions/Metric" },
-    { "$ref": "#/definitions/Policy" },
-    { "$ref": "#/definitions/Capability" },
-    { "$ref": "#/definitions/Resource" },
-    { "$ref": "#/definitions/Goal" }
+    {
+      "$ref": "#/definitions/Entity"
+    },
+    {
+      "$ref": "#/definitions/Environment"
+    },
+    {
+      "$ref": "#/definitions/StateAnchor"
+    },
+    {
+      "$ref": "#/definitions/StateObservation"
+    },
+    {
+      "$ref": "#/definitions/Evidence"
+    },
+    {
+      "$ref": "#/definitions/Metric"
+    },
+    {
+      "$ref": "#/definitions/Policy"
+    },
+    {
+      "$ref": "#/definitions/Capability"
+    },
+    {
+      "$ref": "#/definitions/Resource"
+    },
+    {
+      "$ref": "#/definitions/Goal"
+    },
+    {
+      "$ref": "#/definitions/WKGSnapshot"
+    },
+    {
+      "$ref": "#/definitions/DeltaLogEntry"
+    }
   ]
 }

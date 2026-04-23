@@ -1,6 +1,6 @@
 {
   "transaction_id": "tx-987654321",
-  "parent_wkg_hash": "sha256-current-head-hash-1234",
+  "parent_wkg_snapshot_hash": "sha256-current-head-hash-1234",
   "timestamp_ms": 1713900050000,
   "mutations": [
     {
@@ -24,22 +24,22 @@
     },
     {
       "type": "UPDATE_STATE",
-      "old_state_id": "state-db-init",
-      "new_state": {
-        "id": "state-db-processing",
+      "old_observation_id": "state-obs-db-init",
+      "new_observation": {
+        "id": "state-obs-db-processing",
         "version_hash": "sha256-new-state-hash",
-        "type": "State",
+        "type": "StateObservation",
+        "state_anchor_id": "state-anchor-db-runtime-footprint",
         "subject_ref": "ent-db-service-01",
-        "snapshot": {
+        "observed_snapshot": {
           "memory_usage_mb": 650,
           "connections": 5
         },
         "timestamp_ms": 1713900050000,
+        "evidence_refs": [
+          "ev-api-success"
+        ],
         "relations": [
-          {
-            "type": "evidenced_by",
-            "target_id": "ev-api-success"
-          },
           {
             "type": "satisfies",
             "target_id": "pol-memory-limit"
@@ -48,5 +48,5 @@
       }
     }
   ],
-  "new_wkg_hash": "sha256-calculated-next-head-hash"
+  "new_wkg_snapshot_hash": "sha256-calculated-next-head-hash"
 }

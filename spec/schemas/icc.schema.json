@@ -7,7 +7,7 @@
     "timestamp",
     "goals",
     "constraints",
-    "wkg_hash",
+    "wkg_snapshot_hash",
     "signature"
   ],
   "properties": {
@@ -48,7 +48,13 @@
         "type": "object"
       }
     },
-    "wkg_hash": {
+    "wkg_anchors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "wkg_snapshot_hash": {
       "type": "string"
     },
     "signature": {

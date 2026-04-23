@@ -1,124 +1,230 @@
 # AICL-Core Ontology and WKG Specification
 
-**Document Type**: Formal Technical Specification
-**Module**: WKG (World Knowledge Graph) Core
-**Status**: Draft (v1.1)
+**Document Type:** Formal technical specification
+**Module:** WKG (World Knowledge Graph) Core
+**Status:** Draft (v1.2)
 
-## 1. Ontological Framework & Nominal Type Anchors
+## 0. Scope and Authority Contract
 
-The AICL-Core ontology is formalized as a set of nine nominal anchors: $\Omega = \{E, Env, S, Ev, G, M, P, C, R\}$. These anchors establish a strict, machine-checkable structural foundation for the World Knowledge Graph (WKG).
+This document defines the WKG-side semantic substrate used by the AICL kernel, SHG layer, runtime, and governance path.
 
-The complete, machine-readable TypeScript definition of this ontology is maintained in `wkg/core/schema.ts`.
+The WKG is the authoritative source of semantic identity for Goal, StateAnchor, Policy, Capability, Metric, Entity, Resource, Environment, and Evidence anchors. Kernel type classes are compiler-facing category labels over WKG anchors. Identifier resolution is performed through a pinned WKG snapshot during each compilation pass.
 
-### 1.1 The Nine Pillars of the AICL-Core Ontology
+Important distinction:
 
-1. **Environment ($Env$)**: The contextual boundary isolating entities, resources, and policies. Formally decomposed into `Runtime`, `Deployment`, `Legal`, or `Cohort` sub-classes.
-2. **Entity ($E$)**: An identifiable subject/object within an Environment.
-3. **State ($S$)**: A temporal, immutable binding of variables/attributes for an Entity or Environment at a specific timestamp.
-4. **Evidence ($Ev$)**: A cryptographically verifiable grounding proof mapping external data streams to WKG claims.
-5. **Metric ($M$)**: A computable evaluation function returning a scalar or vector based on a State.
-6. **Policy ($P$)**: A strict invariant constraint over state transitions (e.g., $S_t \to S_{t+1}$).
-7. **Capability ($C$)**: An executable state-transition function, bounded by preconditions and resource requirements.
-8. **Resource ($R$)**: A quantifiable prerequisite consumed, locked, or released by Capabilities.
-9. **Goal ($G$)**: A target state condition or metric optimization objective, acting as the driving force for Capability execution.
+- `StateAnchor` is a compile-time semantic declaration.
+- `StateObservation` is a runtime observed fact referencing a `StateAnchor`.
 
-## 2. Relation Vocabulary & Reasoning Properties
+The runtime grounding axiom applies to `StateObservation`, not to `StateAnchor`.
 
-The AICL ontology restricts graph edges to a predefined, machine-checkable relation vocabulary. This prevents arbitrary semantic drift and ensures deterministic graph traversal. Each relation carries strict algebraic properties and contradiction implications evaluated by the kernel.
+## 1. Ontological Framework and Nominal Anchors
 
-| Relation ($R$) | Domain | Range | Algebraic Properties | Closure Rules | Contradiction Implications | Validity Layer |
-|---|---|---|---|---|---|---|
-| `is_a` | `Anchor` | `Anchor` | Transitive, Reflexive, Antisymmetric | If $A$ `is_a` $B$ and $B$ `is_a` $C$, then $A$ `is_a` $C$ | $A$ `is_a` $B \land B$ `is_a` $A \implies A=B$ | Both |
-| `depends_on` | `Capability`\|`Entity` | `Entity`\|`Resource`\|`Capability` | Transitive, Irreflexive, Asymmetric | If $C_1$ `depends_on` $C_2$, execution order is $C_2 \to C_1$ | Cycle: $A$ `depends_on` $B$ `depends_on` $A \implies$ Scheduling Halt | SHG |
-| `constrains` | `Policy` | `State`\|`Capability`\|`Environment` | Irreflexive, Asymmetric | Policies apply implicitly to all nested sub-environments | Target $S$ transition violates $P \implies$ Kernel Halt | Kernel |
-| `consumes` | `Capability` | `Resource` | Irreflexive, Asymmetric | Resource pool decreases monotonically during capability lock | $\sum \text{consumed} > \text{capacity} \implies \chi_{C,R}$ Fault | SHG |
-| `satisfies` | `State`\|`Capability` | `Goal`\|`Policy` | Irreflexive, Asymmetric | If $S$ `satisfies` $G$, goal is terminated or marked achieved | $S$ `satisfies` $X \land S$ `violates` $X \implies$ Logic Halt | SHG |
-| `violates` | `State`\|`Capability` | `Policy` | Irreflexive, Asymmetric | If $S$ `violates` $P$, the transition is formally invalid | $S$ `violates` $P \implies \chi_{G,P}$ Halt or Escalate | Kernel |
-| `evidenced_by` | `State`\|`Mutation` | `Evidence` | Irreflexive, Asymmetric | Every valid $S$ mutation must map to $\ge 1$ $Ev$ | $\neg \exists Ev$ for $S \implies$ Grounding Halt | Kernel |
-| `executed_in`| `Capability` | `Environment` | Irreflexive, Asymmetric, Functional | $C$ must inherit active policies of $Env$ | $C$ `executed_in` disjoint $Env_1, Env_2 \implies$ Halt | SHG |
+The semantic identity layer of the AICL-Core ontology is formalized as nine nominal anchor classes:
 
-## 3. Multimodal Evidence Semantics & Trust Classes
+- `Entity`
+- `Environment`
+- `StateAnchor`
+- `Evidence`
+- `Metric`
+- `Policy`
+- `Capability`
+- `Resource`
+- `Goal`
 
-To prevent hallucination and ensure absolute traceability, the WKG enforces a strict **Multimodal Evidence Semantic Layer**.
+The complete, machine-readable companion definitions are maintained in:
 
-- **The Grounding Axiom**: No `State` ($S$) can be added to the WKG without an array of `evidence_refs` mapping to valid `Evidence` ($Ev$) anchors.
-- **Multimodal Streams**: The `stream_type` supports heterogeneous inputs (`telemetry`, `log`, `document`, `screenshot`, `api_response`, `model_output`, `human_report`).
-- **Evidence Trust Classes**: Evidence must be mapped to formal trust classes, which dictate mutation admissibility.
-  - **Class A (Cryptographic)**: Signed hardware telemetry, signed API responses. Deterministic and non-repudiable.
-  - **Class B (System Generative)**: Unsigned server logs, APM traces. Strong environmental trace, but potentially spoofable.
-  - **Class C (Opaque Generative)**: LLM/Model outputs (e.g., text, code, generated classifications). Probabilistic confidence scores $\le 0.99$.
-  - **Class D (Human Generative)**: User reports, uploaded screenshots without cryptographic signatures.
+- `wkg/core/schema.ts`
+- `wkg/core/aicl-core-ontology.schema.json`
 
-### 3.1 Admissibility Matrix
+### 1.1 The Nine Pillars
 
-The WKG delta-log enforcing governance validates the mutation type against the provided `evidence_refs`. If the evidence trust class is insufficient, the transaction either halts or mandates a Class D (Human) escalation.
+1. **Environment**: The boundary in which entities, resources, capabilities, and policies are interpreted.
+2. **Entity**: An identifiable subject or object within an environment.
+3. **StateAnchor**: The compile-time semantic declaration of a state category.
+4. **Evidence**: A grounding record linking observations or mutations to external proof sources.
+5. **Metric**: A computable evaluation function over an entity or environment.
+6. **Policy**: A machine-checkable invariant or bound over states, capabilities, or transitions.
+7. **Capability**: An executable transition function bounded by resources and policies.
+8. **Resource**: A quantifiable prerequisite consumed, locked, or released by capabilities.
+9. **Goal**: A target state-anchor condition or metric optimization objective.
 
-| Mutation Type | Minimum Evidence Class | Escalation Requirements | Mandatory Human Approval |
+### 1.2 Runtime Observation Record
+
+`StateObservation` is not a competing semantic authority. It is a runtime fact record over a `StateAnchor`.
+
+- `StateAnchor` is what the kernel means when it speaks about a compile-time `State` category.
+- `StateObservation` is what the runtime writes when evidence supports that a particular state condition has been observed.
+
+This split prevents compile-time declarations from requiring runtime evidence.
+
+## 2. Relation Vocabulary and Reasoning Properties
+
+The ontology restricts graph edges to a predefined, machine-checkable relation vocabulary. This prevents arbitrary semantic drift and supports deterministic traversal and validation.
+
+| Relation | Domain | Range | Closure / reasoning rule | Stage relevance |
+|---|---|---|---|---|
+| `is_a` | anchor | anchor | transitive taxonomy closure | compile + runtime |
+| `depends_on` | `Capability` or `Entity` | `Entity`, `Resource`, or `Capability` | dependency ordering and cycle checks | runtime / SHG |
+| `constrains` | `Policy` | `StateAnchor`, `Capability`, or `Environment` | policy applies to declared semantic targets | compile + runtime |
+| `consumes` | `Capability` | `Resource` | resource accounting and lock checks | runtime |
+| `satisfies` | `StateObservation` or `Capability` | `Goal` or `Policy` | observed or executed conformance | runtime |
+| `violates` | `StateObservation` or `Capability` | `Policy` | contradiction or policy-breach signal | runtime |
+| `evidenced_by` | `StateObservation` or mutation record | `Evidence` | graph-level traceability projection | runtime |
+| `executed_in` | `Capability` | `Environment` | capability inherits active policies of target environment | runtime |
+
+Notes:
+
+- `evidence_refs` remains the required structural field on `StateObservation`. `evidenced_by` relations are the graph projection of that evidence linkage, not a substitute for it.
+- Compile-time kernel normalization should reason primarily over `StateAnchor`, `Goal`, `Policy`, `Capability`, `Metric`, and `Resource` anchors resolved through a pinned snapshot.
+
+## 3. Grounding, Evidence, and Admissibility
+
+### 3.1 Runtime Grounding Axiom
+
+No `StateObservation` may be committed to the WKG without `evidence_refs` resolving to one or more valid `Evidence` records.
+
+This does **not** apply to `StateAnchor` declarations.
+
+### 3.2 Evidence Trust Classes
+
+Evidence records must be classified before mutation admission:
+
+- **Class A (Cryptographic)**: signed telemetry, signed API responses, signed hardware outputs
+- **Class B (System Generative)**: unsigned server logs, traces, APM outputs
+- **Class C (Opaque Generative)**: model outputs, generated classifications, opaque synthesis
+- **Class D (Human Generative)**: human reports, uploaded screenshots, operator assertions
+
+### 3.3 Admissibility Matrix
+
+| Mutation or record type | Minimum evidence class | Escalation rule | Mandatory human approval |
 |---|---|---|---|
-| **ADD_ANCHOR** (Entity, Metric) | Class C (Opaque Generative) | None | No |
-| **ADD_ANCHOR** (Policy, Goal) | Class B (System Generative) | If Class C, escalate to Class D | No (unless Class C origin) |
-| **UPDATE_STATE** (Routine) | Class B | If Class C, flag as probabilistic state | No |
-| **UPDATE_STATE** (Critical Boundary) | Class A (Cryptographic) | If Class B provided, requires Class D | Yes (if Class A unavailable) |
-| **ALLOCATE_RESOURCE** ($<50\%$ Cap) | Class B | None | No |
-| **ALLOCATE_RESOURCE** ($\ge90\%$ Cap) | Class A | Mandatory Escalate to Class D | Yes |
+| `ADD_ANCHOR` for `Entity`, `Metric`, `StateAnchor` | Class C | none | no |
+| `ADD_ANCHOR` for `Policy`, `Goal`, `Capability` | Class B | if only Class C support exists, escalate | no unless escalated |
+| `UPDATE_STATE` producing `StateObservation` (routine) | Class B | if only Class C support exists, mark probabilistic | no |
+| `UPDATE_STATE` producing `StateObservation` at critical boundary | Class A | if Class A unavailable, escalate to human | yes when escalated |
+| `ALLOCATE_RESOURCE` below 50% capacity | Class B | none | no |
+| `ALLOCATE_RESOURCE` at or above 90% capacity | Class A | if unavailable, escalate to human | yes when escalated |
 
-*Critical Boundary*: A state update resulting from a `strict_halt` policy evaluation or an external financial/system-level commit.
+Critical boundary means a mutation associated with:
 
-## 4. Capability and Policy Grounding
+- `strict_halt` policy evaluation
+- financial or legal commitment
+- cross-environment transfer
+- externally visible system commit
 
-### 4.1 Capability Grounding ($\Gamma_C$)
-Capabilities are functionally useless unless grounded in available WKG Resources. The grounding mechanism requires a pre-flight resource validation check:
+## 4. Capability, Policy, and Resource Grounding
 
-$$ \Gamma_C(c) = \text{True} \iff \forall r \in \text{Req}(c), \text{Capacity}(r) - \sum \text{Allocations}(r) \ge \text{Quantity}(c, r) $$
+### 4.1 Capability Grounding
 
-If $\Gamma_C(c)$ is false, the capability cannot be scheduled or executed. Resource allocation mutations (`ALLOCATE_RESOURCE`, `RELEASE_RESOURCE`) are handled atomically in the Delta-Log.
+Capability execution is valid only if required resources are available in the target environment:
 
-### 4.2 Policy Grounding ($\Gamma_P$)
-Policies represent the immutable laws of an Environment. A state transition sequence $\{S_t, S_{t+1}\}$ generated by a Capability is grounded if and only if it satisfies all active policies within the Environment:
+Gamma_C(c) = True iff every required resource quantity can be allocated without exceeding `capacity_total`.
 
-$$ \Gamma_P(S_t, S_{t+1}) = \text{True} \iff \forall p \in \text{ActivePolicies}(Env), \text{Predicate}_p(S_t, S_{t+1}) = \text{True} $$
+If `Gamma_C(c)` is false, the capability cannot be scheduled or executed.
 
-Policies can enforce bounds via Metrics (e.g., asserting that the `Network_Latency` Metric remains $< 50ms$).
+### 4.2 Policy Grounding
 
-## 5. Contradiction Surfaces ($\chi$)
+Policies constrain declared state categories at compile time and observed state transitions at runtime.
 
-Ontological structure inherently introduces logical friction points. The AICL runtime identifies and handles these "contradiction surfaces" explicitly rather than failing silently.
+- Compile time: policies participate in normalization, contradiction analysis, and proof obligations over `StateAnchor`-level declarations.
+- Runtime: policies are checked against `StateObservation` and capability effects in the active environment.
 
-### 5.1 Identified Friction Points
-1. **Goal vs. Policy ($\chi_{G,P}$)**: A Goal requires reaching a target state $S^*$, but the only Capability paths to $S^*$ result in intermediate states that violate an active Policy $P$.
-2. **Capability vs. Resource ($\chi_{C,R}$)**: Parallel active capabilities attempt to lock a volume of resources exceeding the Environment's maximum `capacity_total`.
-3. **Policy vs. Policy ($\chi_{P,P}$)**: $P_1$ asserts Metric $m > x$, while $P_2$ asserts Metric $m \le x$ for the same Environment.
+### 4.3 Implementation-Placeholder Signatures
 
-### 5.2 Resolution Logic
-- **$\chi_{G,P}$**: Policies have strict precedence. The runtime yields a `Goal_Unreachable` fault with the blocking Policy ID.
-- **$\chi_{C,R}$**: Capabilities are serialized by a deterministic priority queue, or the lower-priority Capability yields a `Resource_Exhausted` fault.
-- **$\chi_{P,P}$**: Resolved via the `priority_level` defined on the Policy anchors. If $P_1$ and $P_2$ have equal priority, the WKG engine triggers a systemic halt (`Contradiction_Halt`) to prevent divergent state corruption.
+The fields `predicate_signature`, `evaluator_signature`, and `execution_signature` are implementation placeholders. They indicate that the record points to an evaluation or execution mechanism, but they do **not** by themselves commit the AICL spec to a specific runtime loading model such as content-addressed code fetch or URI-executed semantics.
 
-## 6. Mapping to Formal Semantics
+## 5. Contradiction Surfaces and Pipeline Stages
 
-The ontology is not merely descriptive; it serves as the underlying target for the AICL kernel and runtime compiler:
+The ontology recognizes three contradiction surfaces:
 
-| Ontology Anchor / Construct | Formal Semantic Target | Runtime Behavior |
-|---|---|---|
-| Nominal Anchors ($E, S, G, P, etc.$) | **Type Classes** | Static typing constraints resolved during AST traversal. |
-| Capabilities ($C$) | **Effect / Capability System** | Bounded functions forming a formal effect algebra. Assessed pre-execution. |
-| Policies ($P$) | **Proof Obligations** | SMT-solvable propositions evaluated synchronously on edge transition. |
-| Contradictions ($\chi$) | **Halt / Escalate Semantics** | Deterministic process faults triggering priority-based backoff or external human escalation (via Class D evidence). |
+1. `chi_{G,P}` - Goal vs. Policy
+2. `chi_{C,R}` - Capability vs. Resource
+3. `chi_{P,P}` - Policy vs. Policy
 
-## 7. Governance & Versioning Model
+### 5.1 Compile-Time Contradictions
 
-The WKG evolves via a Merkle-tree structured, append-only ledger. This ensures cryptographic integrity and temporal reproducability.
+Compile-time contradictions are discovered during kernel normalization, identifier resolution, constraint analysis, and proof preparation against a pinned WKG snapshot.
 
-### 7.1 The Delta-Log
-The WKG state at time $t+1$ is exclusively derived by applying a `DeltaLogEntry` to the state at time $t$.
+Primary outcomes:
 
-$$ W_{t+1} = \text{Apply}(W_t, \Delta_{t+1}) $$
+- equal-priority policy conflict: `escalate_to_haig`
+- unresolvable contradiction after normalization: `compile_error`
+- precedence-resolvable contradiction: higher-precedence rule wins and the decision is recorded
 
-### 7.2 Commit Validation Rules
-Before a `DeltaLogEntry` is committed to the WKG, the governance engine asserts:
-1. **Hash Chain Continuity**: `parent_wkg_hash` strictly matches the current HEAD of the WKG.
-2. **Evidence Completeness**: Any `UPDATE_STATE` mutation has valid, resolvable `evidence_refs`.
-3. **Resource Conservation**: No `ALLOCATE_RESOURCE` mutation pushes allocations past `capacity_total`.
-4. **Policy Compliance**: No state mutation violates the active Policies ($\Gamma_P = \text{True}$).
+This is the primary contradiction defense.
 
-By enforcing these constraints at the structural level, AICL guarantees that the Semantic Hypergraph remains logically sound, grounded, and fully verifiable.
+### 5.2 Runtime WKG Contradictions
+
+Runtime contradictions are discovered when delta-log mutations, live imports, or late policy/resource changes produce an invalid runtime state.
+
+Primary outcomes:
+
+- `chi_{G,P}` runtime block: `Goal_Unreachable` or halt of the blocked path
+- `chi_{C,R}` resource violation: `Resource_Exhausted` or deterministic suspension of the lower-priority capability
+- `chi_{P,P}` equal-priority runtime conflict: `Contradiction_Halt`
+
+This is the last-resort backstop after compile-time defenses.
+
+The compile-time kernel escalation path and the runtime WKG halt path are complementary stage-specific defenses, not competing contradiction systems.
+
+## 6. Snapshot Protocol and Delta-Log Governance
+
+### 6.1 WKG Snapshot
+
+Compilation must not resolve identifiers against a moving WKG head.
+
+A `WKGSnapshot` captures:
+
+- `snapshot_id`
+- `wkg_snapshot_hash`
+- `parent_wkg_snapshot_hash` when applicable
+- `timestamp_ms`
+- `purpose`
+- `ontology_registry_ref`
+- anchored records visible in that snapshot
+
+All kernel identifier resolution during one compilation pass is performed against exactly one pinned `WKGSnapshot`.
+
+### 6.2 ICC Binding
+
+The ICC must record the snapshot used for compilation via:
+
+- `wkg_snapshot_hash`
+
+This is the reproducibility link between:
+
+- source text
+- resolved semantic anchors
+- proof obligations
+- emitted artifact
+
+### 6.3 Delta-Log
+
+The live WKG evolves through an append-only, Merkle-style delta-log:
+
+W_(t+1) = Apply(W_t, Delta_(t+1))
+
+Each `DeltaLogEntry` must validate:
+
+1. `parent_wkg_snapshot_hash` matches the current accepted head
+2. any `StateObservation` written by `UPDATE_STATE` has valid `evidence_refs`
+3. resource allocations do not exceed `capacity_total`
+4. no runtime mutation violates active policy admissibility rules
+
+## 7. File Roles
+
+### Authoritative / normative
+
+- `wkg/core/schema.ts`
+- `wkg/core/aicl-core-ontology.schema.json`
+- relation vocabulary and admissibility rules in this file
+- `wkg/core/canonical-ontology-registry.md`
+- `wkg/core/integration-memo.md`
+
+### Illustrative / examples / fixtures
+
+- `wkg/core/example-wkg-snapshot.json`
+- `wkg/core/example-delta-log.json`
+- `wkg/core/contradiction-test-corpus.json`
+
+The contradiction corpus is a machine-readable runtime test fixture. It is not, by itself, normative ontology law.

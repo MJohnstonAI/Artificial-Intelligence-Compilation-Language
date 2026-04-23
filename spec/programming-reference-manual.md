@@ -12,6 +12,8 @@ This manual should be read together with:
 - [`unified-spec-v1.0-draft.md`](unified-spec-v1.0-draft.md) for spec convergence targets
 - [`working-draft.md`](working-draft.md) for the collaborative draft layer
 - [`schemas/`](schemas/) for draft machine-readable schema companions
+- [`../wkg/core/aicl-core-ontology-spec.md`](../wkg/core/aicl-core-ontology-spec.md) for the WKG semantics companion
+- [`../wkg/core/canonical-ontology-registry.md`](../wkg/core/canonical-ontology-registry.md) for WKG naming and snapshot conventions
 - [`../commentary/claude/latest-review.md`](../commentary/claude/latest-review.md) for the authoritative review summary
 - [`../examples/enterprise-service-resolution/README.md`](../examples/enterprise-service-resolution/README.md) for the flagship serious example
 
@@ -91,20 +93,22 @@ AICL uses a **WKG-backed nominal type system**.
 
 Every identifier must resolve through the World Knowledge Graph or through a local declaration.
 
+The WKG is the authoritative source of semantic identity for `Goal`, `StateAnchor`, `Policy`, `Capability`, `Metric`, `Entity`, `Resource`, `Environment`, and `Evidence` anchors. Kernel type classes are compiler-facing category labels over WKG anchors. Identifier resolution during compilation is performed against a pinned WKG snapshot recorded in the ICC.
+
 Resolution pipeline:
 
-`Identifier -> WKG lookup or local declaration -> semantic node -> type class`
+`Identifier -> WKG.lookup(id, snapshot) or local declaration -> WKG anchor -> kernel type class`
 
 ### 4.1 Core Type Classes
 - **Entity** — things that exist (Player, Ticket, Agent, Button)
-- **State** — propositions that may become true (RefundProcessed, PlayerDead)
+- **State** — compiler-facing category label for WKG `StateAnchor` declarations; runtime facts are recorded separately as `StateObservation`
 - **Intent** — things that must be achieved/maintained/avoided
 - **Metric** — measurable optimization targets
 - **Policy** — machine-checkable obligations
 - **Capability** — allowed actions/effects
 
 ### 4.2 Validity Rules
-- `goal`, `maintain`, and `avoid` accept only identifiers resolving to **State**
+- `goal`, `maintain`, and `avoid` accept only identifiers resolving to the kernel **State** category, backed by WKG `StateAnchor` records
 - `optimize` accepts only identifiers resolving to **Metric**
 - `requires_policy` accepts only **Policy**
 - `capability` declarations must resolve to **Capability** or define one
@@ -123,6 +127,8 @@ metric AverageResolutionTime {
   direction: minimize
 }
 ```
+
+`state` declarations produce `StateAnchor` records at compile time. Runtime state facts are represented as `StateObservation` records in the WKG and must include `evidence_refs`.
 
 ---
 
@@ -174,6 +180,8 @@ app "ServiceResolutionPlatform" {
   // declarations
 }
 ```
+
+At the WKG layer, an `app` declaration defines or resolves the active `Environment` scope against which policies, resources, and capabilities are interpreted.
 
 ### 6.2 module
 Reusable semantic package.
@@ -300,6 +308,8 @@ capability Payments.Refund {
 }
 ```
 
+Each `effects` label must resolve to, or be imported through, a WKG `Capability` anchor. Effect labels are not an independent capability type system; they are compiler-facing handles over WKG capability identity.
+
 ### 9.2 OpaqueIntent
 OpaqueIntent wraps an external tool, API, or service.
 
@@ -353,6 +363,12 @@ requires_policy POPIA_ZA
 
 Imported modules and policy packs may conflict.
 
+The contradiction taxonomy spans both compile-time and runtime defenses:
+
+- `Goal_vs_Policy`
+- `Capability_vs_Resource`
+- `Policy_vs_Policy`
+
 ### 11.1 Normalization
 Before SHG construction, constraints should be normalized to a common tuple form:
 
@@ -361,15 +377,19 @@ Before SHG construction, constraints should be normalized to a common tuple form
 ### 11.2 Conflict Policy
 ```aicl
 ontology_conflict_policy {
-  same_tier: escalate_to_haig
-  cross_tier: higher_precedence_wins
-  unresolvable: compile_error
+  same_tier: escalate_to_haig [stage: compile]
+  cross_tier: higher_precedence_wins [stage: compile]
+  unresolvable: compile_error [stage: compile]
+  runtime_delta_conflict: contradiction_halt [stage: runtime, handled_by: wkg]
 }
 ```
 
+Compile-time contradictions discovered during kernel normalization or constraint analysis are the primary defense. Equal-priority conflicts at this stage escalate to HAIG; irreducible contradictions fail compilation.
+
+Runtime contradictions discovered while validating WKG delta-log mutations are the last-resort backstop. They halt the mutation path rather than re-running compile-time arbitration.
+
 ### 11.3 Example
-A data-retention module requiring 7-year storage may conflict with a delete-on-request policy.
-Unresolvable conflicts must be surfaced to HAIG and recorded in the ICC.
+A data-retention module requiring 7-year storage may conflict with a delete-on-request policy. If that conflict is discovered during compilation, it must be surfaced to HAIG and recorded in the ICC. If a live policy import or runtime WKG delta introduces an equal-priority contradiction after deployment, the runtime must halt the conflicting delta-log path.
 
 ---
 
@@ -559,15 +579,18 @@ icc {
   version: "1.0"
   timestamp: ISO8601
   originator: "human" | "agent"
-  goals: [State]
-  non_goals: [State]
+  goals: [StateAnchorRef]
+  non_goals: [StateAnchorRef]
   constraints: [ConstraintNode]
   risk_accepted: [ContradictionRecord]
+  wkg_snapshot_hash: Hash
   wkg_anchors: [WKGNodeRef]
   signature: CryptographicHash
   expires: ISO8601 | never
 }
 ```
+
+All identifier resolution for a compilation pass must use the pinned snapshot recorded in `wkg_snapshot_hash`. This is the provenance link between the ICC and the WKG snapshot used for semantic resolution.
 
 ---
 

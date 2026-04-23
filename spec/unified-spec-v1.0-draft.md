@@ -11,6 +11,11 @@ This draft should converge material from:
 - [`spec/programming-reference-manual.md`](programming-reference-manual.md)
 - [`spec/working-draft.md`](working-draft.md)
 - [`spec/schemas/`](schemas/)
+- [`wkg/core/aicl-core-ontology-spec.md`](../wkg/core/aicl-core-ontology-spec.md)
+- [`wkg/core/canonical-ontology-registry.md`](../wkg/core/canonical-ontology-registry.md)
+- [`wkg/core/integration-memo.md`](../wkg/core/integration-memo.md)
+- [`spec/architecture/AICL_Architecture_Snapshot_v1.md`](architecture/AICL_Architecture_Snapshot_v1.md)
+- [`spec/History/AICL_Consortium_Decision_History.md`](History/AICL_Consortium_Decision_History.md)
 - [`commentary/claude/latest-review.md`](../commentary/claude/latest-review.md)
 - [`commentary/gemini/README.md`](../commentary/gemini/README.md)
 - [`commentary/grok/README.md`](../commentary/grok/README.md)
@@ -22,6 +27,15 @@ This draft should converge material from:
 AICL should become smaller at the kernel, sharper in semantics, and broader only through well-defined layers.
 
 This draft should not invent new semantics casually. It should absorb, reconcile, and organize the strongest current material already present in the repository.
+
+## Current WKG Integration Contract
+
+Until this draft is expanded further, the following bridge constraints should be treated as locked for convergence work:
+
+1. The WKG is the semantic authority for anchor identity. Kernel type classes are compiler-facing category labels over WKG anchors.
+2. Compile-time `state` declarations correspond to `StateAnchor`. Runtime observed facts correspond to `StateObservation` and require `evidence_refs`.
+3. Compilation resolves identifiers against a pinned WKG snapshot, and the ICC records that provenance in `wkg_snapshot_hash`.
+4. Compile-time contradictions escalate or fail during kernel normalization. Runtime contradictions discovered in delta-log mutation handling halt the runtime path.
 
 ## Immediate Integration Targets
 
@@ -56,6 +70,7 @@ The first mature version of this draft should explicitly synthesize:
 - schema alignment points
 - commentary findings that affect normative wording
 - flagship example references and consistency notes
+- WKG snapshot binding and contradiction stage boundaries
 
 ## Practical Use Right Now
 
@@ -64,3 +79,4 @@ Until this draft is more complete:
 - use [`spec/programming-reference-manual.md`](programming-reference-manual.md) for the most detailed language semantics
 - use [`spec/working-draft.md`](working-draft.md) for collaboration-layer notes
 - use [`commentary/claude/latest-review.md`](../commentary/claude/latest-review.md) to understand the highest-priority precision upgrades
+- use [`wkg/core/aicl-core-ontology-spec.md`](../wkg/core/aicl-core-ontology-spec.md) for WKG semantic authority, state split, and snapshot rules
