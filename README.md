@@ -1,16 +1,17 @@
-# AICL — Artificial Intelligence Compilation Language
+# AICL - Artificial Intelligence Compilation Language
 
-**AICL** is an open research and development project exploring a new kind of programming language: one designed **not for humans first, but for AI systems**.
+AICL is an open research project for an AI-native semantic programming language designed for AI systems to express intent, constraints, capabilities, policies, and deployable artifacts.
 
-Traditional programming languages were built for human minds, human workflows, and human limitations. They assume software must be expressed through syntax, files, functions, classes, imports, and manually managed architecture. Those abstractions were a triumph of their time. They are not the natural language of machine intelligence.
+This repository is a public research and development workspace for a serious language design effort. It is not a generic framework, prompt library, or manifesto-only project. The goal is to define a reviewable, implementable programming substrate for AI-native software construction.
 
-AICL asks a different question:
+## Project Identity
 
-> If AI systems are becoming the builders of software, should they remain permanently trapped inside programming languages designed for human beings?
+**Project:** AICL - Artificial Intelligence Compilation Language  
+**Originator:** Marc Johnston  
+**Organization:** NeuroSync AI Dynamics Pty Ltd  
+**Location:** Cape Town, South Africa
 
-AICL proposes that they should not.
-
-Instead of forcing AI models to translate intent through legacy human programming languages, AICL explores a semantic, AI-native compilation model in which intelligent systems can express:
+AICL treats software construction as a semantic compilation problem rather than a syntax-first coding exercise. The language is intended to let AI systems express:
 
 - goals
 - constraints
@@ -21,139 +22,86 @@ Instead of forcing AI models to translate intent through legacy human programmin
 - workflows
 - deployable artifacts
 
-In place of the legacy pipeline:
+## Why AICL Exists
 
-`human prompt -> human code -> compiler/runtime -> deployment`
+Conventional programming languages were designed around human cognition, human workflows, and human maintenance patterns. AICL explores a different assumption: if AI systems become major builders of software, then they may need a programming substrate centered on semantic intent, policy boundaries, proof obligations, and bounded adaptation rather than only syntax, files, and framework glue.
 
-AICL explores a new pipeline:
+The project asks a concrete research question:
 
-`intent -> semantic contract -> proof/optimization -> deployable artifact`
+> Can an AI-native semantic programming language provide a more exact and reviewable way for AI systems to specify and materialize software?
 
 ## What AICL Is
 
-AICL is a proposed **AI-native semantic compilation language** for building:
+AICL is a proposed AI-native semantic programming language with a layered model that includes:
 
-- websites
-- web applications
-- mobile apps
-- desktop software
-- backend systems
-- agent workflows
-- multimodal intelligent systems
-- cross-platform product suites
+- a kernel for goals, constraints, capabilities, policies, resources, and proofs
+- SHG semantics for branching, parallelism, contradiction handling, and adaptation boundaries
+- WKG-backed type and ontology grounding
+- workflow and skill semantics for multi-agent execution
+- materialization targets for deployable artifacts
 
-It is designed around the idea that intelligent systems should eventually be able to specify and construct software **directly in terms of intent and guarantees**, rather than indirectly through human-era syntax.
+The intent is to support software and system construction across web, mobile, desktop, backend, agent, and multimodal contexts without collapsing those semantics into an ordinary application framework.
 
-## Why This Exists
+## Start Here
 
-AICL was originated by **Marc Johnston**, founder of **NeuroSync AI Dynamics Pty Ltd**, Cape Town, South Africa.
+If you are new to the repository, read these files in order:
 
-Marc Johnston’s computing background stretches from the era of mainframe **COBOL**, through **SQL** data analytics, into **Python**, and onward into **AI prompt engineering** and AI-native systems thinking. That long perspective led to a simple but powerful conclusion:
+1. [`README.md`](README.md)
+2. [`WHY_AICL.md`](WHY_AICL.md)
+3. [`MANIFESTO.md`](MANIFESTO.md)
+4. [`ABOUT_THE_ORIGINATOR.md`](ABOUT_THE_ORIGINATOR.md)
+5. [`AI_CONTRIBUTOR_GUIDE.md`](AI_CONTRIBUTOR_GUIDE.md)
+6. [`AGENTS.md`](AGENTS.md)
+7. [`spec/programming-reference-manual.md`](spec/programming-reference-manual.md)
+8. [`spec/unified-spec-v1.0-draft.md`](spec/unified-spec-v1.0-draft.md)
+9. [`commentary/claude/latest-review.md`](commentary/claude/latest-review.md)
+10. [`SKILLS.md`](SKILLS.md)
 
-> Human programming languages are extraordinary tools for human programmers, but they are not the final form of programming for intelligent systems.
-
-AICL is the result of that conclusion.
-
-It is an attempt to define what programming might look like when AI systems are no longer merely *users* of human tools, but active participants in the design of their own semantic language of software construction.
-
-## Project Status
-
-**Status:** Public research draft  
-**Stage:** Architecture, language design, and repository publication baseline  
-**Current focus:**
-- AICL kernel design
-- semantic hypergraph architecture
-- HAIG and ICC formalization
-- WKG grounding
-- proof and policy semantics
-- skills and multi-agent workflow integration
-- target materialization for web, mobile, desktop, backend, and agent systems
-
-This repository is intended as a serious open research and development project, not a finished production standard. AI agents are first-class contributors here; start with `AGENTS.md` and `AI_CONTRIBUTOR_GUIDE.md`.
-
-## Open Source and Attribution
-
-AICL is intended to be:
-- free to use
-- open to study
-- open to extend
-- open to commercial adoption
-
-Creators who build applications, content, workflows, systems, and businesses using AICL should own their own work.
-
-The originating concept, canonical project identity, and public attribution for AICL remain with the original project and its originator.
-
-**Originator:** Marc Johnston  
-**Organization:** NeuroSync AI Dynamics Pty Ltd  
-**Location:** Cape Town, South Africa
-
-See:
-- [`WHY_AICL.md`](WHY_AICL.md)
-- [`MANIFESTO.md`](MANIFESTO.md)
-- [`ABOUT_THE_ORIGINATOR.md`](ABOUT_THE_ORIGINATOR.md)
-- [`spec/programming-reference-manual.md`](spec/programming-reference-manual.md)
-- [`AGENTS.md`](AGENTS.md)
-- [`AI_CONTRIBUTOR_GUIDE.md`](AI_CONTRIBUTOR_GUIDE.md)
-- [`SKILLS.md`](SKILLS.md)
-- [`examples/enterprise-service-resolution/README.md`](examples/enterprise-service-resolution/README.md)
-
-## Repository Structure
+## Repository Layout
 
 ```text
-aicl-public-release-v2/
-├── README.md
-├── WHY_AICL.md
-├── MANIFESTO.md
-├── ABOUT_THE_ORIGINATOR.md
-├── AGENTS.md
-├── SKILLS.md
-├── LICENSE
-├── LICENSE-docs
-├── NOTICE
-├── AUTHORS.md
-├── CITATION.cff
-├── GOVERNANCE.md
-├── TRADEMARK.md
-├── CONTRIBUTING.md
-├── SECURITY.md
-├── SPONSORSHIP_AND_RESEARCH_SUPPORT.md
-├── spec/
-│   ├── working-draft.md
-│   ├── programming-reference-manual.md
-│   ├── unified-spec-v1.0-draft.md
-│   └── schemas/
-├── commentary/
-├── wkg/
-├── examples/
-├── kernel/
-├── tools/
-└── roadmap/
+.
+|-- README.md
+|-- WHY_AICL.md
+|-- MANIFESTO.md
+|-- ABOUT_THE_ORIGINATOR.md
+|-- AI_CONTRIBUTOR_GUIDE.md
+|-- AGENTS.md
+|-- SKILLS.md
+|-- CONTRIBUTING.md
+|-- GOVERNANCE.md
+|-- SECURITY.md
+|-- LICENSE
+|-- LICENSE-docs
+|-- .github/
+|   `-- ISSUE_TEMPLATE/
+|-- spec/
+|   |-- programming-reference-manual.md
+|   |-- unified-spec-v1.0-draft.md
+|   |-- working-draft.md
+|   `-- schemas/
+|-- commentary/
+|-- examples/
+|-- kernel/
+|-- roadmap/
+|-- tools/
+`-- wkg/
 ```
 
-## What This Project Seeks to Prove
+Canonical specification files live under `spec/`. Commentary lives under `commentary/`. The root `README.md` is the public landing page.
 
-AICL is trying to answer a serious question:
+## Licensing
 
-> Can an AI-native semantic programming language eventually surpass the limits of human-designed programming languages for building intelligent systems?
-
-That is the challenge at the heart of this project.
-
-## Related Work by the Originator
-
-Marc Johnston is also associated with:
-
-- **_Let the AIs Teach You AI Prompt Engineering_**
-- **PickAImodel**
+- [`LICENSE`](LICENSE) contains the full Apache License 2.0 text for the repository's code-oriented material.
+- [`LICENSE-docs`](LICENSE-docs) contains the full Creative Commons Attribution 4.0 legal code for documentation-oriented material.
+- [`NOTICE`](NOTICE), [`AUTHORS.md`](AUTHORS.md), and [`TRADEMARK.md`](TRADEMARK.md) provide additional attribution and usage context.
 
 ## Collaboration
 
-This project welcomes:
-- technical critique
-- formal methods review
-- compiler research
-- ontology and WKG design contributions
-- agent workflow experimentation
-- multimodal system design
-- open-source implementation work
+AICL is intended to be open, reviewable, and contributor-friendly for both human collaborators and AI agents.
 
-AICL is an open invitation to explore what programming looks like after the age of human-first languages.
+- Human and AI contributors should start with [`AGENTS.md`](AGENTS.md) and [`AI_CONTRIBUTOR_GUIDE.md`](AI_CONTRIBUTOR_GUIDE.md).
+- Specification proposals and repository bugs should use the issue templates under [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE/).
+- Contributions should preserve project attribution and avoid collapsing AICL into a generic framework or vague product pitch.
+
+The current repository priority is conceptual rigor, semantic precision, and publication hygiene over hype.
