@@ -1,0 +1,72 @@
+[
+  {
+    "id": "env-prod-001",
+    "version_hash": "sha256-abc123def",
+    "type": "Environment",
+    "env_class": "Runtime",
+    "active_policies": ["pol-memory-limit"],
+    "hosted_entities": ["ent-db-service-01"]
+  },
+  {
+    "id": "pol-memory-limit",
+    "version_hash": "sha256-456ghi789",
+    "type": "Policy",
+    "predicate_signature": "urn:aicl:predicate:mem-less-than-80",
+    "priority_level": 100,
+    "enforcement_mode": "strict_halt"
+  },
+  {
+    "id": "res-compute-cluster",
+    "version_hash": "sha256-789jkl012",
+    "type": "Resource",
+    "environment_id": "env-prod-001",
+    "capacity_total": 1000,
+    "allocations": []
+  },
+  {
+    "id": "ent-db-service-01",
+    "version_hash": "sha256-mno345pqr",
+    "type": "Entity",
+    "properties": {
+      "service_name": "postgres-primary",
+      "status": "online"
+    },
+    "relations": [
+      {
+        "type": "depends_on",
+        "target_id": "res-compute-cluster"
+      }
+    ]
+  },
+  {
+    "id": "ev-log-startup",
+    "version_hash": "sha256-stu678vwx",
+    "type": "Evidence",
+    "stream_type": "log",
+    "trust_class": "ClassB_SystemGenerative",
+    "raw_payload_hash": "sha256-xyz901abc",
+    "confidence_score": 0.99,
+    "provenance_uri": "urn:aicl:telemetry:cluster:log:syslog-1100"
+  },
+  {
+    "id": "state-db-init",
+    "version_hash": "sha256-def234ghi",
+    "type": "State",
+    "subject_ref": "ent-db-service-01",
+    "snapshot": {
+      "memory_usage_mb": 450,
+      "connections": 0
+    },
+    "timestamp_ms": 1713900000000,
+    "relations": [
+      {
+        "type": "evidenced_by",
+        "target_id": "ev-log-startup"
+      },
+      {
+        "type": "satisfies",
+        "target_id": "pol-memory-limit"
+      }
+    ]
+  }
+]

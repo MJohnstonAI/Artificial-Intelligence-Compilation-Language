@@ -1,0 +1,52 @@
+{
+  "transaction_id": "tx-987654321",
+  "parent_wkg_hash": "sha256-current-head-hash-1234",
+  "timestamp_ms": 1713900050000,
+  "mutations": [
+    {
+      "type": "ALLOCATE_RESOURCE",
+      "resource_id": "res-compute-cluster",
+      "capability_id": "cap-batch-process-01",
+      "amount": 200
+    },
+    {
+      "type": "ADD_ANCHOR",
+      "anchor": {
+        "id": "ev-api-success",
+        "version_hash": "sha256-new-evidence-hash",
+        "type": "Evidence",
+        "stream_type": "api_response",
+        "trust_class": "ClassA_Cryptographic",
+        "raw_payload_hash": "sha256-raw-api-payload",
+        "confidence_score": 1.0,
+        "provenance_uri": "https://api.internal.corp/batch/status"
+      }
+    },
+    {
+      "type": "UPDATE_STATE",
+      "old_state_id": "state-db-init",
+      "new_state": {
+        "id": "state-db-processing",
+        "version_hash": "sha256-new-state-hash",
+        "type": "State",
+        "subject_ref": "ent-db-service-01",
+        "snapshot": {
+          "memory_usage_mb": 650,
+          "connections": 5
+        },
+        "timestamp_ms": 1713900050000,
+        "relations": [
+          {
+            "type": "evidenced_by",
+            "target_id": "ev-api-success"
+          },
+          {
+            "type": "satisfies",
+            "target_id": "pol-memory-limit"
+          }
+        ]
+      }
+    }
+  ],
+  "new_wkg_hash": "sha256-calculated-next-head-hash"
+}
