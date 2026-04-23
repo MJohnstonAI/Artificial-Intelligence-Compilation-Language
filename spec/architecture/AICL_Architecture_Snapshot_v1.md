@@ -112,6 +112,7 @@ The WKG is versioned and should support both:
 - and vector / neighborhood semantics.
 
 It is the primary defense against semantic drift across models.
+For compilation, identifier resolution should occur against a pinned WKG snapshot recorded in the ICC. The WKG supplies semantic identity; the kernel reads compiler-facing category labels from those anchors.
 
 ### 3.4 AICL-Kernel
 The AICL kernel is the formal core language.
@@ -462,11 +463,12 @@ For a new academic, engineer, or AI model entering the project, the recommended 
 2. `WHY_AICL.md`
 3. `MANIFESTO.md`
 4. `ABOUT_THE_ORIGINATOR.md`
-5. `AICL_Consortium_Decision_History_and_Meeting_Notes_v3.md`
+5. `spec/History/AICL_Consortium_Decision_History.md`
 6. `spec/programming-reference-manual.md`
-7. `spec/unified-spec-v1.0-draft.md`
-8. model-specific commentary folders
-9. examples and schemas
+7. `wkg/core/aicl-core-ontology-spec.md`
+8. `spec/unified-spec-v1.0-draft.md`
+9. model-specific commentary folders
+10. examples and schemas
 
 This order first establishes:
 - purpose,

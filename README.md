@@ -32,11 +32,14 @@ Start with these documents, in roughly this order:
 7. [`spec/programming-reference-manual.md`](spec/programming-reference-manual.md) - strongest current technical baseline
 8. [`spec/unified-spec-v1.0-draft.md`](spec/unified-spec-v1.0-draft.md) - synthesis target for convergence
 9. [`spec/working-draft.md`](spec/working-draft.md) - collaborative design layer
-10. [`commentary/claude/latest-review.md`](commentary/claude/latest-review.md) - authoritative review commentary
+10. [`spec/architecture/AICL_Architecture_Snapshot_v1.md`](spec/architecture/AICL_Architecture_Snapshot_v1.md) - concise architecture overview
+11. [`spec/History/AICL_Consortium_Decision_History.md`](spec/History/AICL_Consortium_Decision_History.md) - project decision history and lineage
+12. [`commentary/claude/latest-review.md`](commentary/claude/latest-review.md) - authoritative review commentary
 
 ## Schemas, Commentary, and Examples
 
 - Draft machine-readable schemas live in [`spec/schemas/`](spec/schemas/).
+- WKG core semantics and registry material live under [`wkg/core/`](wkg/core/), with [`wkg/core/aicl-core-ontology-spec.md`](wkg/core/aicl-core-ontology-spec.md) as the textual companion for ontology, snapshot, and contradiction rules.
 - Model commentary is organized under [`commentary/`](commentary/).
 - The flagship serious example is [`examples/enterprise-service-resolution/README.md`](examples/enterprise-service-resolution/README.md).
 - A secondary lightweight example brief lives at [`examples/cross-platform-app-brief/README.md`](examples/cross-platform-app-brief/README.md).

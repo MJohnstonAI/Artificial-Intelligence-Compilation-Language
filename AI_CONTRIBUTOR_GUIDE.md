@@ -47,6 +47,16 @@ AICL is intended to move software construction away from syntax-first programmin
 - `spec/programming-reference-manual.md` - strongest current technical baseline
 - `spec/unified-spec-v1.0-draft.md` - synthesis target for convergence
 - `spec/working-draft.md` - collaborative design layer
+- `spec/architecture/AICL_Architecture_Snapshot_v1.md` - concise architecture summary
+- `spec/History/AICL_Consortium_Decision_History.md` - historical lineage and prior decisions
+
+### WKG core layer
+
+- `wkg/core/aicl-core-ontology-spec.md` - textual WKG semantics companion
+- `wkg/core/schema.ts` - TypeScript source of truth for WKG structures
+- `wkg/core/aicl-core-ontology.schema.json` - JSON Schema companion
+- `wkg/core/canonical-ontology-registry.md` - naming, minimum fields, snapshot rules
+- `wkg/core/integration-memo.md` - narrow integration guardrails and artifact roles
 
 ### Commentary and evidence
 
@@ -73,9 +83,12 @@ If you are newly pointed at this repository, read files in this order:
 6. `AGENTS.md`
 7. `SKILLS.md`
 8. `spec/programming-reference-manual.md`
-9. `spec/unified-spec-v1.0-draft.md`
-10. `commentary/claude/latest-review.md`
-11. relevant example folders in `examples/`
+9. `wkg/core/aicl-core-ontology-spec.md`
+10. `wkg/core/canonical-ontology-registry.md`
+11. `wkg/core/integration-memo.md`
+12. `spec/unified-spec-v1.0-draft.md`
+13. `commentary/claude/latest-review.md`
+14. relevant example folders in `examples/`
 
 Do not jump straight into syntax changes before reading the reference manual and the Claude review.
 
@@ -124,7 +137,11 @@ Typical work:
 
 Primary files:
 
-- `wkg/core/`
+- `wkg/core/aicl-core-ontology-spec.md`
+- `wkg/core/schema.ts`
+- `wkg/core/aicl-core-ontology.schema.json`
+- `wkg/core/canonical-ontology-registry.md`
+- `wkg/core/integration-memo.md`
 - `wkg/domains/`
 - `commentary/gemini/`
 
@@ -213,6 +230,10 @@ High-caution files:
 - `ABOUT_THE_ORIGINATOR.md`
 - `spec/programming-reference-manual.md`
 - `spec/unified-spec-v1.0-draft.md`
+- `wkg/core/aicl-core-ontology-spec.md`
+- `wkg/core/schema.ts`
+- `wkg/core/aicl-core-ontology.schema.json`
+- `wkg/core/canonical-ontology-registry.md`
 - `commentary/claude/latest-review.md`
 
 If you are writing or revising files in this repository:
@@ -222,6 +243,7 @@ If you are writing or revising files in this repository:
 - keep manifesto/vision docs separate from formal specs
 - prefer append-only clarification for draft layers
 - mark speculative ideas clearly
+- treat WKG examples and contradiction fixtures as illustrative, not normative
 - update examples or schemas if the language changes
 
 ## 9. Good Contribution Format

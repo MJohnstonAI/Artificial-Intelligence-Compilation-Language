@@ -32,6 +32,11 @@ These are the core documents you should treat as authoritative:
 - `spec/programming-reference-manual.md`
 - `spec/unified-spec-v1.0-draft.md`
 - `spec/working-draft.md`
+- `spec/architecture/AICL_Architecture_Snapshot_v1.md`
+- `spec/History/AICL_Consortium_Decision_History.md`
+- `wkg/core/aicl-core-ontology-spec.md`
+- `wkg/core/canonical-ontology-registry.md`
+- `wkg/core/integration-memo.md`
 - `commentary/claude/latest-review.md`
 
 ## Repository Map for Agents
@@ -41,7 +46,8 @@ These are the core documents you should treat as authoritative:
 - `commentary/` contains review and synthesis commentary by model/source.
 - `examples/` contains public examples, with `enterprise-service-resolution/` as the flagship serious example.
 - `kernel/` is reserved for the future formal core.
-- `wkg/core/` and `wkg/domains/` are reserved for ontology and type-grounding work.
+- `wkg/core/` contains the authoritative ontology, schema, registry, and integration notes for WKG-backed semantic grounding.
+- `wkg/domains/` is reserved for domain-specific ontology layers.
 - `tools/` is reserved for validators, parsers, and supporting utilities.
 
 ## Read Order
@@ -56,8 +62,13 @@ Before proposing changes, read:
 6. `AGENTS.md`
 7. `SKILLS.md`
 8. `spec/programming-reference-manual.md`
-9. `spec/unified-spec-v1.0-draft.md`
-10. `commentary/claude/latest-review.md`
+9. `wkg/core/aicl-core-ontology-spec.md`
+10. `wkg/core/canonical-ontology-registry.md`
+11. `wkg/core/integration-memo.md`
+12. `spec/unified-spec-v1.0-draft.md`
+13. `spec/architecture/AICL_Architecture_Snapshot_v1.md`
+14. `spec/History/AICL_Consortium_Decision_History.md`
+15. `commentary/claude/latest-review.md`
 
 ## Working Priorities
 
@@ -105,6 +116,10 @@ High-caution files:
 - `ABOUT_THE_ORIGINATOR.md`
 - `spec/programming-reference-manual.md`
 - `spec/unified-spec-v1.0-draft.md`
+- `wkg/core/aicl-core-ontology-spec.md`
+- `wkg/core/schema.ts`
+- `wkg/core/aicl-core-ontology.schema.json`
+- `wkg/core/canonical-ontology-registry.md`
 - `commentary/claude/latest-review.md`
 
 ## Things AI Agents Should Avoid
@@ -113,6 +128,7 @@ High-caution files:
 - Do not invent security guarantees the spec does not support.
 - Do not assume external tools are trusted by default.
 - Do not collapse multiple semantics into single scalars when they affect proof obligations.
+- Do not treat kernel type classes as a competing semantic authority to WKG anchors.
 - Do not treat AICL as "just another DSL."
 - Do not replace the serious enterprise example emphasis with toy or game-first positioning.
 
