@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AICL ICC",
+  "type": "object",
+  "required": [
+    "version",
+    "timestamp",
+    "goals",
+    "constraints",
+    "wkg_hash",
+    "signature"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "originator": {
+      "type": "string",
+      "enum": [
+        "human",
+        "agent"
+      ]
+    },
+    "goals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "non_goals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "risk_accepted": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "wkg_hash": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "string"
+    },
+    "expires": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}
