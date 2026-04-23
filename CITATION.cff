@@ -1,23 +1,10 @@
-# Roadmap
-
-## Near-Term
-- formalize kernel grammar
-- stabilize ICC schema
-- define contradiction policy
-- define OpaqueIntent IFC rules
-- produce first parser sketch
-- produce first validator sketch
-
-## Mid-Term
-- define SHG wire format
-- publish WKG core ontology draft
-- define skill registry semantics
-- publish first example projects
-- produce first workflow runner sketch
-
-## Long-Term
-- reference compiler
-- materializers for web / mobile / backend / desktop
-- agent workflow engine
-- public white paper
-- benchmark and demonstration corpus
+cff-version: 1.2.0
+title: "AICL: Artificial Intelligence Compilation Language"
+message: "If you use this project in research or public discussion, please cite the originator and repository."
+type: software
+authors:
+  - family-names: Johnston
+    given-names: Marc
+    affiliation: "NeuroSync AI Dynamics Pty Ltd"
+repository-code: "https://github.com/<your-username>/aicl"
+license: "Apache-2.0"

@@ -56,16 +56,20 @@ AICL is the result of that conclusion.
 
 It is an attempt to define what programming might look like when AI systems are no longer merely *users* of human tools, but active participants in the design of their own semantic language of software construction.
 
-## Start Here
+## Project Status
 
-- [WHY_AICL.md](WHY_AICL.md)
-- [MANIFESTO.md](MANIFESTO.md)
-- [ABOUT_THE_ORIGINATOR.md](ABOUT_THE_ORIGINATOR.md)
-- [AGENTS.md](AGENTS.md)
-- [AI_CONTRIBUTOR_GUIDE.md](AI_CONTRIBUTOR_GUIDE.md)
-- [SKILLS.md](SKILLS.md)
-- [spec/programming-reference-manual.md](spec/programming-reference-manual.md)
-- [examples/enterprise-service-resolution/README.md](examples/enterprise-service-resolution/README.md)
+**Status:** Public research draft  
+**Stage:** Architecture, language design, and repository publication baseline  
+**Current focus:**
+- AICL kernel design
+- semantic hypergraph architecture
+- HAIG and ICC formalization
+- WKG grounding
+- proof and policy semantics
+- skills and multi-agent workflow integration
+- target materialization for web, mobile, desktop, backend, and agent systems
+
+This repository is intended as a serious open research and development project, not a finished production standard. AI agents are first-class contributors here; start with `AGENTS.md` and `AI_CONTRIBUTOR_GUIDE.md`.
 
 ## Open Source and Attribution
 
@@ -83,21 +87,25 @@ The originating concept, canonical project identity, and public attribution for 
 **Organization:** NeuroSync AI Dynamics Pty Ltd  
 **Location:** Cape Town, South Africa
 
-## Licensing
+See:
+- [`WHY_AICL.md`](WHY_AICL.md)
+- [`MANIFESTO.md`](MANIFESTO.md)
+- [`ABOUT_THE_ORIGINATOR.md`](ABOUT_THE_ORIGINATOR.md)
+- [`spec/programming-reference-manual.md`](spec/programming-reference-manual.md)
+- [`AGENTS.md`](AGENTS.md)
+- [`AI_CONTRIBUTOR_GUIDE.md`](AI_CONTRIBUTOR_GUIDE.md)
+- [`SKILLS.md`](SKILLS.md)
+- [`examples/enterprise-service-resolution/README.md`](examples/enterprise-service-resolution/README.md)
 
-- Code: Apache-2.0
-- Documentation and specifications: CC BY 4.0
-
-## Repository Layout
+## Repository Structure
 
 ```text
-Artificial-Intelligence-Compilation-Language/
+aicl-public-release-v2/
 ├── README.md
 ├── WHY_AICL.md
 ├── MANIFESTO.md
 ├── ABOUT_THE_ORIGINATOR.md
 ├── AGENTS.md
-├── AI_CONTRIBUTOR_GUIDE.md
 ├── SKILLS.md
 ├── LICENSE
 ├── LICENSE-docs
@@ -108,28 +116,34 @@ Artificial-Intelligence-Compilation-Language/
 ├── TRADEMARK.md
 ├── CONTRIBUTING.md
 ├── SECURITY.md
+├── SPONSORSHIP_AND_RESEARCH_SUPPORT.md
 ├── spec/
+│   ├── working-draft.md
+│   ├── programming-reference-manual.md
+│   ├── unified-spec-v1.0-draft.md
+│   └── schemas/
 ├── commentary/
+├── wkg/
 ├── examples/
+├── kernel/
+├── tools/
 └── roadmap/
 ```
 
-## Current Focus
+## What This Project Seeks to Prove
 
-- AICL kernel design
-- semantic hypergraph architecture
-- HAIG and ICC formalization
-- WKG grounding
-- proof and policy semantics
-- skills and multi-agent workflow integration
-- target materialization for web, mobile, desktop, backend, and agent systems
+AICL is trying to answer a serious question:
+
+> Can an AI-native semantic programming language eventually surpass the limits of human-designed programming languages for building intelligent systems?
+
+That is the challenge at the heart of this project.
 
 ## Related Work by the Originator
 
 Marc Johnston is also associated with:
 
-- *Let the AIs Teach You AI Prompt Engineering*
-- PickAImodel — https://pickaimodel.com
+- **_Let the AIs Teach You AI Prompt Engineering_**
+- **PickAImodel**
 
 ## Collaboration
 

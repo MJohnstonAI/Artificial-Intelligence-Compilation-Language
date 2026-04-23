@@ -1,64 +1,8 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "AICL ICC",
-  "type": "object",
-  "required": [
-    "version",
-    "timestamp",
-    "goals",
-    "constraints",
-    "wkg_hash",
-    "signature"
-  ],
-  "properties": {
-    "version": {
-      "type": "string"
-    },
-    "timestamp": {
-      "type": "string"
-    },
-    "originator": {
-      "type": "string",
-      "enum": [
-        "human",
-        "agent"
-      ]
-    },
-    "goals": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "non_goals": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "constraints": {
-      "type": "array",
-      "items": {
-        "type": "object"
-      }
-    },
-    "risk_accepted": {
-      "type": "array",
-      "items": {
-        "type": "object"
-      }
-    },
-    "wkg_hash": {
-      "type": "string"
-    },
-    "signature": {
-      "type": "string"
-    },
-    "expires": {
-      "type": [
-        "string",
-        "null"
-      ]
-    }
-  }
-}
+AICL (Artificial Intelligence Compilation Language) is an open research and development project originated by Marc Johnston, founder of NeuroSync AI Dynamics Pty Ltd, Cape Town, South Africa.
+
+This repository contains the canonical public research draft and supporting materials for AICL.
+
+Source code is licensed under Apache License 2.0.
+Specifications and documentation are licensed under Creative Commons Attribution 4.0 International (CC BY 4.0), unless otherwise noted.
+
+Derivative implementations, tools, and applications built using AICL may be used commercially and are owned by their creators. However, derivative works must not misrepresent authorship of the original AICL language concept or the canonical specification.

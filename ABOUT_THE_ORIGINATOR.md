@@ -1,117 +1,67 @@
-# Enterprise Service Resolution — Serious AICL Demonstration
+# About the Originator
 
-This example exists to demonstrate AICL as a **serious semantic systems language**, not as a game-specific language.
+## Marc Johnston
 
-## Why this demo
+**Marc Johnston** is the originator of **AICL — Artificial Intelligence Compilation Language** and the founder of **NeuroSync AI Dynamics Pty Ltd**, based in Cape Town, South Africa.
 
-AICL should first be understood through a problem class that is:
-- commercially real
-- multi-platform
-- policy-sensitive
-- multimodal
-- workflow-heavy
-- agent-compatible
-- verifiable
+His career spans a long and unusually wide arc across the history of computing. That journey began in the era of mainframe **COBOL**, passed through data and reporting systems built with **SQL**, extended into modern software and scripting with **Python**, and evolved further into **AI prompt engineering**, AI-assisted development, and AI-native systems thinking.
 
-A customer and service-resolution platform satisfies all of these.
+That long historical perspective shaped the core insight behind AICL:
 
-## Scenario
+> Human programming languages are remarkable achievements, but they were designed for human minds, human workflows, and human constraints. They are not necessarily the natural or final language for intelligent systems.
 
-The system must:
-- ingest customer cases through web, mobile, and desktop channels
-- classify them using bounded AI capabilities
-- verify eligibility against policy and billing state
-- resolve cases through refund, store credit, escalation, or closure
-- enforce privacy, residency, auditability, and latency budgets
-- coordinate among multiple agents and human approval paths where necessary
+Rather than treating AI as a tool that should merely become better at using human programming languages, Marc Johnston began asking a deeper question:
 
-## What this demonstrates
+> What would the ideal programming language look like if it were designed for AI systems themselves?
 
-This example demonstrates:
-- WKG-backed type resolution
-- goal, maintain, avoid semantics
-- capability-bounded OpaqueIntents
-- IFC policy flows
-- contradiction-aware policy imports
-- multi-agent workflow routing
-- cross-platform materialization targets
-- ICC-rooted semantic contracts
-- proof gates and human escalation paths
+AICL emerged from that question.
 
-## Conceptual AICL Example
+## Why AICL Matters to Him
 
-```aicl
-app "EnterpriseServiceResolution" {
-  import module Support.CoreWorkflow
-  import capabilitypack CRM_Billing_Core
-  import policypack GDPR_POPIA_Minimal
-  import targetpack Web.Vercel
-  import targetpack Android.Compose
-  import targetpack Windows.WinUI
+Marc Johnston did not arrive at AICL by rejecting the value of traditional programming. Quite the opposite. His experience across multiple eras of software development is exactly what made the limitation visible.
 
-  goal CaseResolved
-  maintain PolicyCompliant
-  maintain AuditTraceAvailable
-  avoid DataLeak
-  avoid UnauthorizedRefund
+From mainframe logic to database systems, from procedural scripting to modern AI workflows, one pattern remained constant: every generation of programming language was shaped by what humans needed in order to command machines.
 
-  budget {
-    cost.usd_per_session <= 0.03
-    latency.p95_ms <= 250
-    memory.mb <= 256
-  }
+AICL represents a different possibility:
+- a language of intent rather than syntax
+- a language of semantic contracts rather than brittle file structures
+- a language of capabilities, constraints, and proofs rather than framework glue
+- a language through which AI systems may eventually design, build, verify, and maintain software more natively
 
-  agent Triage {
-    goal: ClassifyIncomingCase
-    capabilities: [CRM.Read, LLM.Classify]
-    coordination: PACT
-    autonomy {
-      action: 0.8
-      goal: 0.0
-      resource: 0.2
-      delegation: false
-    }
-  }
+## Broader Work
 
-  agent PolicyCheck {
-    goal: ValidateEligibility
-    capabilities: [PolicyEngine.Read, Billing.Read]
-    coordination: PACT
-    autonomy {
-      action: 0.5
-      goal: 0.0
-      resource: 0.1
-      delegation: false
-    }
-  }
+Marc Johnston’s interests and work sit at the intersection of:
+- data analytics
+- software architecture
+- AI systems
+- prompt engineering
+- AI-native application design
+- intelligent workflows
+- long-horizon questions about the future of programming
 
-  agent Executor {
-    goal: ResolveCase
-    capabilities: [Payments.Refund, StoreCredit.Issue, Case.Close]
-    coordination: PACT
-    autonomy {
-      action: 0.6
-      goal: 0.0
-      resource: 0.2
-      delegation: false
-    }
-  }
+He is also associated with:
+- **NeuroSync AI Dynamics Pty Ltd**
+- **PickAImodel**
+- the book **Let the AIs Teach You AI Prompt Engineering**
+   https://www.amazon.com/dp/B0G2FJ39G7 
 
-  flow ResolutionFlow {
-    Triage ->
-    PolicyCheck ->
-    [if eligibility_passes: Executor | else: escalate_to_human]
-  }
-}
-```
+## Open Research Intent
 
-## Why this is a better public demonstration
+AICL is being released as an open research and development initiative because Marc Johnston wants the wider technical community to:
+- study it
+- challenge it
+- critique it
+- extend it
+- build with it
 
-This example signals that AICL is aimed at:
-- enterprise software
-- policy-aware systems
-- multimodal AI workflows
-- cross-platform application generation
-- serious research in programming languages and AI systems
+The applications, systems, workflows, and commercial products created with AICL should belong to their creators.
 
-It avoids the impression that AICL is primarily a niche language for games or entertainment demos.
+The originating concept, canonical project identity, and public historical attribution remain with Marc Johnston and the AICL project.
+
+## Attribution
+
+When discussing the origins of AICL, the canonical attribution is:
+
+> **AICL was originated by Marc Johnston, founder of NeuroSync AI Dynamics Pty Ltd, Cape Town, South Africa.**
+
+Collaborative AI systems such as ChatGPT, Claude, Gemini, Grok, and others may contribute to its research and development, but they do so as contributors within a project originated by Marc Johnston.

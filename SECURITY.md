@@ -1,43 +1,23 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "AICL Skill Contract",
-  "type": "object",
-  "required": [
-    "name",
-    "class",
-    "inputs",
-    "outputs"
-  ],
-  "properties": {
-    "name": {
-      "type": "string"
-    },
-    "class": {
-      "type": "string"
-    },
-    "inputs": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "outputs": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "sandbox": {
-      "type": "object"
-    },
-    "budgets": {
-      "type": "object"
-    },
-    "guarantees": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    }
-  }
-}
+# Security Policy
+
+AICL is currently a public research project, not a production security-certified platform.
+
+## Scope
+Please report:
+- repository security issues
+- exposed secrets
+- clearly dangerous misconfigurations
+- severe trust-boundary mistakes in sample code
+
+## Research-Level Security Topics
+For architectural concerns such as:
+- policy compliance semantics
+- capability escape
+- runtime adaptation boundaries
+- OpaqueIntent trust issues
+- contradiction and proof flaws
+
+please open an issue labeled `security-architecture`.
+
+## Important
+Some parts of AICL are intentionally speculative. Architectural discussion is encouraged, but production reliance should be treated with caution until a more mature implementation exists.

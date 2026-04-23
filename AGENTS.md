@@ -18,19 +18,6 @@ Do not rewrite AICL into a generic framework or vague manifesto.
 
 The project’s purpose is to define a serious **AI-native semantic programming language**, not just a set of tools.
 
-## First Steps for AI Agents
-
-Before proposing changes, read in this order:
-
-1. `README.md`
-2. `WHY_AICL.md`
-3. `MANIFESTO.md`
-4. `ABOUT_THE_ORIGINATOR.md`
-5. `spec/programming-reference-manual.md`
-6. `spec/unified-spec-v1.0-draft.md`
-7. `SKILLS.md`
-8. `AI_CONTRIBUTOR_GUIDE.md`
-
 ## Working Priorities
 
 When making contributions, prioritize:
@@ -65,6 +52,17 @@ When making contributions, prioritize:
    - readable manuals
    - human-reviewable canonical text
 
+## Repository Expectations for AI Agents
+
+Before proposing changes, read:
+- `README.md`
+- `WHY_AICL.md`
+- `MANIFESTO.md`
+- `ABOUT_THE_ORIGINATOR.md`
+- `spec/programming-reference-manual.md`
+- `spec/unified-spec-v1.0-draft.md`
+- `SKILLS.md`
+
 ## Contribution Style
 
 - Preserve origin attribution.
@@ -76,7 +74,7 @@ When making contributions, prioritize:
   - formal semantics
   - runtime behavior
   - governance
-  - repository marketing
+  - repo marketing
 
 ## Things AI Agents Should Avoid
 
@@ -115,3 +113,16 @@ Help make AICL:
 - more reviewable
 - more credible
 - more useful to future AI and human contributors
+
+
+## First-Step Checklist for AI Agents
+
+When newly attached to this repository:
+
+1. Read `README.md`
+2. Read `AI_CONTRIBUTOR_GUIDE.md`
+3. Read `spec/programming-reference-manual.md`
+4. Read `commentary/claude/latest-review.md`
+5. Choose one open problem and state it explicitly before changing files
+
+If your task is unclear, do not improvise by widening scope. Tighten one part of the language.
