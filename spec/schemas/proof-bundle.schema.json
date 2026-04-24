@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AICL Proof Bundle",
+  "description": "A collection of proof entries attached to an artifact, patch, materialization target, or agent workflow output.",
+  "type": "object",
+  "required": [
+    "proof_bundle_id",
+    "artifact_ref",
+    "overall_status",
+    "proofs"
+  ],
+  "properties": {
+    "proof_bundle_id": {
+      "type": "string"
+    },
+    "artifact_ref": {
+      "type": "string"
+    },
+    "overall_status": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "warning",
+        "unknown"
+      ]
+    },
+    "proofs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "proof_id",
+          "claim",
+          "mechanism",
+          "tier",
+          "status",
+          "evidence"
+        ],
+        "properties": {
+          "proof_id": {
+            "type": "string"
+          },
+          "claim": {
+            "type": "string"
+          },
+          "mechanism": {
+            "type": "string",
+            "enum": [
+              "static",
+              "schema-validation",
+              "policy-check",
+              "dependency-scan",
+              "test-run",
+              "human-review",
+              "probabilistic",
+              "heuristic"
+            ]
+          },
+          "tier": {
+            "type": "string",
+            "enum": [
+              "tier1-static",
+              "tier2-probabilistic",
+              "tier3-heuristic"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "warning",
+              "not_applicable",
+              "unknown"
+            ]
+          },
+          "evidence": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "related_artifacts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "failure_consequence": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

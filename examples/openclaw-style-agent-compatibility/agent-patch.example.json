@@ -1,0 +1,35 @@
+{
+  "patch_id": "agentpatch://aicl/studypath-docs-proposal",
+  "author_agent": "agent://openclaw-style/local-initiator",
+  "target_artifacts": [
+    "examples/studypath-offline-learning-planner/README.md",
+    "examples/studypath-offline-learning-planner/studypath.intent.aicl.json",
+    "README.md"
+  ],
+  "target_shg_nodes": [
+    "shg://aicl/examples/studypath-public-demo",
+    "shg://aicl/docs/root-readme"
+  ],
+  "affected_files": [
+    "examples/studypath-offline-learning-planner/",
+    "README.md",
+    "roadmap/STUDYPATH_FLAGSHIP_DEMO_PLAN.md"
+  ],
+  "change_summary": "Propose StudyPath as a public academic AICL example with documentation and local specification artifacts.",
+  "allowed_scope": [
+    "documentation",
+    "schemas",
+    "examples",
+    "roadmap"
+  ],
+  "risk_class": "R2",
+  "requires_reproof": [
+    "markdown_links",
+    "json_validity",
+    "safe_claim_language",
+    "no_private_product_reference"
+  ],
+  "proof_bundle_ref": "proofbundle://aicl/studypath-docs-proposal",
+  "rollback_plan": "Remove the proposed StudyPath example artifacts and revert the root README reference if proof gates fail.",
+  "status": "proposed"
+}

@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AICL Delegation Contract",
+  "description": "A delegation contract cannot grant an authority level higher than the delegator's own authority.",
+  "type": "object",
+  "required": [
+    "contract_id",
+    "delegator_agent",
+    "delegate_agent",
+    "task",
+    "allowed_effects",
+    "forbidden_effects",
+    "required_outputs",
+    "proof_gates",
+    "authority_ceiling",
+    "status"
+  ],
+  "properties": {
+    "contract_id": {
+      "type": "string"
+    },
+    "delegator_agent": {
+      "type": "string"
+    },
+    "delegate_agent": {
+      "type": "string"
+    },
+    "task": {
+      "type": "string"
+    },
+    "input_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "output_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowed_effects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "forbidden_effects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "required_outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "proof_gates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authority_ceiling": {
+      "type": "string",
+      "enum": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ]
+    },
+    "human_approval_required": {
+      "type": "boolean"
+    },
+    "rollback_instructions": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "accepted",
+        "rejected",
+        "completed",
+        "failed"
+      ]
+    }
+  }
+}

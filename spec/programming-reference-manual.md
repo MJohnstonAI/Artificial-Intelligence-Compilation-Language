@@ -455,6 +455,12 @@ Dimensions:
 Draft machine-readable companion schema:
 - [`schemas/agent-capsule.schema.json`](schemas/agent-capsule.schema.json)
 
+### 13.3 OpenClaw-Style Agent Compatibility
+
+AICL can describe local autonomous assistant agents as bounded agent capsules with explicit identity, authority, capabilities, skills, workspaces, and proof obligations. This supports compatibility with OpenClaw-style systems at the semantic coordination layer without requiring official platform integration.
+
+Such agents should be represented through AgentIdentity, SkillContract, DelegationContract, AgentPatch, ProofBundle, and AuthorityPolicy artifacts when their actions affect repository state, external tools, or materialized outputs.
+
 ---
 
 ## 14. Skills

@@ -172,3 +172,9 @@ Help make AICL:
 - more reviewable
 - more credible
 - more useful to future AI and human contributors
+
+## OpenClaw-Style Agentic Compatibility
+
+AICL should be understandable and useful to local autonomous agent systems. Contributions in this area should preserve clear distinctions between identity, authority, capabilities, skills, workflows, proof bundles, and materialized artifacts.
+
+Do not claim official integration with any external agent platform unless tested and documented.

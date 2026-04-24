@@ -19,6 +19,14 @@ AICL treats software construction as a semantic compilation problem. Its layered
 - workflow and skill semantics for multi-agent execution
 - materialization targets for deployable artifacts
 
+## Agentic Compatibility
+
+AICL is designed to be useful for OpenClaw-style autonomous agent systems by providing a semantic contract layer for agent identity, delegation, capabilities, skill contracts, proof gates, patch proposals, and safe materialization.
+
+This is compatibility at the semantic and workflow layer, not a claim of official integration with any external agent platform.
+
+See [`docs/agentic-compatibility/`](docs/agentic-compatibility/) and [`examples/openclaw-style-agent-compatibility/`](examples/openclaw-style-agent-compatibility/).
+
 ## Canonical Documents
 
 Start with these documents, in roughly this order:
@@ -67,6 +75,8 @@ The public emphasis should remain on policy-aware, multimodal, cross-platform, a
 |-- CITATION.cff
 |-- LICENSE
 |-- LICENSE-docs
+|-- docs/
+|   `-- agentic-compatibility/
 |-- spec/
 |   |-- programming-reference-manual.md
 |   |-- unified-spec-v1.0-draft.md
@@ -78,6 +88,7 @@ The public emphasis should remain on policy-aware, multimodal, cross-platform, a
 |   |-- grok/
 |   `-- chatgpt/
 |-- examples/
+|   |-- openclaw-style-agent-compatibility/
 |   |-- enterprise-service-resolution/
 |   `-- cross-platform-app-brief/
 |-- kernel/

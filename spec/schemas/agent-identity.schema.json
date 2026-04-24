@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AICL Agent Identity",
+  "description": "Identity and authority metadata for an autonomous or semi-autonomous AICL agent.",
+  "type": "object",
+  "required": [
+    "agent_id",
+    "display_name",
+    "agent_class",
+    "issuer",
+    "authority_level",
+    "owner",
+    "created_at"
+  ],
+  "properties": {
+    "agent_id": {
+      "type": "string",
+      "description": "URI-like agent identifier, for example agent://openclaw-style/local-builder."
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "agent_class": {
+      "type": "string",
+      "enum": [
+        "planner",
+        "coder",
+        "verifier",
+        "materializer",
+        "local-assistant",
+        "reviewer",
+        "orchestrator"
+      ]
+    },
+    "issuer": {
+      "type": "string"
+    },
+    "authority_level": {
+      "type": "string",
+      "enum": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ]
+    },
+    "owner": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "signature": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}
