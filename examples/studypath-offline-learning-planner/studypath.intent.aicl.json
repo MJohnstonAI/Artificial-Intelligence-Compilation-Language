@@ -1,0 +1,123 @@
+{
+  "schema": "AICL-AgentProjectIntent-v1",
+  "project": {
+    "name": "StudyPath",
+    "description": "A cross-platform offline learning plan builder for personalized study schedules, local practice, and privacy-preserving progress tracking.",
+    "public_demo": true,
+    "classification": "public_academic_flagship_demo",
+    "materialization_scope": "target_briefs_only"
+  },
+  "intent_origin": {
+    "type": "agent",
+    "originator": "agent://aicl/demo-initiator",
+    "human_owner": "Marc Johnston",
+    "organization": "NeuroSync AI Dynamics Pty Ltd",
+    "requires_human_approval_above": "R2"
+  },
+  "goal": {
+    "primary": "Help a learner prepare for an introductory Python assessment using an offline-first personalized study plan.",
+    "avoid": [
+      "guaranteed_exam_outcome_claims",
+      "cloud_student_tracking",
+      "hidden_analytics",
+      "unsupported_pedagogical_claims",
+      "copyrighted_curriculum_ingestion"
+    ],
+    "maintain": [
+      "local_first_storage",
+      "deterministic_local_adaptation",
+      "accessibility_baseline",
+      "curriculum_provenance",
+      "student_data_privacy"
+    ]
+  },
+  "scenario": {
+    "assessment_window_days": 21,
+    "study_time": {
+      "weekday_minutes": 45,
+      "weekend_minutes": 90
+    },
+    "declared_weak_areas": [
+      "loops",
+      "functions"
+    ],
+    "requested_outputs": [
+      "personalized_study_roadmap",
+      "weekly_schedule",
+      "daily_schedule",
+      "topic_dependency_graph",
+      "local_practice_queue",
+      "revision_prompts",
+      "on_device_progress_tracker"
+    ]
+  },
+  "targets": {
+    "platforms": [
+      "web",
+      "android",
+      "windows"
+    ],
+    "deployment_mode": "offline_first",
+    "runtime_dependency_policy": "no_runtime_cloud_services"
+  },
+  "privacy": {
+    "storage_mode": "local_only",
+    "analytics": "none",
+    "backend": "none",
+    "cloud_account_required": false,
+    "export_policy": "user_initiated_only"
+  },
+  "data": {
+    "stores": [
+      {
+        "name": "learner_profile",
+        "contents": [
+          "study_window",
+          "weak_topics",
+          "preferred_session_length",
+          "accessibility_preferences"
+        ],
+        "transmission": "forbidden"
+      },
+      {
+        "name": "study_plan",
+        "contents": [
+          "weekly_schedule",
+          "daily_schedule",
+          "topic_dependencies",
+          "revision_windows"
+        ],
+        "transmission": "forbidden"
+      },
+      {
+        "name": "progress_counters",
+        "contents": [
+          "completed_sessions",
+          "quiz_accuracy_by_topic",
+          "streak_markers",
+          "revision_due_markers"
+        ],
+        "transmission": "forbidden"
+      },
+      {
+        "name": "local_quiz_queue",
+        "contents": [
+          "synthetic_question_prompts",
+          "difficulty_level",
+          "retry_state"
+        ],
+        "transmission": "forbidden"
+      }
+    ]
+  },
+  "proof_gates": [
+    "privacy.local_only",
+    "network.no_runtime_cloud",
+    "analytics.none",
+    "student_data.no_transmission",
+    "curriculum.provenance_required",
+    "accessibility.readability",
+    "accessibility.contrast",
+    "adaptation.deterministic_local"
+  ]
+}

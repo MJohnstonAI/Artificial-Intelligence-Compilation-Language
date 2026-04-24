@@ -1,0 +1,27 @@
+{
+  "schema": "AICL-TargetBrief-v1",
+  "project": "StudyPath",
+  "target": "windows",
+  "materialization_scope": "brief_only",
+  "build_artifact": "win-msix",
+  "experience_constraints": [
+    "desktop_windowed_layout",
+    "offline_first",
+    "accessibility_support",
+    "keyboard_friendly_interaction"
+  ],
+  "runtime_constraints": {
+    "storage": "local_app_storage",
+    "analytics": "none",
+    "backend": "none",
+    "network_required_for_core_flow": false,
+    "cloud_account_required": false
+  },
+  "expected_surfaces": [
+    "study_roadmap",
+    "daily_schedule",
+    "practice_queue",
+    "progress_tracker",
+    "settings_and_export_controls"
+  ]
+}

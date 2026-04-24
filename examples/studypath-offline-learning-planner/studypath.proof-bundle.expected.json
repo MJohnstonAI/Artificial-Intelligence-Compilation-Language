@@ -1,0 +1,152 @@
+{
+  "schema": "AICL-ProofBundleExpected-v1",
+  "project": "StudyPath",
+  "overall_status": "expected_pass",
+  "proof_entries": {
+    "privacy.local_only": {
+      "status": "pass",
+      "evidence": [
+        "Intent declares local_only storage mode.",
+        "Target briefs forbid backend dependencies.",
+        "Privacy proof states progress remains on-device."
+      ],
+      "related_shg_nodes": [
+        "shg://studypath/node/privacy-policy",
+        "shg://studypath/node/progress-state"
+      ],
+      "failure_consequence": "StudyPath stops qualifying as a privacy-preserving public demo."
+    },
+    "network.no_runtime_cloud": {
+      "status": "pass",
+      "evidence": [
+        "Intent runtime dependency policy is no_runtime_cloud_services.",
+        "Android, web, and Windows target briefs forbid backend requirements.",
+        "Privacy proof states no cloud account is required."
+      ],
+      "related_shg_nodes": [
+        "shg://studypath/node/privacy-policy",
+        "shg://studypath/node/target-materialization"
+      ],
+      "failure_consequence": "Runtime execution would no longer satisfy offline-first materialization constraints."
+    },
+    "analytics.none": {
+      "status": "pass",
+      "evidence": [
+        "Intent privacy section sets analytics to none.",
+        "All target briefs explicitly forbid analytics.",
+        "Privacy proof rejects analytics SDK inclusion."
+      ],
+      "related_shg_nodes": [
+        "shg://studypath/node/privacy-policy",
+        "shg://studypath/node/target-materialization"
+      ],
+      "failure_consequence": "Student privacy claims would become invalid."
+    },
+    "student_data.no_transmission": {
+      "status": "pass",
+      "evidence": [
+        "All declared data stores mark transmission as forbidden.",
+        "Agent delegation forbids learner_data_transmission.",
+        "Privacy proof limits export to user-initiated actions only."
+      ],
+      "related_shg_nodes": [
+        "shg://studypath/node/learner-profile",
+        "shg://studypath/node/privacy-policy",
+        "shg://studypath/node/progress-state"
+      ],
+      "failure_consequence": "The demo would violate its stated student-data trust boundary."
+    },
+    "curriculum.synthetic_and_provenanced": {
+      "status": "pass",
+      "evidence": [
+        "Curriculum pack license is demo-only synthetic curriculum.",
+        "Curriculum provenance declares no real exam-board alignment.",
+        "README public boundaries reject copyrighted curriculum ingestion."
+      ],
+      "related_shg_nodes": [
+        "shg://studypath/node/curriculum-pack",
+        "shg://studypath/node/proof-bundle"
+      ],
+      "failure_consequence": "The example would lose public-demo safety and provenance clarity."
+    },
+    "accessibility.contrast": {
+      "status": "pass",
+      "evidence": [
+        "Accessibility proof requires contrast-safe presentation.",
+        "Intent proof gates include accessibility.contrast.",
+        "Accessibility profile constrains the study-session plan."
+      ],
+      "related_shg_nodes": [
+        "shg://studypath/node/accessibility-profile",
+        "shg://studypath/node/study-session-plan"
+      ],
+      "failure_consequence": "The demo would fail its accessibility baseline."
+    },
+    "accessibility.font_size": {
+      "status": "pass",
+      "evidence": [
+        "Accessibility proof requires readable typography.",
+        "Intent maintain list includes accessibility_baseline.",
+        "Target briefs include accessibility support requirements."
+      ],
+      "related_shg_nodes": [
+        "shg://studypath/node/accessibility-profile",
+        "shg://studypath/node/target-materialization"
+      ],
+      "failure_consequence": "Readable educational use would no longer be supportable."
+    },
+    "accessibility.low_cognitive_load": {
+      "status": "pass",
+      "evidence": [
+        "Accessibility proof requires low cognitive load and plain language.",
+        "Scenario constrains sessions to bounded time windows.",
+        "QA report includes low-time and accessibility edge-case checks."
+      ],
+      "related_shg_nodes": [
+        "shg://studypath/node/accessibility-profile",
+        "shg://studypath/node/study-session-plan"
+      ],
+      "failure_consequence": "The planner could overwhelm learners and violate the demo's educational safety framing."
+    },
+    "adaptation.local_deterministic": {
+      "status": "pass",
+      "evidence": [
+        "Intent maintain list requires deterministic_local_adaptation.",
+        "Intent proof gates include adaptation.deterministic_local.",
+        "Agent delegation forbids runtime cloud model calls for adaptation."
+      ],
+      "related_shg_nodes": [
+        "shg://studypath/node/adaptation-policy",
+        "shg://studypath/node/progress-state"
+      ],
+      "failure_consequence": "Adaptation would become opaque and non-reproducible."
+    },
+    "permissions.minimality": {
+      "status": "pass",
+      "evidence": [
+        "Agent delegation caps authority at R3.",
+        "No agent may publish, deploy, spend money, or transmit learner data.",
+        "MaterializationAgent is limited to target briefs."
+      ],
+      "related_shg_nodes": [
+        "shg://studypath/node/privacy-policy",
+        "shg://studypath/node/target-materialization",
+        "shg://studypath/node/proof-bundle"
+      ],
+      "failure_consequence": "The example would exceed bounded-authority expectations for a public demo."
+    },
+    "targets.cross_platform_consistency": {
+      "status": "pass",
+      "evidence": [
+        "All three target briefs require offline-first or offline-capable operation.",
+        "All three target briefs prohibit analytics and backend dependencies.",
+        "All three target briefs treat materialization as specification output rather than deployment."
+      ],
+      "related_shg_nodes": [
+        "shg://studypath/node/target-materialization",
+        "shg://studypath/node/proof-bundle"
+      ],
+      "failure_consequence": "StudyPath would lose coherence as a single cross-platform AICL demo."
+    }
+  }
+}

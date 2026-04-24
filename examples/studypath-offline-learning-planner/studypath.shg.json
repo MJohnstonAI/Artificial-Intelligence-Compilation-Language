@@ -1,0 +1,189 @@
+{
+  "schema": "AICL-SHG-v1-draft",
+  "graph_id": "shg://studypath/graph/public-flagship-demo",
+  "project": "StudyPath",
+  "nodes": [
+    {
+      "id": "shg://studypath/node/learner-goal",
+      "label": "LearnerGoal",
+      "type": "Goal",
+      "summary": "Represents the learner objective to prepare for an introductory Python assessment within 21 days."
+    },
+    {
+      "id": "shg://studypath/node/learner-profile",
+      "label": "LearnerProfile",
+      "type": "StateAnchor",
+      "summary": "Captures study-time availability, weak areas, and local accessibility preferences."
+    },
+    {
+      "id": "shg://studypath/node/curriculum-pack",
+      "label": "CurriculumPack",
+      "type": "Resource",
+      "summary": "Synthetic local curriculum pack with topic definitions, prerequisites, and prompt templates."
+    },
+    {
+      "id": "shg://studypath/node/topic-graph",
+      "label": "TopicGraph",
+      "type": "StateAnchor",
+      "summary": "Dependency graph ordering Python topics for the generated study plan."
+    },
+    {
+      "id": "shg://studypath/node/study-session-plan",
+      "label": "StudySessionPlan",
+      "type": "Intent",
+      "summary": "Daily and weekly study schedule tuned to the learner profile and curriculum pacing."
+    },
+    {
+      "id": "shg://studypath/node/practice-queue",
+      "label": "PracticeQueue",
+      "type": "Intent",
+      "summary": "Local queue of synthetic quizzes, revision prompts, and retry ordering."
+    },
+    {
+      "id": "shg://studypath/node/progress-state",
+      "label": "ProgressState",
+      "type": "StateAnchor",
+      "summary": "On-device counters and checkpoints describing completion and topic confidence."
+    },
+    {
+      "id": "shg://studypath/node/adaptation-policy",
+      "label": "AdaptationPolicy",
+      "type": "Policy",
+      "summary": "Constrains adaptation to deterministic local rules based on progress signals."
+    },
+    {
+      "id": "shg://studypath/node/accessibility-profile",
+      "label": "AccessibilityProfile",
+      "type": "Policy",
+      "summary": "Readability, contrast, reduced-motion, and low-cognitive-load design constraints."
+    },
+    {
+      "id": "shg://studypath/node/privacy-policy",
+      "label": "PrivacyPolicy",
+      "type": "Policy",
+      "summary": "Local-only storage, no analytics, no backend, and no learner-data transmission."
+    },
+    {
+      "id": "shg://studypath/node/proof-bundle",
+      "label": "ProofBundle",
+      "type": "Evidence",
+      "summary": "Aggregated expected proof outcomes covering privacy, accessibility, permissions, and target consistency."
+    },
+    {
+      "id": "shg://studypath/node/target-materialization",
+      "label": "TargetMaterialization",
+      "type": "Environment",
+      "summary": "Cross-platform materialization briefs for web, Android, and Windows targets."
+    }
+  ],
+  "edges": [
+    {
+      "id": "shg://studypath/edge/goal-requires-profile",
+      "type": "requires",
+      "from": "shg://studypath/node/learner-goal",
+      "to": "shg://studypath/node/learner-profile"
+    },
+    {
+      "id": "shg://studypath/edge/goal-requires-curriculum",
+      "type": "requires",
+      "from": "shg://studypath/node/learner-goal",
+      "to": "shg://studypath/node/curriculum-pack"
+    },
+    {
+      "id": "shg://studypath/edge/profile-grounds-plan",
+      "type": "grounds",
+      "from": "shg://studypath/node/learner-profile",
+      "to": "shg://studypath/node/study-session-plan"
+    },
+    {
+      "id": "shg://studypath/edge/curriculum-grounds-topic-graph",
+      "type": "grounds",
+      "from": "shg://studypath/node/curriculum-pack",
+      "to": "shg://studypath/node/topic-graph"
+    },
+    {
+      "id": "shg://studypath/edge/topic-graph-generates-plan",
+      "type": "generates",
+      "from": "shg://studypath/node/topic-graph",
+      "to": "shg://studypath/node/study-session-plan"
+    },
+    {
+      "id": "shg://studypath/edge/topic-graph-generates-queue",
+      "type": "generates",
+      "from": "shg://studypath/node/topic-graph",
+      "to": "shg://studypath/node/practice-queue"
+    },
+    {
+      "id": "shg://studypath/edge/plan-updates-progress",
+      "type": "updates",
+      "from": "shg://studypath/node/study-session-plan",
+      "to": "shg://studypath/node/progress-state"
+    },
+    {
+      "id": "shg://studypath/edge/queue-updates-progress",
+      "type": "updates",
+      "from": "shg://studypath/node/practice-queue",
+      "to": "shg://studypath/node/progress-state"
+    },
+    {
+      "id": "shg://studypath/edge/adaptation-constrains-plan",
+      "type": "constrains",
+      "from": "shg://studypath/node/adaptation-policy",
+      "to": "shg://studypath/node/study-session-plan"
+    },
+    {
+      "id": "shg://studypath/edge/accessibility-constrains-plan",
+      "type": "constrains",
+      "from": "shg://studypath/node/accessibility-profile",
+      "to": "shg://studypath/node/study-session-plan"
+    },
+    {
+      "id": "shg://studypath/edge/privacy-constrains-progress",
+      "type": "constrains",
+      "from": "shg://studypath/node/privacy-policy",
+      "to": "shg://studypath/node/progress-state"
+    },
+    {
+      "id": "shg://studypath/edge/privacy-constrains-queue",
+      "type": "constrains",
+      "from": "shg://studypath/node/privacy-policy",
+      "to": "shg://studypath/node/practice-queue"
+    },
+    {
+      "id": "shg://studypath/edge/proof-proves-privacy",
+      "type": "proves",
+      "from": "shg://studypath/node/proof-bundle",
+      "to": "shg://studypath/node/privacy-policy"
+    },
+    {
+      "id": "shg://studypath/edge/proof-proves-accessibility",
+      "type": "proves",
+      "from": "shg://studypath/node/proof-bundle",
+      "to": "shg://studypath/node/accessibility-profile"
+    },
+    {
+      "id": "shg://studypath/edge/proof-proves-adaptation",
+      "type": "proves",
+      "from": "shg://studypath/node/proof-bundle",
+      "to": "shg://studypath/node/adaptation-policy"
+    },
+    {
+      "id": "shg://studypath/edge/materializes-plan",
+      "type": "materializes_to",
+      "from": "shg://studypath/node/study-session-plan",
+      "to": "shg://studypath/node/target-materialization"
+    },
+    {
+      "id": "shg://studypath/edge/materializes-queue",
+      "type": "materializes_to",
+      "from": "shg://studypath/node/practice-queue",
+      "to": "shg://studypath/node/target-materialization"
+    },
+    {
+      "id": "shg://studypath/edge/materializes-progress",
+      "type": "materializes_to",
+      "from": "shg://studypath/node/progress-state",
+      "to": "shg://studypath/node/target-materialization"
+    }
+  ]
+}

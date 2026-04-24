@@ -1,0 +1,27 @@
+{
+  "schema": "AICL-TargetBrief-v1",
+  "project": "StudyPath",
+  "target": "web",
+  "materialization_scope": "brief_only",
+  "build_artifact": "web-pwa",
+  "experience_constraints": [
+    "offline_capable_pwa_concept",
+    "responsive_layout",
+    "accessibility_support",
+    "plain_language_navigation"
+  ],
+  "runtime_constraints": {
+    "storage": "local_storage_or_indexeddb_abstraction",
+    "analytics": "none",
+    "backend": "none",
+    "network_required_for_core_flow": false,
+    "cloud_account_required": false
+  },
+  "expected_surfaces": [
+    "study_roadmap",
+    "weekly_schedule",
+    "practice_queue",
+    "progress_tracker",
+    "local_curriculum_pack"
+  ]
+}

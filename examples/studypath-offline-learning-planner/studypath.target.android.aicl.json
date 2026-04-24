@@ -1,0 +1,28 @@
+{
+  "schema": "AICL-TargetBrief-v1",
+  "project": "StudyPath",
+  "target": "android",
+  "materialization_scope": "brief_only",
+  "build_artifact": "android-apk",
+  "experience_constraints": [
+    "portrait_first",
+    "offline_first",
+    "accessibility_support",
+    "short_session_friendly"
+  ],
+  "runtime_constraints": {
+    "storage": "local_only",
+    "analytics": "none",
+    "backend": "none",
+    "payments": "forbidden",
+    "ads": "forbidden",
+    "cloud_account_required": false
+  },
+  "expected_surfaces": [
+    "study_roadmap",
+    "daily_schedule",
+    "practice_queue",
+    "progress_tracker",
+    "accessibility_preferences"
+  ]
+}

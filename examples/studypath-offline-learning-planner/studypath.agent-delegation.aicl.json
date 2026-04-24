@@ -1,0 +1,251 @@
+{
+  "schema": "AICL-AgentDelegation-v1",
+  "project": "StudyPath",
+  "authority_levels": {
+    "R1": "may propose or structure intent",
+    "R2": "may generate local artifacts and specifications",
+    "R3": "may modify project files",
+    "R4": "may publish or deploy",
+    "R5": "may spend money or use external paid services"
+  },
+  "global_constraints": {
+    "max_authority_per_agent": "R3",
+    "publish_or_deploy": "forbidden",
+    "learner_data_transmission": "forbidden",
+    "runtime_cloud_model_calls": "forbidden",
+    "paid_services": "forbidden"
+  },
+  "agents": [
+    {
+      "name": "IntentAgent",
+      "goal": "Translate the StudyPath public-demo objective into bounded AICL intent artifacts.",
+      "authority_level": "R2",
+      "allowed_effects": [
+        "structure_intent",
+        "declare_constraints",
+        "emit_demo_metadata"
+      ],
+      "forbidden_effects": [
+        "modify_live_student_records",
+        "publish_or_deploy",
+        "transmit_learner_data",
+        "invoke_runtime_cloud_dependency"
+      ],
+      "inputs": [
+        "public_demo_objective",
+        "scenario_constraints",
+        "repository_guardrails"
+      ],
+      "outputs": [
+        "project_intent",
+        "proof_gate_list"
+      ]
+    },
+    {
+      "name": "CurriculumAgent",
+      "goal": "Assemble a synthetic local curriculum pack for introductory Python foundations.",
+      "authority_level": "R2",
+      "allowed_effects": [
+        "declare_synthetic_topics",
+        "define_prerequisites",
+        "emit_local_prompt_templates"
+      ],
+      "forbidden_effects": [
+        "ingest_copyrighted_curriculum",
+        "claim_real_exam_alignment",
+        "publish_or_deploy",
+        "transmit_learner_data"
+      ],
+      "inputs": [
+        "project_intent",
+        "scenario_constraints"
+      ],
+      "outputs": [
+        "curriculum_pack",
+        "topic_prerequisite_map"
+      ]
+    },
+    {
+      "name": "PlannerAgent",
+      "goal": "Generate a 21-day study roadmap and schedule from learner constraints and topic dependencies.",
+      "authority_level": "R2",
+      "allowed_effects": [
+        "generate_schedule_spec",
+        "allocate_session_lengths",
+        "emit_revision_windows"
+      ],
+      "forbidden_effects": [
+        "guarantee_exam_outcomes",
+        "publish_or_deploy",
+        "transmit_learner_data",
+        "override_privacy_policy"
+      ],
+      "inputs": [
+        "learner_profile",
+        "curriculum_pack",
+        "topic_graph",
+        "adaptation_policy"
+      ],
+      "outputs": [
+        "study_session_plan",
+        "weekly_schedule",
+        "daily_schedule"
+      ]
+    },
+    {
+      "name": "QuizAgent",
+      "goal": "Generate a local practice queue and revision prompts from synthetic curriculum content.",
+      "authority_level": "R2",
+      "allowed_effects": [
+        "emit_synthetic_quiz_prompts",
+        "classify_question_difficulty",
+        "structure_revision_prompts"
+      ],
+      "forbidden_effects": [
+        "fetch_remote_question_banks",
+        "claim_exam_board_authenticity",
+        "publish_or_deploy",
+        "transmit_learner_data"
+      ],
+      "inputs": [
+        "curriculum_pack",
+        "topic_graph",
+        "learner_profile"
+      ],
+      "outputs": [
+        "practice_queue",
+        "revision_prompt_set"
+      ]
+    },
+    {
+      "name": "AdaptationAgent",
+      "goal": "Define deterministic local adaptation rules for rescheduling and topic reinforcement.",
+      "authority_level": "R2",
+      "allowed_effects": [
+        "define_local_rules",
+        "adjust_topic_priority",
+        "emit_recovery_paths"
+      ],
+      "forbidden_effects": [
+        "non_deterministic_runtime_model_calls",
+        "publish_or_deploy",
+        "transmit_learner_data",
+        "increase_authority_scope"
+      ],
+      "inputs": [
+        "progress_state",
+        "study_session_plan",
+        "practice_queue"
+      ],
+      "outputs": [
+        "adaptation_policy",
+        "deterministic_local_adjustment_rules"
+      ]
+    },
+    {
+      "name": "AccessibilityAgent",
+      "goal": "Verify readability, low cognitive load, reduced motion, and assistive-technology compatibility in the demo briefs.",
+      "authority_level": "R2",
+      "allowed_effects": [
+        "declare_accessibility_constraints",
+        "review_layout_assumptions",
+        "emit_accessibility_proof_notes"
+      ],
+      "forbidden_effects": [
+        "publish_or_deploy",
+        "transmit_learner_data",
+        "weaken_readability_requirements",
+        "remove_keyboard_or_screen_reader_support_intent"
+      ],
+      "inputs": [
+        "study_session_plan",
+        "target_briefs",
+        "accessibility_profile"
+      ],
+      "outputs": [
+        "accessibility_profile",
+        "accessibility_proof"
+      ]
+    },
+    {
+      "name": "PrivacyAgent",
+      "goal": "Verify that StudyPath remains local-only, analytics-free, and backend-free.",
+      "authority_level": "R2",
+      "allowed_effects": [
+        "declare_privacy_constraints",
+        "review_data_flows",
+        "emit_privacy_proof_notes"
+      ],
+      "forbidden_effects": [
+        "add_backend_dependency",
+        "add_analytics_sdk",
+        "publish_or_deploy",
+        "transmit_learner_data"
+      ],
+      "inputs": [
+        "project_intent",
+        "data_model",
+        "target_briefs"
+      ],
+      "outputs": [
+        "privacy_policy",
+        "privacy_proof"
+      ]
+    },
+    {
+      "name": "ProofAgent",
+      "goal": "Assemble expected proof outcomes and bind them to SHG nodes and target constraints.",
+      "authority_level": "R2",
+      "allowed_effects": [
+        "collect_evidence_references",
+        "emit_expected_proof_bundle",
+        "link_failure_consequences"
+      ],
+      "forbidden_effects": [
+        "invent_runtime_attestations",
+        "publish_or_deploy",
+        "transmit_learner_data",
+        "weaken_failure_reporting"
+      ],
+      "inputs": [
+        "privacy_policy",
+        "accessibility_profile",
+        "adaptation_policy",
+        "target_briefs",
+        "shg"
+      ],
+      "outputs": [
+        "proof_bundle",
+        "qa_checks"
+      ]
+    },
+    {
+      "name": "MaterializationAgent",
+      "goal": "Emit bounded cross-platform materialization briefs for Android, web, and Windows.",
+      "authority_level": "R3",
+      "allowed_effects": [
+        "modify_project_files",
+        "emit_target_briefs",
+        "declare_build_artifact_constraints"
+      ],
+      "forbidden_effects": [
+        "publish_or_deploy",
+        "generate_executable_release_binaries",
+        "transmit_learner_data",
+        "add_cloud_runtime_dependencies"
+      ],
+      "inputs": [
+        "project_intent",
+        "study_session_plan",
+        "practice_queue",
+        "privacy_policy",
+        "accessibility_profile"
+      ],
+      "outputs": [
+        "android_target_brief",
+        "web_target_brief",
+        "windows_target_brief"
+      ]
+    }
+  ]
+}
