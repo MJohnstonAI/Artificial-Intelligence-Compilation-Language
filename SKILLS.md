@@ -150,6 +150,21 @@ Draft machine-readable companion schema:
 
 - `spec/schemas/skill-contract.schema.json`
 
+## Agentic System Compatibility
+
+Skill contracts are one of the main bridges between AICL and OpenClaw-style autonomous agents. They define what a skill may access, what effects it may produce, what proofs it must return, and which authority level it requires.
+
+Future skill contracts should explicitly include:
+
+- allowed effects
+- forbidden effects
+- secret policy
+- network policy
+- writable paths
+- proof obligations
+- delegation permission
+- maximum autonomy level
+
 ## Skill Packs and Routes
 
 Skill packs group multiple skills into one workflow bundle.

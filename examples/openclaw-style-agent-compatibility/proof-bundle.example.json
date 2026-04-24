@@ -1,0 +1,83 @@
+{
+  "proof_bundle_id": "proofbundle://aicl/studypath-docs-proposal",
+  "artifact_ref": "agentpatch://aicl/studypath-docs-proposal",
+  "overall_status": "pass",
+  "proofs": [
+    {
+      "proof_id": "proof://aicl/json-valid",
+      "claim": "All proposed JSON artifacts parse successfully.",
+      "mechanism": "schema-validation",
+      "tier": "tier1-static",
+      "status": "pass",
+      "evidence": "JSON parser accepted all proposed example and schema files.",
+      "related_artifacts": [
+        "agentpatch://aicl/studypath-docs-proposal"
+      ],
+      "failure_consequence": "The patch cannot be applied until invalid JSON is corrected."
+    },
+    {
+      "proof_id": "proof://aicl/markdown-links-valid",
+      "claim": "Markdown links resolve to repository-local targets.",
+      "mechanism": "static",
+      "tier": "tier1-static",
+      "status": "pass",
+      "evidence": "Relative link check completed without missing targets.",
+      "related_artifacts": [
+        "README.md",
+        "examples/studypath-offline-learning-planner/README.md"
+      ],
+      "failure_consequence": "The patch remains proposed until broken links are repaired."
+    },
+    {
+      "proof_id": "proof://aicl/no-official-openclaw-claim",
+      "claim": "The patch does not claim official OpenClaw integration, certification, endorsement, or platform requirement.",
+      "mechanism": "policy-check",
+      "tier": "tier1-static",
+      "status": "pass",
+      "evidence": "Safe wording check found only OpenClaw-style semantic compatibility language.",
+      "related_artifacts": [
+        "agentpatch://aicl/studypath-docs-proposal"
+      ],
+      "failure_consequence": "The patch must be reworded before review."
+    },
+    {
+      "proof_id": "proof://aicl/no-private-product-reference",
+      "claim": "The patch does not mention private product or game concepts.",
+      "mechanism": "policy-check",
+      "tier": "tier1-static",
+      "status": "pass",
+      "evidence": "Private-reference scan found no disallowed names.",
+      "related_artifacts": [
+        "agentpatch://aicl/studypath-docs-proposal"
+      ],
+      "failure_consequence": "The patch must be rejected or sanitized."
+    },
+    {
+      "proof_id": "proof://aicl/authority-ceiling-respected",
+      "claim": "Delegation stays at or below the delegator's R2 authority.",
+      "mechanism": "policy-check",
+      "tier": "tier1-static",
+      "status": "pass",
+      "evidence": "Delegation contract authority ceiling is R2 and both participating agents declare R2 authority.",
+      "related_artifacts": [
+        "delegation://aicl/openclaw-style/studypath-validation"
+      ],
+      "failure_consequence": "Human approval is required before delegated work may continue."
+    },
+    {
+      "proof_id": "proof://aicl/no-forbidden-effects",
+      "claim": "The delegated verifier does not request forbidden effects.",
+      "mechanism": "policy-check",
+      "tier": "tier1-static",
+      "status": "pass",
+      "evidence": [
+        "Allowed effects are Repo:read, Schema:validate, and Markdown:link-check.",
+        "Forbidden effects include Repo:write, Net:unapproved, Secrets:read, and Deploy:publish."
+      ],
+      "related_artifacts": [
+        "delegation://aicl/openclaw-style/studypath-validation"
+      ],
+      "failure_consequence": "The delegation contract must be revised before acceptance."
+    }
+  ]
+}

@@ -285,3 +285,11 @@ Your job is to help make AICL:
 - more useful to future AI and human collaborators
 
 That is the standard.
+
+## For OpenClaw-Style Agent Contributors
+
+If you are an autonomous local agent working in this repository, treat AICL artifacts as contracts rather than prompts. Do not infer authority from task wording alone.
+
+Check AGENTS.md, skill contracts, authority policy, and proof requirements before proposing or applying changes.
+
+AICL compatibility with OpenClaw-style systems means semantic and workflow compatibility, not official platform integration.

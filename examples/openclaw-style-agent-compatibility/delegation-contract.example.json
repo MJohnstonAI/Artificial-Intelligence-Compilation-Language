@@ -1,0 +1,40 @@
+{
+  "contract_id": "delegation://aicl/openclaw-style/studypath-validation",
+  "delegator_agent": "agent://openclaw-style/local-initiator",
+  "delegate_agent": "agent://aicl/verifier",
+  "task": "Validate a proposed StudyPath documentation and specification patch before it can be applied.",
+  "input_artifacts": [
+    "agentpatch://aicl/studypath-docs-proposal"
+  ],
+  "output_artifacts": [
+    "proofbundle://aicl/studypath-docs-proposal"
+  ],
+  "allowed_effects": [
+    "Repo:read",
+    "Schema:validate",
+    "Markdown:link-check"
+  ],
+  "forbidden_effects": [
+    "Repo:write",
+    "Net:unapproved",
+    "Secrets:read",
+    "Deploy:publish"
+  ],
+  "required_outputs": [
+    "validation_report",
+    "proof_bundle"
+  ],
+  "proof_gates": [
+    "json_validity",
+    "markdown_links",
+    "safe_claim_language",
+    "no_private_product_reference",
+    "authority_ceiling_respected",
+    "no_forbidden_effects_requested"
+  ],
+  "authority_ceiling": "R2",
+  "human_approval_required": false,
+  "rollback_instructions": "Reject the patch proposal if any required proof gate fails.",
+  "expires_at": "2026-05-24T00:00:00Z",
+  "status": "proposed"
+}

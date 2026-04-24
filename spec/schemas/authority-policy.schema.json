@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AICL Authority Policy",
+  "description": "Authority policy for bounded autonomous agents. Agents may not escalate their own authority. Delegation cannot grant more authority than the delegator holds. External side effects require R4/R5 review unless explicitly pre-approved.",
+  "type": "object",
+  "required": [
+    "policy_id",
+    "default_authority",
+    "levels",
+    "human_approval_above"
+  ],
+  "properties": {
+    "policy_id": {
+      "type": "string"
+    },
+    "default_authority": {
+      "type": "string",
+      "enum": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ]
+    },
+    "levels": {
+      "type": "object",
+      "description": "Definitions for R0 through R5 authority levels."
+    },
+    "human_approval_above": {
+      "type": "string",
+      "enum": [
+        "R0",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ]
+    },
+    "forbidden_self_escalation": {
+      "type": "boolean"
+    },
+    "delegation_ceiling_rule": {
+      "type": "string"
+    },
+    "external_side_effect_policy": {
+      "type": "string"
+    }
+  }
+}

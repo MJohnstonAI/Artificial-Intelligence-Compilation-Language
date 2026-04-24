@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AICL Agent Patch",
+  "description": "A proposed change generated or prepared by an agent, including scope, risk, reproof requirements, and rollback plan. Risk classes: R1 documentation/spec-only; R2 schema/example changes; R3 code/tooling changes; R4 build/deploy changes; R5 external side effects/cost.",
+  "type": "object",
+  "required": [
+    "patch_id",
+    "author_agent",
+    "target_artifacts",
+    "target_shg_nodes",
+    "change_summary",
+    "risk_class",
+    "requires_reproof",
+    "status"
+  ],
+  "properties": {
+    "patch_id": {
+      "type": "string"
+    },
+    "author_agent": {
+      "type": "string"
+    },
+    "target_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "target_shg_nodes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "affected_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "change_summary": {
+      "type": "string"
+    },
+    "allowed_scope": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "risk_class": {
+      "type": "string",
+      "enum": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ]
+    },
+    "requires_reproof": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "proof_bundle_ref": {
+      "type": "string"
+    },
+    "rollback_plan": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "applied",
+        "rejected",
+        "reverted"
+      ]
+    }
+  }
+}

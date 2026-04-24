@@ -1,0 +1,22 @@
+{
+  "policy_id": "authority-policy://aicl/openclaw-style-local-demo",
+  "default_authority": "R1",
+  "levels": {
+    "R0": "Observe/comment only",
+    "R1": "Propose intent/spec",
+    "R2": "Generate local artifacts/spec files",
+    "R3": "Modify repo/project files",
+    "R4": "Build/deploy/publish",
+    "R5": "Spend money/use paid services/change external state"
+  },
+  "human_approval_above": "R3",
+  "forbidden_self_escalation": true,
+  "delegation_ceiling_rule": "Delegation cannot grant more authority than the delegator holds.",
+  "external_side_effect_policy": "R4 and R5 are disabled in this example and require explicit human owner approval in real workflows.",
+  "example_constraints": [
+    "R4_disabled",
+    "R5_disabled",
+    "self_escalation_forbidden",
+    "delegation_ceiling_enforced"
+  ]
+}
