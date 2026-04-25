@@ -1,0 +1,31 @@
+name: Validate repository
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate-json:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JSON files
+        run: |
+          if find . -name "*.json" | grep -q .; then
+            find . -name "*.json" -print0 | xargs -0 -n1 jq empty
+          else
+            echo "No JSON files found."
+          fi
+
+  forbidden-public-claims:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check forbidden public claims
+        run: |
+          ! grep -RInE "official OpenClaw integration|certified by OpenClaw|guarantees safe autonomous agents|production-ready compiler|replaces all programming languages" . \
+            --exclude-dir=.git \
+            --exclude=validate-repository.yml \
+            --exclude=public-claim-guide.md \
+            --exclude=public-launch-checklist.md

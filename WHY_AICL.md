@@ -1,5 +1,7 @@
 # Why AICL Exists
 
+> This document states the research thesis of AICL. It should be read as a hypothesis and design direction, not as a claim that AICL has already replaced existing programming systems or ships a production compiler today.
+
 ## The Problem
 
 Human programming languages are one of the greatest achievements in computer science.

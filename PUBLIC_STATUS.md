@@ -1,50 +1,41 @@
 # Public Status
 
-AICL is a research-stage semantic language specification for AI-native software construction.
-
-This repository is suitable for public review, critique, and contribution, but it should not be presented as a production compiler, certified verifier, or deployment-ready platform.
+AICL is a research-stage semantic language specification. It is not currently a production compiler, certified verifier, deployment-ready platform, or production security-certified system.
 
 ## Current maturity
 
 **Status:** research draft / pre-implementation specification.
 
-The repository currently prioritizes:
-
-- conceptual rigor
-- semantic precision
-- proof and policy vocabulary
-- agent-compatible workflow structure
-- teachable examples
-- machine-readable schema drafts
+The repository currently prioritizes conceptual rigor, semantic precision, proof and policy vocabulary, agent-compatible workflow structure, teachable examples, and machine-readable schema drafts.
 
 ## What exists today
 
-- Public project framing and motivation
-- Draft language and architecture documents
-- WKG-backed ontology material
-- Draft schema companions
-- Agent and contributor guardrails
-- Public examples and reference briefs
-- Licensing, citation, governance, security, and contribution files
+- Public project framing and motivation.
+- Draft language and architecture documents.
+- WKG-backed ontology material.
+- Draft schema companions.
+- Agent and contributor guardrails.
+- Public examples and reference briefs.
+- Licensing, citation, governance, security, and contribution files.
 
 ## What does not exist yet
 
-AICL does **not** currently provide:
+AICL does not currently provide:
 
-- a production compiler
-- a stable runtime
-- a package manager
-- a certified proof checker
+- production compiler
+- stable runtime
+- package manager
+- certified proof checker
 - official IDE tooling
 - production security certification
-- a published conformance suite
+- published conformance suite
 - official integration with external agent platforms
 
 ## How to read public claims
 
 When this repository says AICL is designed for AI-native semantic compilation, that is a research thesis and language-design direction.
 
-It should not be read as a claim that AICL has already replaced existing programming languages, frameworks, build systems, or production verification tools.
+It should not be read as a claim that AICL has already replaced existing programming languages, frameworks, build systems, production compilers, or production verification tools.
 
 ## Appropriate use today
 

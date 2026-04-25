@@ -43,3 +43,26 @@ We welcome:
 - preserve attribution
 - avoid hype-only edits
 - prefer mechanical clarity over slogans
+
+## Pull Request Scope
+
+Keep pull requests narrow. Do not mix unrelated changes such as examples, kernel semantics, public positioning, schemas, and issue templates in one PR unless the relationship is explicit.
+
+## Public-Readiness Rules
+
+Before opening public-facing changes, check:
+
+- no production compiler claim
+- no certified safety claim
+- no official external integration claim
+- no private product/game references
+- examples and schemas remain consistent
+- JSON files validate
+
+## Validation
+
+Run JSON validation before submitting schema/example changes:
+
+```bash
+find . -name "*.json" -print0 | xargs -0 -n1 jq empty
+```
