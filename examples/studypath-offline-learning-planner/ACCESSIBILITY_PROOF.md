@@ -1,47 +1,39 @@
-# Accessibility Proof
+# Accessibility Proof — StudyPath
 
 ## Claim
 
-StudyPath is intended to meet a baseline accessibility posture appropriate for an educational planning tool by prioritizing readable presentation, low cognitive load, plain language, and assistive-technology-friendly interaction patterns.
+StudyPath defines accessibility constraints for readable, low-cognitive-load learning sessions across Android, Web/PWA, and Windows target briefs.
 
-## Proof points
+## Tier 1 compile-time obligations
 
-- readable typography
-- contrast-safe presentation
-- low cognitive load
-- short study sessions
-- keyboard and screen-reader compatible design intent
-- reduced-motion option
-- plain language
-- no color-only progress indicators
+AICL can check that target briefs declare accessibility requirements, that sessions are short and bounded, and that progress indicators are not color-only. It can also verify that proof gates PG07 and PG09 are present in the target briefs.
 
-## Evidence within this demo
+## Tier 2 materializer obligations
 
-- `studypath.intent.aicl.json` includes proof gates for readability and contrast and maintains an accessibility baseline.
-- `studypath.shg.json` includes an `AccessibilityProfile` node that constrains the study-session plan.
-- `studypath.agent-delegation.aicl.json` assigns an `AccessibilityAgent` with bounded responsibility for accessibility proof notes and layout constraints.
-- The target briefs require accessibility support across Android, web, and Windows materializations.
-- `studypath.proof-bundle.expected.json` includes expected-pass entries for contrast, font size, and low cognitive load.
+AICL can require accessibility constraints and verify target declarations, but final rendered accessibility remains a target-materializer and deployment responsibility.
 
-## Assumptions
+Contrast, font rendering, screen-reader behavior, platform accessibility APIs, and actual keyboard focus behavior must be verified by the final materializer and platform implementation.
 
-- Future materializers preserve minimum readable font sizing and do not collapse content density beyond the stated design intent.
-- Navigation controls, study actions, and progress markers are exposed through keyboard focus order and screen-reader-friendly labels.
-- Motion is optional rather than required for task completion.
-- Session planning continues to favor short, bounded learning blocks instead of dense uninterrupted workloads.
+## Cognitive-load constraints
+
+StudyPath uses short study sessions, plain language prompts, local revision queues, and prerequisite ordering so the learner is not overloaded with unrelated topics.
+
+## Visual accessibility
+
+Target briefs require readable typography, contrast support, scalable text where relevant, reduced visual clutter, and no color-only progress indicators.
+
+## Interaction accessibility
+
+Target briefs require keyboard or platform-equivalent navigation, screen-reader compatible labels, and local controls that do not depend on network state.
+
+## Reduced motion
+
+Target briefs require a reduced-motion option or reduced-motion support so motion is not required for understanding progress or completing study tasks.
+
+## What AICL does not prove
+
+AICL does not prove final rendered contrast, font metrics, assistive-technology behavior, or deployment-specific accessibility compliance at Tier 1. Those remain target-materializer and implementation responsibilities.
 
 ## Failure conditions
 
-This proof fails if any of the following become true:
-
-- text sizing becomes too small for comfortable reading
-- contrast drops below the intended baseline
-- progress is communicated only by color
-- essential interactions require touch-only or pointer-only gestures
-- screen-reader labels are omitted from core study and progress flows
-- motion-heavy transitions cannot be reduced or disabled
-- schedules become cognitively overloaded or excessively dense
-
-## Conclusion
-
-Within the scope of this specification demo, StudyPath maintains an accessibility-safe design intent only while typography, contrast, interaction redundancy, reduced motion, and low-cognitive-load scheduling remain explicit materialization constraints.
+This proof fails if target briefs omit readable typography, contrast, low cognitive load, short study sessions, keyboard/screen-reader compatible design intent, reduced motion, plain language, or non-color-only progress indicators.

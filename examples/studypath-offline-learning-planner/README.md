@@ -1,10 +1,10 @@
 # StudyPath — Offline Learning Plan Builder
 
-StudyPath is the flagship public demonstration for AICL as an AI-native coordination language for educational software. It is intentionally presented as a specification and artifact bundle rather than as an executable application so that the example remains reviewable in semantic, policy, proof, and materialization terms.
+StudyPath is the flagship public academic demo for AICL as an AI-native semantic programming and coordination language for educational software. It is a reference architecture and artifact set, not a finished app.
 
 ## Why this demo
 
-StudyPath gives AICL a public academic example that is serious, socially useful, and easy to evaluate without exposing private commercial product ideas. It demonstrates how an AI-originated intent can remain bounded by privacy, accessibility, deterministic local adaptation, and cross-platform target constraints while still producing a useful educational application brief.
+StudyPath shows how AICL can coordinate educational software from agent-originated intent through ICC grounding, SHG planning, bounded delegation, proof gates, and target materialization. It is academically useful, privacy-first, and understandable to students, researchers, and AI contributors without relying on private commercial concepts or entertainment-first examples.
 
 ## Scenario
 
@@ -12,52 +12,60 @@ A learner wants to prepare for an introductory Python assessment in 21 days. The
 
 ## What this demonstrates
 
-StudyPath demonstrates how AICL can express:
+StudyPath generates:
 
-- a personalized study roadmap
-- a weekly and daily schedule
-- a topic dependency graph
+- personalized study roadmap
+- weekly and daily schedule
+- topic dependency graph
 - local practice questions
 - revision prompts
-- a progress model stored on-device
+- progress model stored on-device
 - accessibility-safe UI constraints
 - proof artifacts showing no cloud runtime dependency and no analytics
 
 ## AICL concepts demonstrated
 
-- agent-originated project intent with bounded authority and human approval thresholds
-- SHG structure linking learner goals, curriculum grounding, planning outputs, privacy policy, accessibility profile, and proof material
-- specialist agent delegation for curriculum planning, schedule generation, quiz generation, adaptation, accessibility review, privacy review, proof assembly, and target materialization
-- proof gates for local-only storage, no runtime cloud dependency, no analytics, provenance, deterministic adaptation, and accessibility baselines
-- cross-platform materialization briefs for web, Android, and Windows without claiming a finished runtime implementation
+| Concept | StudyPath role |
+|---|---|
+| ICC | Root-of-trust intent certificate |
+| SHG | Semantic graph of learner goal, curriculum, sessions, progress, and adaptation |
+| WKG anchors | Semantic grounding for learner, curriculum topic, study session, privacy, and accessibility |
+| Agent delegation | Nine bounded specialist agents |
+| Proof gates | Nine top-level proof obligations guarding materialization |
+| Target briefs | Android, Web/PWA, and Windows materialization constraints |
+| Privacy proof | Local-only learner data and no analytics |
+| Accessibility proof | Readability, contrast, session design, reduced cognitive load |
 
 ## Files
 
-- [`studypath.intent.aicl.json`](studypath.intent.aicl.json) - project-level semantic intent and proof gates
-- [`studypath.shg.json`](studypath.shg.json) - semantic handover graph sketch for the StudyPath pipeline
-- [`studypath.agent-delegation.aicl.json`](studypath.agent-delegation.aicl.json) - bounded agent roles, inputs, outputs, and effect limits
-- [`studypath.curriculum-pack.intro-python.json`](studypath.curriculum-pack.intro-python.json) - synthetic local curriculum pack for introductory Python study
-- [`studypath.proof-bundle.expected.json`](studypath.proof-bundle.expected.json) - expected proof outcomes and failure consequences
-- [`studypath.target.android.aicl.json`](studypath.target.android.aicl.json) - Android materialization brief
-- [`studypath.target.web.aicl.json`](studypath.target.web.aicl.json) - web/PWA materialization brief
-- [`studypath.target.windows.aicl.json`](studypath.target.windows.aicl.json) - Windows materialization brief
-- [`PRIVACY_PROOF.md`](PRIVACY_PROOF.md) - human-readable privacy proof summary
-- [`ACCESSIBILITY_PROOF.md`](ACCESSIBILITY_PROOF.md) - human-readable accessibility proof summary
-- [`QA_REPORT.md`](QA_REPORT.md) - acceptance criteria and QA matrix for the demo artifacts
+- [`studypath.intent.aicl.json`](studypath.intent.aicl.json) - agent-originated project intent
+- [`studypath.icc.json`](studypath.icc.json) - ICC root-of-trust artifact
+- [`studypath.shg.json`](studypath.shg.json) - semantic handover graph and proof gates
+- [`studypath.agent-delegation.aicl.json`](studypath.agent-delegation.aicl.json) - bounded specialist agent delegation
+- [`studypath.curriculum-pack.intro-python.json`](studypath.curriculum-pack.intro-python.json) - synthetic local Python foundations curriculum
+- [`studypath.proof-bundle.expected.json`](studypath.proof-bundle.expected.json) - expected proof outcomes for PG01-PG09
+- [`studypath.target.android.aicl.json`](studypath.target.android.aicl.json) - Android target brief
+- [`studypath.target.web.aicl.json`](studypath.target.web.aicl.json) - Web/PWA target brief
+- [`studypath.target.windows.aicl.json`](studypath.target.windows.aicl.json) - Windows target brief
+- [`PRIVACY_PROOF.md`](PRIVACY_PROOF.md) - human-readable privacy proof
+- [`ACCESSIBILITY_PROOF.md`](ACCESSIBILITY_PROOF.md) - human-readable accessibility proof
+- [`QA_REPORT.md`](QA_REPORT.md) - QA matrix and acceptance criteria
+- [`pipeline-walkthrough.md`](pipeline-walkthrough.md) - AICL compilation trace for StudyPath
 
 ## Public-demo boundaries
 
-This demo deliberately avoids:
+This demo avoids:
 
 - real exam-board copyrighted curriculum
 - real student records
 - cloud analytics
 - backend services
-- claims of guaranteed exam performance
-- private product concepts
+- guaranteed exam outcome claims
+- private commercial product concepts
+- games/private game ideas
 
-All curriculum content in this example is synthetic, local, and demo-only. The example is intended to show AICL semantics, delegation, proof structure, and target constraints, not to claim that a production educational product is already implemented.
+All curriculum material is synthetic and demo-only. The target briefs describe materialization constraints, not executable app code or deployment instructions.
 
 ## Status
 
-StudyPath is a reference demo and specification bundle. It is suitable for repository study, academic discussion, schema evolution, and future validator/tooling work, but it is not a production application and should not be presented as one.
+This is a reference architecture and AICL demonstration, not a production app implementation.

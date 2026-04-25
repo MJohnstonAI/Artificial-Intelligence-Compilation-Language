@@ -1,45 +1,44 @@
-# Privacy Proof
+# Privacy Proof — StudyPath
 
 ## Claim
 
-StudyPath is specified as a local-only educational application demo in which learner data stays on-device and no cloud runtime dependency is required for the core study-planning flow.
+StudyPath is specified as an offline-first educational reference architecture where learner data remains local and the core study flow requires no backend, analytics, cloud account, or runtime cloud dependency.
 
-## Proof points
+## What AICL proves
 
-- No student data is transmitted.
-- No analytics SDK is permitted.
-- No backend is required.
-- No cloud account is required.
-- Progress is stored locally.
-- The curriculum pack is bundled locally.
-- Export is user-initiated only.
+AICL can represent and check privacy constraints at the semantic artifact level. The StudyPath ICC, SHG, target briefs, and proof bundle declare local-only storage, no learner-data transmission, no analytics, no backend services, and user-initiated export only.
 
-## Evidence within this demo
+## What AICL does not prove
 
-- `studypath.intent.aicl.json` declares `storage_mode: local_only`, `analytics: none`, and `backend: none`.
-- Each declared data store marks transmission as forbidden.
-- `studypath.agent-delegation.aicl.json` forbids learner-data transmission and runtime cloud model calls for every agent.
-- All target briefs prohibit analytics and backend dependencies.
-- `studypath.proof-bundle.expected.json` includes expected-pass entries for `privacy.local_only`, `network.no_runtime_cloud`, `analytics.none`, and `student_data.no_transmission`.
+AICL does not prove physical device security, operating-system account security, disk encryption, backup behavior, or implementation choices made outside the declared target materializers. Device compromise is outside AICL's proof boundary.
 
-## Assumptions
+## Data inventory
 
-- The future materializer honors the declared storage and network constraints.
-- Any export operation is explicit, local, and initiated by the user.
-- Synthetic curriculum content is packaged with the application or otherwise made available locally before runtime.
-- No third-party libraries are introduced later that add telemetry, remote logging, or hidden synchronization.
+- learner profile: weak areas, study window, availability, accessibility preferences
+- study plan: weekly and daily sessions
+- practice queue: local synthetic prompts and revision tasks
+- progress state: completion counters, topic confidence, retry markers
+
+## Storage boundary
+
+Progress is stored locally. The curriculum pack is bundled locally. Target briefs require local app sandbox storage, IndexedDB/local storage abstraction, or local app data storage depending on platform.
+
+## Network boundary
+
+No student data is transmitted. No cloud account is required. No backend service is required for the core learning plan, practice queue, or progress tracker.
+
+## Analytics boundary
+
+No analytics SDK, telemetry endpoint, hidden tracking flow, or cloud student tracking is declared.
+
+## Export boundary
+
+Export is user-initiated only. Any future export mechanism must be explicit, local-first, and excluded from automatic synchronization.
+
+## Risk acceptance
+
+The ICC accepts `RA01 device_storage_boundary`: AICL can require local-only storage, but cannot guarantee physical device security outside the generated app boundary.
 
 ## Failure conditions
 
-This proof fails if any of the following become true:
-
-- learner profile or progress data is uploaded automatically
-- analytics or telemetry SDKs are added
-- a backend becomes mandatory for study-plan generation or quiz access
-- a sign-in or cloud account becomes required for normal operation
-- curriculum content must be fetched remotely at runtime
-- export occurs automatically or without a clear user action
-
-## Conclusion
-
-Within the scope of this specification demo, StudyPath satisfies the intended privacy posture only while remaining local-first, analytics-free, backend-free, and user-controlled with respect to export.
+This proof fails if a target materializer introduces backend services, cloud accounts, analytics, hidden telemetry, automatic export, remote curriculum fetch, learner-data transmission, or permissions beyond the declared local storage/export boundary.

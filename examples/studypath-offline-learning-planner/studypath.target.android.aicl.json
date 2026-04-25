@@ -2,27 +2,45 @@
   "schema": "AICL-TargetBrief-v1",
   "project": "StudyPath",
   "target": "android",
-  "materialization_scope": "brief_only",
-  "build_artifact": "android-apk",
-  "experience_constraints": [
-    "portrait_first",
-    "offline_first",
-    "accessibility_support",
-    "short_session_friendly"
-  ],
+  "artifact": "android-apk",
+  "materialization_scope": "target_brief_only",
+  "layout": {
+    "orientation": "portrait-first",
+    "session_design": "short_bounded_study_blocks"
+  },
   "runtime_constraints": {
-    "storage": "local_only",
+    "offline_first": true,
     "analytics": "none",
     "backend": "none",
-    "payments": "forbidden",
-    "ads": "forbidden",
-    "cloud_account_required": false
+    "ads": "none",
+    "payments": "none",
+    "storage": "local_app_sandbox_storage",
+    "network_runtime": "none_declared",
+    "permissions": "no_permissions_beyond_local_app_storage_defaults"
   },
-  "expected_surfaces": [
-    "study_roadmap",
-    "daily_schedule",
-    "practice_queue",
-    "progress_tracker",
-    "accessibility_preferences"
+  "local_artifacts": [
+    "local_curriculum_pack",
+    "local_progress_state",
+    "local_practice_queue",
+    "user_initiated_export_only"
+  ],
+  "accessibility": {
+    "baseline": "accessibility_baseline",
+    "scalable_text": true,
+    "screen_reader_labels": true,
+    "high_contrast": true,
+    "reduced_motion": true,
+    "no_color_only_progress": true
+  },
+  "proof_gate_refs": [
+    "PG01",
+    "PG02",
+    "PG03",
+    "PG04",
+    "PG05",
+    "PG06",
+    "PG07",
+    "PG08",
+    "PG09"
   ]
 }

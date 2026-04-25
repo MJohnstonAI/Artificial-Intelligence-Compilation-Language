@@ -1,152 +1,173 @@
 {
   "schema": "AICL-ProofBundleExpected-v1",
-  "project": "StudyPath",
+  "proof_bundle_id": "proofbundle://aicl-demo/studypath/expected/v0.1",
+  "artifact_ref": "shg://aicl-demo/studypath/v0.1",
   "overall_status": "expected_pass",
-  "proof_entries": {
-    "privacy.local_only": {
-      "status": "pass",
+  "proofs": [
+    {
+      "proof_id": "P-PG01",
+      "gate_ref": "PG01",
+      "claim": "Core runtime behavior requires no cloud network calls.",
+      "tier": 1,
+      "mechanism": "static_analysis",
+      "status": "expected_pass",
       "evidence": [
-        "Intent declares local_only storage mode.",
-        "Target briefs forbid backend dependencies.",
-        "Privacy proof states progress remains on-device."
+        "Intent runtime mode is offline_first.",
+        "Target briefs declare no runtime network requirement.",
+        "Privacy proof states no backend or cloud account is required."
       ],
       "related_shg_nodes": [
-        "shg://studypath/node/privacy-policy",
-        "shg://studypath/node/progress-state"
+        "N11",
+        "N12"
       ],
-      "failure_consequence": "StudyPath stops qualifying as a privacy-preserving public demo."
+      "failure_consequence": "compile_error"
     },
-    "network.no_runtime_cloud": {
-      "status": "pass",
+    {
+      "proof_id": "P-PG02",
+      "gate_ref": "PG02",
+      "claim": "No analytics SDK, telemetry endpoint, or hidden tracking is declared.",
+      "tier": 1,
+      "mechanism": "static_policy_check",
+      "status": "expected_pass",
       "evidence": [
-        "Intent runtime dependency policy is no_runtime_cloud_services.",
-        "Android, web, and Windows target briefs forbid backend requirements.",
-        "Privacy proof states no cloud account is required."
+        "Intent non-goals include analytics.",
+        "All target briefs set analytics to none.",
+        "Privacy proof declares the analytics boundary."
       ],
       "related_shg_nodes": [
-        "shg://studypath/node/privacy-policy",
-        "shg://studypath/node/target-materialization"
+        "N11",
+        "N12"
       ],
-      "failure_consequence": "Runtime execution would no longer satisfy offline-first materialization constraints."
+      "failure_consequence": "compile_error"
     },
-    "analytics.none": {
-      "status": "pass",
+    {
+      "proof_id": "P-PG03",
+      "gate_ref": "PG03",
+      "claim": "Learner profile, plan, progress, and practice queue are not transmitted.",
+      "tier": 1,
+      "mechanism": "information_flow_check",
+      "status": "expected_pass",
       "evidence": [
-        "Intent privacy section sets analytics to none.",
-        "All target briefs explicitly forbid analytics.",
-        "Privacy proof rejects analytics SDK inclusion."
+        "Privacy policy forbids learner-data transmission.",
+        "Target briefs preserve local storage only.",
+        "Delegation forbids runtime cloud, backend, analytics, and secret-reading effects."
       ],
       "related_shg_nodes": [
-        "shg://studypath/node/privacy-policy",
-        "shg://studypath/node/target-materialization"
+        "N02",
+        "N07",
+        "N08",
+        "N11"
       ],
-      "failure_consequence": "Student privacy claims would become invalid."
+      "failure_consequence": "compile_error"
     },
-    "student_data.no_transmission": {
-      "status": "pass",
+    {
+      "proof_id": "P-PG04",
+      "gate_ref": "PG04",
+      "claim": "The study schedule fits within 21 days and declared available minutes.",
+      "tier": 1,
+      "mechanism": "deterministic_schedule_check",
+      "status": "expected_pass",
       "evidence": [
-        "All declared data stores mark transmission as forbidden.",
-        "Agent delegation forbids learner_data_transmission.",
-        "Privacy proof limits export to user-initiated actions only."
+        "ICC records 21-day deadline and availability.",
+        "SHG HE01 requires learner availability, deadline, and topic graph before plan generation.",
+        "QA report includes deadline calculation checks."
       ],
       "related_shg_nodes": [
-        "shg://studypath/node/learner-profile",
-        "shg://studypath/node/privacy-policy",
-        "shg://studypath/node/progress-state"
+        "N02",
+        "N03",
+        "N05",
+        "N06"
       ],
-      "failure_consequence": "The demo would violate its stated student-data trust boundary."
+      "failure_consequence": "planning_failure"
     },
-    "curriculum.synthetic_and_provenanced": {
-      "status": "pass",
+    {
+      "proof_id": "P-PG05",
+      "gate_ref": "PG05",
+      "claim": "Curriculum is local, synthetic, demo-only, and provenanced.",
+      "tier": 1,
+      "mechanism": "provenance_check",
+      "status": "expected_pass",
       "evidence": [
         "Curriculum pack license is demo-only synthetic curriculum.",
-        "Curriculum provenance declares no real exam-board alignment.",
-        "README public boundaries reject copyrighted curriculum ingestion."
+        "Curriculum boundaries reject real exam-board alignment and copyrighted source material.",
+        "Public-demo boundaries state the same constraint."
       ],
       "related_shg_nodes": [
-        "shg://studypath/node/curriculum-pack",
-        "shg://studypath/node/proof-bundle"
+        "N04",
+        "N05"
       ],
-      "failure_consequence": "The example would lose public-demo safety and provenance clarity."
+      "failure_consequence": "compile_error"
     },
-    "accessibility.contrast": {
-      "status": "pass",
+    {
+      "proof_id": "P-PG06",
+      "gate_ref": "PG06",
+      "claim": "Adaptation is local and deterministic.",
+      "tier": 1,
+      "mechanism": "rule_inspection",
+      "status": "expected_pass",
       "evidence": [
-        "Accessibility proof requires contrast-safe presentation.",
-        "Intent proof gates include accessibility.contrast.",
-        "Accessibility profile constrains the study-session plan."
+        "Intent maintains deterministic_local_adaptation.",
+        "SHG HE02 limits adaptation to local progress, adaptation policy, and existing plan.",
+        "Delegation forbids runtime cloud model calls for AdaptationAgent."
       ],
       "related_shg_nodes": [
-        "shg://studypath/node/accessibility-profile",
-        "shg://studypath/node/study-session-plan"
+        "N06",
+        "N08",
+        "N09"
       ],
-      "failure_consequence": "The demo would fail its accessibility baseline."
+      "failure_consequence": "compile_error"
     },
-    "accessibility.font_size": {
-      "status": "pass",
+    {
+      "proof_id": "P-PG07",
+      "gate_ref": "PG07",
+      "claim": "Session design and target declarations preserve accessibility constraints.",
+      "tier": 2,
+      "mechanism": "target_declaration_review",
+      "status": "expected_pass",
       "evidence": [
-        "Accessibility proof requires readable typography.",
-        "Intent maintain list includes accessibility_baseline.",
-        "Target briefs include accessibility support requirements."
+        "Accessibility proof separates compile-time declarations from materializer obligations.",
+        "Target briefs declare scalable text, screen-reader labels, high contrast, reduced motion, and keyboard support where applicable.",
+        "QA report requires accessibility checks."
       ],
       "related_shg_nodes": [
-        "shg://studypath/node/accessibility-profile",
-        "shg://studypath/node/target-materialization"
+        "N06",
+        "N10",
+        "N12"
       ],
-      "failure_consequence": "Readable educational use would no longer be supportable."
+      "failure_consequence": "materialization_blocked"
     },
-    "accessibility.low_cognitive_load": {
-      "status": "pass",
+    {
+      "proof_id": "P-PG08",
+      "gate_ref": "PG08",
+      "claim": "Target briefs request no permissions beyond declared local storage, local export, and accessibility-safe UI requirements.",
+      "tier": 1,
+      "mechanism": "static_analysis",
+      "status": "expected_pass",
       "evidence": [
-        "Accessibility proof requires low cognitive load and plain language.",
-        "Scenario constrains sessions to bounded time windows.",
-        "QA report includes low-time and accessibility edge-case checks."
+        "Android target declares no permissions beyond local app storage defaults.",
+        "Web target limits service worker use to offline cache.",
+        "Windows target declares local app data storage and no network requirement."
       ],
       "related_shg_nodes": [
-        "shg://studypath/node/accessibility-profile",
-        "shg://studypath/node/study-session-plan"
+        "N12"
       ],
-      "failure_consequence": "The planner could overwhelm learners and violate the demo's educational safety framing."
+      "failure_consequence": "compile_error"
     },
-    "adaptation.local_deterministic": {
-      "status": "pass",
+    {
+      "proof_id": "P-PG09",
+      "gate_ref": "PG09",
+      "claim": "Android, Web, and Windows briefs preserve the same privacy, curriculum, progress-state, and accessibility constraints.",
+      "tier": 1,
+      "mechanism": "schema_validation",
+      "status": "expected_pass",
       "evidence": [
-        "Intent maintain list requires deterministic_local_adaptation.",
-        "Intent proof gates include adaptation.deterministic_local.",
-        "Agent delegation forbids runtime cloud model calls for adaptation."
+        "All target briefs reference PG01-PG09.",
+        "All target briefs declare offline-first behavior, local curriculum pack, local progress state, no analytics, no backend, no ads, and no payments."
       ],
       "related_shg_nodes": [
-        "shg://studypath/node/adaptation-policy",
-        "shg://studypath/node/progress-state"
+        "N12"
       ],
-      "failure_consequence": "Adaptation would become opaque and non-reproducible."
-    },
-    "permissions.minimality": {
-      "status": "pass",
-      "evidence": [
-        "Agent delegation caps authority at R3.",
-        "No agent may publish, deploy, spend money, or transmit learner data.",
-        "MaterializationAgent is limited to target briefs."
-      ],
-      "related_shg_nodes": [
-        "shg://studypath/node/privacy-policy",
-        "shg://studypath/node/target-materialization",
-        "shg://studypath/node/proof-bundle"
-      ],
-      "failure_consequence": "The example would exceed bounded-authority expectations for a public demo."
-    },
-    "targets.cross_platform_consistency": {
-      "status": "pass",
-      "evidence": [
-        "All three target briefs require offline-first or offline-capable operation.",
-        "All three target briefs prohibit analytics and backend dependencies.",
-        "All three target briefs treat materialization as specification output rather than deployment."
-      ],
-      "related_shg_nodes": [
-        "shg://studypath/node/target-materialization",
-        "shg://studypath/node/proof-bundle"
-      ],
-      "failure_consequence": "StudyPath would lose coherence as a single cross-platform AICL demo."
+      "failure_consequence": "compile_error"
     }
-  }
+  ]
 }

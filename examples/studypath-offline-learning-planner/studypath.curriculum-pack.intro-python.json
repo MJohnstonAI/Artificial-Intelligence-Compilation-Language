@@ -1,125 +1,208 @@
 {
   "schema": "AICL-LocalCurriculumPack-v1",
-  "curriculum_id": "curriculum://studypath/intro-python-foundations/v1",
+  "curriculum_id": "curriculum://studypath/introductory-python-foundations/v0.1",
   "title": "Introductory Python Foundations",
   "license": "demo-only synthetic curriculum",
   "provenance": {
     "source_type": "synthetic_demo_content",
-    "real_exam_board_alignment": "none",
-    "copyrighted_content_included": false
+    "created_for": "AICL StudyPath public academic demo",
+    "real_exam_board_alignment": false,
+    "copyrighted_source_material": false
   },
   "topics": [
     {
-      "id": "topic.variables",
+      "id": "variables",
       "title": "Variables",
-      "summary": "Naming values and updating them through simple assignments.",
-      "suggested_session_duration_min": 35,
-      "prerequisites": []
+      "learning_objective": "Understand how names refer to values in small Python examples.",
+      "estimated_minutes": 45,
+      "prerequisites": [],
+      "practice_prompt_templates": [
+        "Create a variable for a learner's score and update it after one practice attempt."
+      ],
+      "revision_prompts": [
+        "Explain what changes when a variable is reassigned."
+      ],
+      "mastery_signal": "Learner can trace simple assignments without confusing name and value."
     },
     {
-      "id": "topic.data-types",
+      "id": "data_types",
       "title": "Data Types",
-      "summary": "Recognizing strings, integers, floats, booleans, and basic conversion patterns.",
-      "suggested_session_duration_min": 35,
+      "learning_objective": "Distinguish strings, integers, floats, booleans, and simple conversions.",
+      "estimated_minutes": 45,
       "prerequisites": [
-        "topic.variables"
-      ]
+        "variables"
+      ],
+      "practice_prompt_templates": [
+        "Classify a short list of Python literals by type."
+      ],
+      "revision_prompts": [
+        "Name one case where converting a string to an integer is necessary."
+      ],
+      "mastery_signal": "Learner can predict the type of common literal values."
     },
     {
-      "id": "topic.conditionals",
+      "id": "conditionals",
       "title": "Conditionals",
-      "summary": "Using if, elif, and else to branch on simple decisions.",
-      "suggested_session_duration_min": 40,
+      "learning_objective": "Use if, elif, and else to choose between simple paths.",
+      "estimated_minutes": 45,
       "prerequisites": [
-        "topic.data-types"
-      ]
+        "data_types"
+      ],
+      "practice_prompt_templates": [
+        "Write a conditional that chooses a revision prompt from a score threshold."
+      ],
+      "revision_prompts": [
+        "Describe what makes a condition evaluate to true or false."
+      ],
+      "mastery_signal": "Learner can trace which branch runs in a short conditional."
     },
     {
-      "id": "topic.loops",
+      "id": "loops",
       "title": "Loops",
-      "summary": "Repeating work with for and while loops, including simple tracing and stopping conditions.",
-      "suggested_session_duration_min": 45,
+      "learning_objective": "Trace repetition with for and while loops using bounded examples.",
+      "estimated_minutes": 60,
       "prerequisites": [
-        "topic.conditionals"
-      ]
+        "conditionals"
+      ],
+      "practice_prompt_templates": [
+        "Predict the output of a short loop over three practice scores."
+      ],
+      "revision_prompts": [
+        "Explain how a loop knows when to stop."
+      ],
+      "mastery_signal": "Learner can trace each loop iteration and identify the stopping condition."
     },
     {
-      "id": "topic.functions",
+      "id": "functions",
       "title": "Functions",
-      "summary": "Defining reusable blocks, passing inputs, and returning values.",
-      "suggested_session_duration_min": 45,
+      "learning_objective": "Define reusable behavior with parameters and return values.",
+      "estimated_minutes": 60,
       "prerequisites": [
-        "topic.conditionals"
-      ]
+        "loops"
+      ],
+      "practice_prompt_templates": [
+        "Repair a function that should return a revised score."
+      ],
+      "revision_prompts": [
+        "Explain the difference between printing and returning a value."
+      ],
+      "mastery_signal": "Learner can identify inputs, body, and return value in a small function."
     },
     {
-      "id": "topic.lists",
+      "id": "lists",
       "title": "Lists",
-      "summary": "Creating ordered collections and iterating through list items.",
-      "suggested_session_duration_min": 40,
+      "learning_objective": "Use ordered collections for groups of related values.",
+      "estimated_minutes": 45,
       "prerequisites": [
-        "topic.loops"
-      ]
+        "functions"
+      ],
+      "practice_prompt_templates": [
+        "Store three topic scores in a list and compute a simple total."
+      ],
+      "revision_prompts": [
+        "Describe when an ordered list is useful."
+      ],
+      "mastery_signal": "Learner can index and iterate through a small list safely."
     },
     {
-      "id": "topic.dictionaries",
+      "id": "dictionaries",
       "title": "Dictionaries",
-      "summary": "Using key-value mappings for simple lookup tasks.",
-      "suggested_session_duration_min": 40,
+      "learning_objective": "Use key-value mappings for named lookups.",
+      "estimated_minutes": 45,
       "prerequisites": [
-        "topic.lists"
-      ]
+        "lists"
+      ],
+      "practice_prompt_templates": [
+        "Create a dictionary mapping topic names to confidence scores."
+      ],
+      "revision_prompts": [
+        "Explain why a dictionary key should be meaningful."
+      ],
+      "mastery_signal": "Learner can retrieve and update values by key."
     },
     {
-      "id": "topic.debugging-basics",
+      "id": "debugging_basics",
       "title": "Debugging Basics",
-      "summary": "Reading error messages, checking assumptions, and tracing small examples.",
-      "suggested_session_duration_min": 30,
+      "learning_objective": "Read simple errors, inspect assumptions, and isolate small failures.",
+      "estimated_minutes": 45,
       "prerequisites": [
-        "topic.functions",
-        "topic.loops"
-      ]
+        "dictionaries"
+      ],
+      "practice_prompt_templates": [
+        "Given a short error message, identify the first value or line to inspect."
+      ],
+      "revision_prompts": [
+        "List two checks to make before rewriting code."
+      ],
+      "mastery_signal": "Learner can describe a first debugging step from a small failure."
     },
     {
-      "id": "topic.mini-project-review",
+      "id": "mini_project_review",
       "title": "Mini-Project Review",
-      "summary": "Combining the earlier topics into a short review activity with reflection prompts.",
-      "suggested_session_duration_min": 50,
+      "learning_objective": "Combine variables, data types, conditionals, loops, functions, lists, dictionaries, and debugging in a short local review activity.",
+      "estimated_minutes": 90,
       "prerequisites": [
-        "topic.functions",
-        "topic.lists",
-        "topic.dictionaries",
-        "topic.debugging-basics"
-      ]
+        "debugging_basics"
+      ],
+      "practice_prompt_templates": [
+        "Sketch a local study tracker that records topic scores and recommends one revision topic."
+      ],
+      "revision_prompts": [
+        "Name the most fragile part of your mini-project and explain how you would test it."
+      ],
+      "mastery_signal": "Learner can connect core Python concepts in one small scenario."
+    }
+  ],
+  "prerequisites": [
+    {
+      "from": "variables",
+      "to": "data_types"
+    },
+    {
+      "from": "data_types",
+      "to": "conditionals"
+    },
+    {
+      "from": "conditionals",
+      "to": "loops"
+    },
+    {
+      "from": "loops",
+      "to": "functions"
+    },
+    {
+      "from": "functions",
+      "to": "lists"
+    },
+    {
+      "from": "lists",
+      "to": "dictionaries"
+    },
+    {
+      "from": "dictionaries",
+      "to": "debugging_basics"
+    },
+    {
+      "from": "debugging_basics",
+      "to": "mini_project_review"
     }
   ],
   "quiz_prompt_templates": [
-    {
-      "id": "quiz.loop-trace.v1",
-      "focus_topic": "topic.loops",
-      "template": "Present a short loop and ask the learner to predict the printed output and explain one iteration step."
-    },
-    {
-      "id": "quiz.function-repair.v1",
-      "focus_topic": "topic.functions",
-      "template": "Show a small function with one missing or incorrect line and ask the learner to repair it using plain-language reasoning."
-    },
-    {
-      "id": "quiz.collection-choice.v1",
-      "focus_topic": "topic.lists",
-      "template": "Give a small scenario and ask whether a list or dictionary is the better fit, with a short explanation."
-    },
-    {
-      "id": "quiz.debugging-basics.v1",
-      "focus_topic": "topic.debugging-basics",
-      "template": "Provide a short error message and ask the learner to identify the likely cause and the next local check."
-    }
+    "Trace this short loop and explain each iteration in one sentence.",
+    "Repair this small function so it returns the intended value.",
+    "Choose whether a list or dictionary best fits this local study-tracker task.",
+    "Read this simple error message and choose the first value to inspect."
   ],
   "revision_prompts": [
-    "Explain a loop in your own words and give one example of when it should stop.",
-    "Describe the difference between printing a value and returning a value from a function.",
-    "Write one sentence that explains when a dictionary is more useful than a list.",
-    "List two debugging checks you can do before changing the code.",
-    "Summarize today's topic in plain language without using formal jargon."
-  ]
+    "Summarize today's topic in plain language.",
+    "Write one question you can answer locally without using cloud services.",
+    "Identify the prerequisite topic that most affects today's topic.",
+    "Mark one concept for spaced review in the local progress tracker."
+  ],
+  "boundaries": {
+    "real_exam_board_alignment": false,
+    "copyrighted_source_material": false,
+    "guaranteed_outcome_claims": false,
+    "cloud_required": false
+  }
 }
