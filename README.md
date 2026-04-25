@@ -19,6 +19,20 @@ AICL treats software construction as a semantic compilation problem. Its layered
 - workflow and skill semantics for multi-agent execution
 - materialization targets for deployable artifacts
 
+## Public Review Status
+
+AICL is currently a research-stage semantic language specification, not a production compiler or certified verification platform.
+
+New reviewers should start with:
+
+- [`PUBLIC_STATUS.md`](PUBLIC_STATUS.md)
+- [`GLOSSARY.md`](GLOSSARY.md)
+- [`ROADMAP.md`](ROADMAP.md)
+- [`docs/reviewer-quickstart.md`](docs/reviewer-quickstart.md)
+- [`docs/public-claim-guide.md`](docs/public-claim-guide.md)
+
+The repository welcomes technical critique, contradiction reports, schema/example mismatches, and proof-boundary analysis.
+
 ## Canonical Documents
 
 Start with these documents, in roughly this order:
@@ -59,6 +73,9 @@ The public emphasis should remain on policy-aware, multimodal, cross-platform, a
 |-- SKILLS.md
 |-- AUTHORS.md
 |-- CONTRIBUTING.md
+|-- PUBLIC_STATUS.md
+|-- GLOSSARY.md
+|-- ROADMAP.md
 |-- GOVERNANCE.md
 |-- SECURITY.md
 |-- NOTICE
@@ -67,6 +84,10 @@ The public emphasis should remain on policy-aware, multimodal, cross-platform, a
 |-- CITATION.cff
 |-- LICENSE
 |-- LICENSE-docs
+|-- docs/
+|   |-- reviewer-quickstart.md
+|   |-- public-claim-guide.md
+|   `-- public-launch-checklist.md
 |-- spec/
 |   |-- programming-reference-manual.md
 |   |-- unified-spec-v1.0-draft.md
