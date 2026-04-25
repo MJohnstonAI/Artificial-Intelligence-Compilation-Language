@@ -45,6 +45,8 @@ This QA report covers StudyPath as a reference architecture and AICL demonstrati
 
 The proof bundle must include exactly PG01-PG09. Each proof entry must include proof id, gate reference, claim, tier, mechanism, status, evidence, related SHG nodes, and failure consequence.
 
+Explicit gate set: PG01, PG02, PG03, PG04, PG05, PG06, PG07, PG08, PG09.
+
 ## Cross-platform checks
 
 Each target brief must reference PG01-PG09 and declare offline-first operation, no analytics, no backend, no ads, no payments, local storage only, local curriculum pack, local progress state, accessibility baseline, and platform-specific accessibility support.
