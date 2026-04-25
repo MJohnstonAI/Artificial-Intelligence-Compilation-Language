@@ -41,7 +41,8 @@ Start with these documents, in roughly this order:
 - Draft machine-readable schemas live in [`spec/schemas/`](spec/schemas/).
 - WKG core semantics and registry material live under [`wkg/core/`](wkg/core/), with [`wkg/core/aicl-core-ontology-spec.md`](wkg/core/aicl-core-ontology-spec.md) as the textual companion for ontology, snapshot, and contradiction rules.
 - Model commentary is organized under [`commentary/`](commentary/).
-- The flagship serious example is [`examples/enterprise-service-resolution/README.md`](examples/enterprise-service-resolution/README.md).
+- The flagship public academic example is [`examples/studypath-offline-learning-planner/README.md`](examples/studypath-offline-learning-planner/README.md).
+- The flagship enterprise workflow example is [`examples/enterprise-service-resolution/README.md`](examples/enterprise-service-resolution/README.md).
 - A secondary lightweight example brief lives at [`examples/cross-platform-app-brief/README.md`](examples/cross-platform-app-brief/README.md).
 
 The public emphasis should remain on policy-aware, multimodal, cross-platform, agent-compatible systems rather than novelty demos.
@@ -78,6 +79,7 @@ The public emphasis should remain on policy-aware, multimodal, cross-platform, a
 |   |-- grok/
 |   `-- chatgpt/
 |-- examples/
+|   |-- studypath-offline-learning-planner/
 |   |-- enterprise-service-resolution/
 |   `-- cross-platform-app-brief/
 |-- kernel/

@@ -1,0 +1,375 @@
+{
+  "schema": "AICL-SHG-v1-draft",
+  "graph_id": "shg://aicl-demo/studypath/v0.1",
+  "title": "StudyPath Semantic Handover Graph",
+  "nodes": [
+    {
+      "id": "N01",
+      "label": "LearnerGoal",
+      "type": "Goal",
+      "wkg_anchor": "wkg://aicl/entity/learner",
+      "summary": "Prepare for an introductory Python assessment in 21 days."
+    },
+    {
+      "id": "N02",
+      "label": "LearnerProfile",
+      "type": "StateAnchor",
+      "wkg_anchor": "wkg://aicl/entity/learner",
+      "summary": "Weekday and weekend availability, weak areas, and local accessibility preferences."
+    },
+    {
+      "id": "N03",
+      "label": "DeadlineConstraint",
+      "type": "Constraint",
+      "summary": "21-day preparation window with 45 weekday minutes and 90 weekend minutes."
+    },
+    {
+      "id": "N04",
+      "label": "CurriculumPack",
+      "type": "Resource",
+      "wkg_anchor": "wkg://aicl/education/curriculum-topic",
+      "summary": "Synthetic local Introductory Python Foundations curriculum pack."
+    },
+    {
+      "id": "N05",
+      "label": "TopicGraph",
+      "type": "SHGSubgraph",
+      "summary": "Prerequisite-respecting graph of nine introductory Python topics."
+    },
+    {
+      "id": "N06",
+      "label": "StudySessionPlan",
+      "type": "Plan",
+      "wkg_anchor": "wkg://aicl/education/study-session",
+      "summary": "Weekly and daily study schedule derived from learner availability and topic order."
+    },
+    {
+      "id": "N07",
+      "label": "PracticeQueue",
+      "type": "Queue",
+      "wkg_anchor": "wkg://aicl/education/practice-queue",
+      "summary": "Local practice prompts and revision tasks generated from synthetic curriculum."
+    },
+    {
+      "id": "N08",
+      "label": "ProgressState",
+      "type": "StateAnchor",
+      "summary": "On-device progress counters, completion state, and topic confidence signals."
+    },
+    {
+      "id": "N09",
+      "label": "AdaptationPolicy",
+      "type": "Policy",
+      "summary": "Deterministic local adaptation policy for rescheduling and reinforcement."
+    },
+    {
+      "id": "N10",
+      "label": "AccessibilityProfile",
+      "type": "Policy",
+      "wkg_anchor": "wkg://aicl/accessibility/wcag21-aa",
+      "summary": "Readable typography, contrast, session bounds, reduced motion, and assistive design intent."
+    },
+    {
+      "id": "N11",
+      "label": "PrivacyPolicy",
+      "type": "Policy",
+      "wkg_anchor": "wkg://aicl/privacy/local-only",
+      "summary": "Local-only storage, no analytics, no backend, no learner-data transmission."
+    },
+    {
+      "id": "N12",
+      "label": "TargetMaterialization",
+      "type": "MaterializationSet",
+      "summary": "Android, Web/PWA, and Windows target briefs."
+    }
+  ],
+  "topic_graph": {
+    "topics": [
+      "variables",
+      "data_types",
+      "conditionals",
+      "loops",
+      "functions",
+      "lists",
+      "dictionaries",
+      "debugging_basics",
+      "mini_project_review"
+    ],
+    "dependency_edges": [
+      {
+        "type": "precedes",
+        "from": "variables",
+        "to": "data_types"
+      },
+      {
+        "type": "precedes",
+        "from": "data_types",
+        "to": "conditionals"
+      },
+      {
+        "type": "precedes",
+        "from": "conditionals",
+        "to": "loops"
+      },
+      {
+        "type": "precedes",
+        "from": "loops",
+        "to": "functions"
+      },
+      {
+        "type": "precedes",
+        "from": "functions",
+        "to": "lists"
+      },
+      {
+        "type": "precedes",
+        "from": "lists",
+        "to": "dictionaries"
+      },
+      {
+        "type": "precedes",
+        "from": "dictionaries",
+        "to": "debugging_basics"
+      },
+      {
+        "type": "precedes",
+        "from": "debugging_basics",
+        "to": "mini_project_review"
+      }
+    ]
+  },
+  "edges": [
+    {
+      "id": "E01",
+      "type": "requires",
+      "from": "N01",
+      "to": "N02"
+    },
+    {
+      "id": "E02",
+      "type": "requires",
+      "from": "N01",
+      "to": "N03"
+    },
+    {
+      "id": "E03",
+      "type": "requires",
+      "from": "N01",
+      "to": "N04"
+    },
+    {
+      "id": "E04",
+      "type": "grounds",
+      "from": "N04",
+      "to": "N05"
+    },
+    {
+      "id": "E05",
+      "type": "generates",
+      "from": "N05",
+      "to": "N06"
+    },
+    {
+      "id": "E06",
+      "type": "generates",
+      "from": "N05",
+      "to": "N07"
+    },
+    {
+      "id": "E07",
+      "type": "updates",
+      "from": "N06",
+      "to": "N08"
+    },
+    {
+      "id": "E08",
+      "type": "updates",
+      "from": "N07",
+      "to": "N08"
+    },
+    {
+      "id": "E09",
+      "type": "constrains",
+      "from": "N09",
+      "to": "N06"
+    },
+    {
+      "id": "E10",
+      "type": "constrains",
+      "from": "N10",
+      "to": "N06"
+    },
+    {
+      "id": "E11",
+      "type": "constrains",
+      "from": "N11",
+      "to": "N08"
+    },
+    {
+      "id": "E12",
+      "type": "materializes_to",
+      "from": "N06",
+      "to": "N12"
+    },
+    {
+      "id": "E13",
+      "type": "materializes_to",
+      "from": "N07",
+      "to": "N12"
+    },
+    {
+      "id": "E14",
+      "type": "proves",
+      "from": "PG01",
+      "to": "N11"
+    },
+    {
+      "id": "E15",
+      "type": "proves",
+      "from": "PG07",
+      "to": "N10"
+    },
+    {
+      "id": "E16",
+      "type": "proves",
+      "from": "PG09",
+      "to": "N12"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "HE01",
+      "label": "plan_validity",
+      "arity": 3,
+      "inputs": [
+        "N02",
+        "N03",
+        "N05"
+      ],
+      "output": "N06",
+      "meaning": "A valid study plan requires learner availability, deadline constraint, and prerequisite-respecting topic graph simultaneously."
+    },
+    {
+      "id": "HE02",
+      "label": "local_adaptation",
+      "arity": 3,
+      "inputs": [
+        "N08",
+        "N09",
+        "N06"
+      ],
+      "output": "N06",
+      "meaning": "Future study sessions may adapt only from local progress, the adaptation policy, and the existing plan."
+    }
+  ],
+  "proof_gates": [
+    {
+      "id": "PG01",
+      "label": "network_absence",
+      "tier": 1,
+      "mechanism": "static_analysis",
+      "assertion": "Core runtime behavior does not require cloud network calls.",
+      "guards": [
+        "PrivacyPolicy",
+        "TargetMaterialization"
+      ],
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "PG02",
+      "label": "analytics_absence",
+      "tier": 1,
+      "mechanism": "static_policy_check",
+      "assertion": "No analytics SDK, telemetry endpoint, or hidden tracking is declared.",
+      "guards": [
+        "PrivacyPolicy",
+        "TargetMaterialization"
+      ],
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "PG03",
+      "label": "student_data_no_transmission",
+      "tier": 1,
+      "mechanism": "information_flow_check",
+      "assertion": "Learner profile, study plan, progress state, and practice queue do not flow to network or backend effects.",
+      "guards": [
+        "LearnerProfile",
+        "ProgressState",
+        "PrivacyPolicy"
+      ],
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "PG04",
+      "label": "deadline_satisfaction",
+      "tier": 1,
+      "mechanism": "deterministic_schedule_check",
+      "assertion": "The schedule fits within 21 days and declared weekday/weekend availability.",
+      "guards": [
+        "DeadlineConstraint",
+        "StudySessionPlan"
+      ],
+      "failure_consequence": "planning_failure"
+    },
+    {
+      "id": "PG05",
+      "label": "curriculum_local_and_provenanced",
+      "tier": 1,
+      "mechanism": "provenance_check",
+      "assertion": "Curriculum content is bundled locally, synthetic, and demo-only.",
+      "guards": [
+        "CurriculumPack",
+        "TopicGraph"
+      ],
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "PG06",
+      "label": "adaptation_local_deterministic",
+      "tier": 1,
+      "mechanism": "rule_inspection",
+      "assertion": "Adaptation uses only local progress and deterministic local policy rules.",
+      "guards": [
+        "ProgressState",
+        "AdaptationPolicy",
+        "StudySessionPlan"
+      ],
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "PG07",
+      "label": "accessibility_session_bounded",
+      "tier": 2,
+      "mechanism": "target_declaration_review",
+      "assertion": "Target briefs declare bounded study sessions, readable presentation, reduced motion, and non-color-only progress signals.",
+      "guards": [
+        "AccessibilityProfile",
+        "StudySessionPlan"
+      ],
+      "failure_consequence": "materialization_blocked"
+    },
+    {
+      "id": "PG08",
+      "label": "permissions_minimality",
+      "tier": 1,
+      "mechanism": "static_analysis",
+      "assertion": "No target brief requests permissions beyond declared local storage, local export, and accessibility-safe UI requirements.",
+      "guards": [
+        "TargetMaterialization"
+      ],
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "PG09",
+      "label": "target_brief_consistency",
+      "tier": 1,
+      "mechanism": "schema_validation",
+      "assertion": "Android, Web, and Windows target briefs preserve the same privacy, curriculum, progress-state, and accessibility constraints.",
+      "guards": [
+        "TargetMaterialization"
+      ],
+      "failure_consequence": "compile_error"
+    }
+  ]
+}

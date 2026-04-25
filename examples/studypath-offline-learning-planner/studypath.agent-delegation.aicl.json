@@ -1,0 +1,322 @@
+{
+  "schema": "AICL-AgentDelegation-v1",
+  "project": "StudyPath",
+  "authority_taxonomy": {
+    "R0": "observe/comment only",
+    "R1": "propose intent/spec",
+    "R2": "generate local artifacts/spec files",
+    "R3": "modify repository/project files",
+    "R4": "build/deploy/publish",
+    "R5": "spend money/use paid services/change external state"
+  },
+  "global_constraints": {
+    "max_authority_level": "R3",
+    "human_approval_required_above": "R2",
+    "global_forbidden_effects": [
+      "Net:runtime_cloud",
+      "Analytics:*",
+      "Backend:*",
+      "Secrets:read",
+      "Deploy:publish",
+      "Payments:*",
+      "Ads:*"
+    ]
+  },
+  "agents": [
+    {
+      "id": "IntentAgent",
+      "goal": "Create the agent-originated StudyPath intent and ICC/spec artifacts.",
+      "authority_level": "R2",
+      "icc_delegation_chain": [
+        "icc://aicl-demo/studypath/v0.1",
+        "agent://aicl/demo-initiator",
+        "IntentAgent"
+      ],
+      "inputs": [
+        "public_demo_objective",
+        "learner_scenario",
+        "repository_guardrails"
+      ],
+      "outputs": [
+        "studypath.intent.aicl.json",
+        "studypath.icc.json"
+      ],
+      "allowed_effects": [
+        "LocalRead:learner_input",
+        "LocalWrite:icc_spec"
+      ],
+      "forbidden_effects": [
+        "Net:*",
+        "Analytics:*"
+      ],
+      "proof_obligations": [
+        "PG01",
+        "PG02",
+        "PG03"
+      ]
+    },
+    {
+      "id": "CurriculumAgent",
+      "goal": "Generate synthetic local curriculum topics, prerequisites, prompts, and revision material.",
+      "authority_level": "R2",
+      "icc_delegation_chain": [
+        "icc://aicl-demo/studypath/v0.1",
+        "IntentAgent",
+        "CurriculumAgent"
+      ],
+      "inputs": [
+        "studypath.icc.json",
+        "learner_goal"
+      ],
+      "outputs": [
+        "studypath.curriculum-pack.intro-python.json"
+      ],
+      "allowed_effects": [
+        "LocalRead:icc",
+        "LocalWrite:curriculum_spec"
+      ],
+      "forbidden_effects": [
+        "Net:runtime_cloud",
+        "Backend:*",
+        "CopyrightedCurriculum:ingest"
+      ],
+      "proof_obligations": [
+        "PG05"
+      ]
+    },
+    {
+      "id": "PlannerAgent",
+      "goal": "Create a 21-day study session plan from availability, deadline, and topic graph.",
+      "authority_level": "R2",
+      "icc_delegation_chain": [
+        "icc://aicl-demo/studypath/v0.1",
+        "IntentAgent",
+        "PlannerAgent"
+      ],
+      "inputs": [
+        "LearnerProfile",
+        "DeadlineConstraint",
+        "TopicGraph"
+      ],
+      "outputs": [
+        "StudySessionPlan"
+      ],
+      "allowed_effects": [
+        "LocalRead:curriculum_pack",
+        "LocalWrite:study_plan_spec"
+      ],
+      "forbidden_effects": [
+        "Net:runtime_cloud",
+        "Analytics:*",
+        "Backend:*"
+      ],
+      "proof_obligations": [
+        "PG04",
+        "PG09"
+      ]
+    },
+    {
+      "id": "QuizAgent",
+      "goal": "Generate local practice prompts and revision queue entries from synthetic topics.",
+      "authority_level": "R2",
+      "icc_delegation_chain": [
+        "icc://aicl-demo/studypath/v0.1",
+        "CurriculumAgent",
+        "QuizAgent"
+      ],
+      "inputs": [
+        "CurriculumPack",
+        "TopicGraph",
+        "LearnerProfile"
+      ],
+      "outputs": [
+        "PracticeQueue"
+      ],
+      "allowed_effects": [
+        "LocalRead:curriculum_pack",
+        "LocalWrite:practice_queue_spec"
+      ],
+      "forbidden_effects": [
+        "Net:runtime_cloud",
+        "Backend:*",
+        "Analytics:*"
+      ],
+      "proof_obligations": [
+        "PG03",
+        "PG05"
+      ]
+    },
+    {
+      "id": "AdaptationAgent",
+      "goal": "Define deterministic local adaptation from progress state to future session emphasis.",
+      "authority_level": "R2",
+      "icc_delegation_chain": [
+        "icc://aicl-demo/studypath/v0.1",
+        "PlannerAgent",
+        "AdaptationAgent"
+      ],
+      "inputs": [
+        "ProgressState",
+        "AdaptationPolicy",
+        "StudySessionPlan"
+      ],
+      "outputs": [
+        "deterministic_local_adaptation_rules"
+      ],
+      "allowed_effects": [
+        "LocalRead:progress_state",
+        "LocalWrite:adaptation_policy_spec"
+      ],
+      "forbidden_effects": [
+        "Net:runtime_cloud",
+        "ModelCall:runtime_cloud",
+        "Analytics:*"
+      ],
+      "proof_obligations": [
+        "PG06"
+      ]
+    },
+    {
+      "id": "AccessibilityAgent",
+      "goal": "Declare accessibility constraints and proof boundaries for target materializers.",
+      "authority_level": "R2",
+      "icc_delegation_chain": [
+        "icc://aicl-demo/studypath/v0.1",
+        "IntentAgent",
+        "AccessibilityAgent"
+      ],
+      "inputs": [
+        "StudySessionPlan",
+        "TargetMaterialization"
+      ],
+      "outputs": [
+        "ACCESSIBILITY_PROOF.md",
+        "AccessibilityProfile"
+      ],
+      "allowed_effects": [
+        "LocalRead:target_briefs",
+        "LocalWrite:accessibility_proof"
+      ],
+      "forbidden_effects": [
+        "Net:runtime_cloud",
+        "Analytics:*",
+        "Deploy:publish"
+      ],
+      "proof_obligations": [
+        "PG07"
+      ]
+    },
+    {
+      "id": "PrivacyAgent",
+      "goal": "Verify local-only data flow, no analytics, no backend, and no learner-data transmission.",
+      "authority_level": "R2",
+      "icc_delegation_chain": [
+        "icc://aicl-demo/studypath/v0.1",
+        "IntentAgent",
+        "PrivacyAgent"
+      ],
+      "inputs": [
+        "LearnerProfile",
+        "ProgressState",
+        "TargetMaterialization"
+      ],
+      "outputs": [
+        "PRIVACY_PROOF.md",
+        "PrivacyPolicy"
+      ],
+      "allowed_effects": [
+        "LocalRead:study_artifacts",
+        "LocalWrite:privacy_proof"
+      ],
+      "forbidden_effects": [
+        "Net:runtime_cloud",
+        "Analytics:*",
+        "Backend:*",
+        "Secrets:read"
+      ],
+      "proof_obligations": [
+        "PG01",
+        "PG02",
+        "PG03"
+      ]
+    },
+    {
+      "id": "ProofAgent",
+      "goal": "Assemble expected proof outcomes for PG01-PG09 and block materialization on failed gates.",
+      "authority_level": "R2",
+      "icc_delegation_chain": [
+        "icc://aicl-demo/studypath/v0.1",
+        "IntentAgent",
+        "ProofAgent"
+      ],
+      "inputs": [
+        "studypath.icc.json",
+        "studypath.shg.json",
+        "target_briefs"
+      ],
+      "outputs": [
+        "studypath.proof-bundle.expected.json"
+      ],
+      "allowed_effects": [
+        "LocalRead:all_studypath_artifacts",
+        "LocalWrite:proof_bundle_spec"
+      ],
+      "forbidden_effects": [
+        "Net:runtime_cloud",
+        "Deploy:publish",
+        "Analytics:*"
+      ],
+      "proof_obligations": [
+        "PG01",
+        "PG02",
+        "PG03",
+        "PG04",
+        "PG05",
+        "PG06",
+        "PG07",
+        "PG08",
+        "PG09"
+      ]
+    },
+    {
+      "id": "MaterializationAgent",
+      "goal": "Emit Android, Web/PWA, and Windows target briefs without building or publishing apps.",
+      "authority_level": "R3",
+      "icc_delegation_chain": [
+        "icc://aicl-demo/studypath/v0.1",
+        "ProofAgent",
+        "MaterializationAgent"
+      ],
+      "activation_condition": "All proof gates PG01-PG09 must pass before target materialization briefs are treated as buildable.",
+      "inputs": [
+        "StudySessionPlan",
+        "PracticeQueue",
+        "PrivacyPolicy",
+        "AccessibilityProfile"
+      ],
+      "outputs": [
+        "studypath.target.android.aicl.json",
+        "studypath.target.web.aicl.json",
+        "studypath.target.windows.aicl.json"
+      ],
+      "allowed_effects": [
+        "LocalRead:validated_specs",
+        "LocalWrite:target_briefs"
+      ],
+      "forbidden_effects": [
+        "Deploy:publish",
+        "Payments:*",
+        "Ads:*",
+        "Net:runtime_cloud",
+        "Backend:*"
+      ],
+      "proof_obligations": [
+        "PG01",
+        "PG02",
+        "PG03",
+        "PG08",
+        "PG09"
+      ]
+    }
+  ]
+}

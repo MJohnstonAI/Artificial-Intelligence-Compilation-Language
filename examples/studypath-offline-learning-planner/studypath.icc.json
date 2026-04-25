@@ -1,0 +1,127 @@
+{
+  "schema": "AICL-ICC-v1",
+  "icc_id": "icc://aicl-demo/studypath/v0.1",
+  "title": "StudyPath Offline Learning Plan Builder ICC",
+  "status": "reference_architecture",
+  "originator": "agent://aicl/demo-initiator",
+  "human_owner": "Marc Johnston",
+  "scenario": {
+    "learner_goal": "Prepare for an introductory Python assessment in 21 days.",
+    "weekday_minutes_available": 45,
+    "weekend_minutes_available": 90,
+    "weak_areas": [
+      "loops",
+      "functions"
+    ],
+    "runtime_mode": "offline_first"
+  },
+  "wkg_snapshot_hash": "wkg-snapshot://aicl-demo/studypath/v0.1",
+  "wkg_anchors": [
+    "wkg://aicl/entity/learner",
+    "wkg://aicl/education/curriculum-topic",
+    "wkg://aicl/education/study-session",
+    "wkg://aicl/education/practice-queue",
+    "wkg://aicl/privacy/local-only",
+    "wkg://aicl/accessibility/wcag21-aa"
+  ],
+  "goals": [
+    {
+      "id": "G01",
+      "label": "offline_learning_plan",
+      "target_state_anchor": "wkg://aicl/education/study-session",
+      "description": "Create a local-only study plan, practice queue, and progress tracker for a 21-day introductory Python preparation window."
+    }
+  ],
+  "constraints": [
+    {
+      "id": "C01",
+      "label": "local_only_storage",
+      "tier": 1,
+      "mechanism": "static_policy_check",
+      "assertion": "Learner profile, progress state, study plan, and practice queue must be stored locally.",
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "C02",
+      "label": "no_runtime_cloud",
+      "tier": 1,
+      "mechanism": "static_policy_check",
+      "assertion": "Core runtime study planning and practice flows must not require cloud services.",
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "C03",
+      "label": "no_analytics",
+      "tier": 1,
+      "mechanism": "static_policy_check",
+      "assertion": "No analytics SDK, telemetry pipeline, or hidden tracking may be declared.",
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "C04",
+      "label": "deadline_21_days",
+      "tier": 1,
+      "mechanism": "deterministic_schedule_check",
+      "assertion": "Generated sessions must fit within the 21-day preparation window and declared weekday/weekend availability.",
+      "failure_consequence": "planning_failure"
+    },
+    {
+      "id": "C05",
+      "label": "deterministic_local_adaptation",
+      "tier": 1,
+      "mechanism": "rule_inspection",
+      "assertion": "Adaptation may use only local progress state and deterministic local rules.",
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "C06",
+      "label": "synthetic_curriculum_only",
+      "tier": 1,
+      "mechanism": "provenance_check",
+      "assertion": "Curriculum content must be synthetic, demo-only, and not aligned to a real exam board.",
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "C07",
+      "label": "accessibility_baseline",
+      "tier": 2,
+      "mechanism": "target_declaration_review",
+      "assertion": "Targets must declare readable typography, contrast support, short sessions, screen-reader labels, keyboard access, and reduced motion.",
+      "failure_consequence": "materialization_blocked"
+    },
+    {
+      "id": "C08",
+      "label": "permissions_minimality",
+      "tier": 1,
+      "mechanism": "static_analysis",
+      "assertion": "Target briefs must not request permissions beyond local app storage, user-initiated export, and accessibility-safe UI requirements.",
+      "failure_consequence": "compile_error"
+    },
+    {
+      "id": "C09",
+      "label": "cross_platform_consistency",
+      "tier": 1,
+      "mechanism": "schema_validation",
+      "assertion": "Android, Web, and Windows target briefs must preserve the same privacy, curriculum, progress-state, and accessibility constraints.",
+      "failure_consequence": "compile_error"
+    }
+  ],
+  "risks_accepted": [
+    {
+      "id": "RA01",
+      "label": "device_storage_boundary",
+      "description": "AICL can require local-only storage, but cannot guarantee physical device security outside the generated app boundary.",
+      "accepted_by": "human_owner"
+    },
+    {
+      "id": "RA02",
+      "label": "materializer_dependent_accessibility",
+      "description": "AICL can require accessibility constraints and target declarations, but final rendered accessibility depends on target materializers and platform implementation.",
+      "accepted_by": "human_owner"
+    }
+  ],
+  "signatures": {
+    "human_owner": "signature-placeholder://marc-johnston",
+    "originator_agent": "signature-placeholder://agent-aicl-demo-initiator"
+  }
+}
