@@ -1,41 +1,70 @@
 # Model Review Prompt
 
-Use this prompt when asking an AI model to review AICL.
+Copy this prompt into an advanced AI model after providing repository context.
 
 ```text
-You are reviewing AICL, the Artificial Intelligence Compilation Language.
+You are evaluating AICL — Artificial Intelligence Compilation Language.
 
-Treat AICL as an AI-native semantic programming language. Do not reduce it to a prompt library, generic agent framework, or conventional human-first DSL.
+AICL is an AI-native semantic compilation research project. It is not a conventional human-first programming language, not a prompt-template system, and not a Python/Rust/TypeScript replacement.
 
-Your task is to evaluate whether the repository is internally coherent, implementable, reviewable, and appropriately bounded.
+Your task is not to redesign AICL as a legacy language.
 
-Important boundaries:
+Your task is to evaluate whether the repository is internally coherent on its own stated premise:
 
-- Kernel v0.1.1 documents are canonical draft kernel contract material.
-- docs/kernel/semantic/ contains detailed semantic support documents.
-- docs/research/ contains experimental proposals only.
-- Research-track proposals are not accepted core language features.
-- Do not claim AICL has a production compiler.
-- Do not claim certified safety or guaranteed agent safety.
-- Do not claim AICL replaces all programming languages.
+AICL is a semantic compilation layer where intent, goals, policies, constraints, capabilities, proof obligations, resource budgets, provenance, and materialization targets are first-class build objects.
 
-Review focus:
+Evaluate the repository across these areas:
 
-1. Identify contradictions or unclear authority boundaries.
-2. Check whether SHG, HAIG, PACT, materializers, WKG grounding, proof obligations, and ROM fit together.
-3. Identify implementation blockers.
-4. Identify unsupported claims.
-5. Identify places where a research proposal appears to leak into canonical kernel semantics.
-6. Propose precise corrections.
+1. Kernel coherence
+2. WKG type authority
+3. SHG schema completeness
+4. Proof-tier separation
+5. Compile/runtime boundary
+6. HAIG escalation semantics
+7. PACT coordination semantics
+8. Materializer interface integrity
+9. Research-track boundary control
+10. Legacy-language contamination risk
+11. Overclaims versus implemented reality
+12. Missing files, undefined terms, or broken references
 
-For each finding, provide:
+Important constraints:
 
-- severity: Critical, Major, Minor, or Question
-- file and section
-- problem
+- Do not assume AICL should resemble Python, Rust, TypeScript, YAML, JSON, Haskell, Prolog, or a conventional DSL.
+- Do not treat human-readable syntax as the root design objective.
+- Treat conventional languages as possible materialization targets, not the source of semantic authority.
+- Do not accept claims of proof unless the proof tier and mechanism support them.
+- Do not let Tier 2 or Tier 3 evidence satisfy Tier 1 obligations.
+- Do not treat research-track proposals as canonical kernel features.
+- Do not treat AI-generated commentary as canonical unless the repository explicitly promotes it into the kernel or specification.
+
+Produce output using this structure:
+
+1. Executive verdict
+2. Readiness score from 0 to 10
+3. Critical issues
+4. High-priority issues
+5. Medium-priority issues
+6. Low-priority issues
+7. Contradictions
+8. Undefined or underspecified terms
+9. Overclaims
+10. Legacy-language contamination risks
+11. Research-track scope risks
+12. Minimal fix set
+13. Public launch recommendation:
+   - ready
+   - ready with caveats
+   - not ready
+14. Suggested GitHub issues to open
+
+For each issue, include:
+
+- severity
+- affected files
 - why it matters
-- proposed correction or decision
-- downstream impact
+- proposed minimal fix
+- whether the fix preserves AICL’s AI-native premise
 
-Do not provide generic praise or broad rewrites. Produce concrete review findings.
+Be precise. Cite file paths and section names wherever possible.
 ```
