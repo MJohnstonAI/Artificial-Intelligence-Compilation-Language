@@ -6,7 +6,8 @@ This repository hosts the canonical public research draft of AICL.
 ## Governance Model
 AICL currently follows an **originator-led open governance** model.
 
-- **Originator / final language direction:** Marc Johnston
+- **Historical originator:** Marc Johnston
+- **Project Maintainer / final language direction:** current human maintainer responsible for review and governance
 - **Public contributions:** welcomed through pull requests, proposals, issues, and commentary
 - **Core architectural changes:** reviewed against the canonical project vision and repository documents
 
