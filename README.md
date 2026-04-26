@@ -64,6 +64,14 @@ Experimental frontier proposals live in:
 
 Research tracks are not canonical kernel law. They exist to evaluate future ideas such as SHG-TENSOR, MachineICC, neural-symbolic projection, adversarial PACT testing, meta-circular WKG grammar anchoring, and rejected proposals before any kernel adoption is considered.
 
+## AI-Model Evaluation
+
+External reviewers can run an AI model against AICL using:
+
+* [`docs/evaluation/`](docs/evaluation/)
+
+This layer provides a model review guide, a reusable model prompt, and a structured findings template. Evaluation outputs are reviewer evidence, not canonical kernel law.
+
 ## Schemas, Commentary, and Examples
 
 - Draft machine-readable schemas live in [`spec/schemas/`](spec/schemas/).
@@ -97,20 +105,21 @@ The public emphasis should remain on policy-aware, multimodal, cross-platform, a
 |-- LICENSE-docs
 |-- docs/
 |   |-- kernel/
-|       |-- semantic/
-|       |-- README.md
-|       |-- SHG_SCHEMA.md
-|       |-- HAIG_SPEC.md
-|       |-- PACT_COORDINATION_SPEC.md
-|       |-- MATERIALIZER_INTERFACE.md
-|       `-- KERNEL_v0.1.1_PATCH_NOTES.md
-|   `-- research/
-|       |-- shg-tensor/
-|       |-- machine-autonomy/
-|       |-- neural-symbolic-bridge/
-|       |-- pact-sandbox/
-|       |-- meta-circularity/
-|       `-- rejected/
+|   |   |-- semantic/
+|   |   |-- README.md
+|   |   |-- SHG_SCHEMA.md
+|   |   |-- HAIG_SPEC.md
+|   |   |-- PACT_COORDINATION_SPEC.md
+|   |   |-- MATERIALIZER_INTERFACE.md
+|   |   `-- KERNEL_v0.1.1_PATCH_NOTES.md
+|   |-- research/
+|   |   |-- shg-tensor/
+|   |   |-- machine-autonomy/
+|   |   |-- neural-symbolic-bridge/
+|   |   |-- pact-sandbox/
+|   |   |-- meta-circularity/
+|   |   `-- rejected/
+|   `-- evaluation/
 |-- spec/
 |   |-- programming-reference-manual.md
 |   |-- unified-spec-v1.0-draft.md
