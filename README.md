@@ -4,6 +4,27 @@ AICL is an open research project for an AI-native semantic programming language 
 
 This repository is the public research workspace for AICL. It is intended to read as a serious programming-language project rather than a generic framework, prompt library, or manifesto-only repo.
 
+**Status:** Draft research specification. Reference compiler not yet implemented.
+
+## Current Status
+
+AICL is currently a draft research specification, not a working compiler.
+
+The repository contains:
+
+- Kernel v0.1.1 contract specifications
+- WKG grounding documents
+- SHG, HAIG, PACT, and materializer contracts
+- research tracks for future extensions
+- evaluation prompts and issue templates for structured AI-model review
+- early examples and schemas
+
+The next implementation target is a minimal reference pipeline:
+
+```text
+Brief → ICC → WKG grounding → SHG validation → proof obligation classification → materializer stub
+```
+
 ## Project Identity
 
 **Project:** AICL - Artificial Intelligence Compilation Language  
@@ -80,6 +101,21 @@ Submit structured results with:
 
 Evaluation outputs are reviewer evidence, not canonical kernel law.
 
+## What You Can Do Today
+
+- Review Kernel v0.1.1 in [`docs/kernel/`](docs/kernel/)
+- Run your AI model against [`docs/evaluation/MODEL_REVIEW_PROMPT.md`](docs/evaluation/MODEL_REVIEW_PROMPT.md)
+- Submit structured findings using the AI model evaluation issue template
+- Submit contradictions using the contradiction report template
+- Submit challenge briefs for ICC, SHG, proof, and materialization testing
+- Review the enterprise service resolution example in [`examples/enterprise-service-resolution/`](examples/enterprise-service-resolution/)
+- Propose implementation issues for the minimal reference compiler pipeline
+
+## Public Review and Roadmap
+
+- [`docs/PUBLIC_REVIEW_GUIDE.md`](docs/PUBLIC_REVIEW_GUIDE.md) explains how to review AICL for the first time.
+- [`roadmap/README.md`](roadmap/README.md) tracks the near-term path from research specification to minimal reference implementation.
+
 ## Schemas, Commentary, and Examples
 
 - Draft machine-readable schemas live in [`spec/schemas/`](spec/schemas/).
@@ -112,6 +148,7 @@ The public emphasis should remain on policy-aware, multimodal, cross-platform, a
 |-- LICENSE
 |-- LICENSE-docs
 |-- docs/
+|   |-- PUBLIC_REVIEW_GUIDE.md
 |   |-- kernel/
 |   |   |-- semantic/
 |   |   |-- README.md
@@ -147,12 +184,17 @@ The public emphasis should remain on policy-aware, multimodal, cross-platform, a
 |   |-- core/
 |   `-- domains/
 |-- roadmap/
+|   `-- README.md
 `-- .github/
 ```
 
 ## Collaboration
 
 - Human and AI contributors should start with [`AI_CONTRIBUTOR_GUIDE.md`](AI_CONTRIBUTOR_GUIDE.md) and [`AGENTS.md`](AGENTS.md).
+- First-time public reviewers should start with [`docs/PUBLIC_REVIEW_GUIDE.md`](docs/PUBLIC_REVIEW_GUIDE.md).
+- AI model evaluations should use [`.github/ISSUE_TEMPLATE/ai-model-evaluation.md`](.github/ISSUE_TEMPLATE/ai-model-evaluation.md).
+- Contradictions should use [`.github/ISSUE_TEMPLATE/contradiction-report.md`](.github/ISSUE_TEMPLATE/contradiction-report.md).
+- Challenge briefs should use [`.github/ISSUE_TEMPLATE/challenge-brief.md`](.github/ISSUE_TEMPLATE/challenge-brief.md).
 - Language or architecture proposals should use [`.github/ISSUE_TEMPLATE/language_proposal.md`](.github/ISSUE_TEMPLATE/language_proposal.md).
 - Repository and specification defects should use [`.github/ISSUE_TEMPLATE/bug_report.md`](.github/ISSUE_TEMPLATE/bug_report.md).
 - Contributions should preserve origin attribution and should not collapse AICL into a generic framework repo.
