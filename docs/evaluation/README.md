@@ -35,4 +35,10 @@ A finding becomes actionable only when it states:
 
 ## Submission Path
 
-Submit findings as a GitHub issue using the repository's language proposal or bug report templates, or as a pull request when the proposed change is narrow and concrete.
+Submit findings with the dedicated issue templates:
+
+- [AI model evaluation](../../.github/ISSUE_TEMPLATE/ai-model-evaluation.md)
+- [Contradiction report](../../.github/ISSUE_TEMPLATE/contradiction-report.md)
+- [Challenge brief](../../.github/ISSUE_TEMPLATE/challenge-brief.md)
+
+Use a pull request only when the proposed change is narrow and concrete.

@@ -64,13 +64,21 @@ Experimental frontier proposals live in:
 
 Research tracks are not canonical kernel law. They exist to evaluate future ideas such as SHG-TENSOR, MachineICC, neural-symbolic projection, adversarial PACT testing, meta-circular WKG grammar anchoring, and rejected proposals before any kernel adoption is considered.
 
-## AI-Model Evaluation
+## Evaluate AICL With Your AI Model
 
 External reviewers can run an AI model against AICL using:
 
-* [`docs/evaluation/`](docs/evaluation/)
+- [`docs/evaluation/AI_MODEL_EVALUATION_GUIDE.md`](docs/evaluation/AI_MODEL_EVALUATION_GUIDE.md)
+- [`docs/evaluation/MODEL_REVIEW_PROMPT.md`](docs/evaluation/MODEL_REVIEW_PROMPT.md)
+- [`docs/evaluation/STRUCTURED_FINDINGS_TEMPLATE.md`](docs/evaluation/STRUCTURED_FINDINGS_TEMPLATE.md)
 
-This layer provides a model review guide, a reusable model prompt, and a structured findings template. Evaluation outputs are reviewer evidence, not canonical kernel law.
+Submit structured results with:
+
+- [`.github/ISSUE_TEMPLATE/ai-model-evaluation.md`](.github/ISSUE_TEMPLATE/ai-model-evaluation.md)
+- [`.github/ISSUE_TEMPLATE/contradiction-report.md`](.github/ISSUE_TEMPLATE/contradiction-report.md)
+- [`.github/ISSUE_TEMPLATE/challenge-brief.md`](.github/ISSUE_TEMPLATE/challenge-brief.md)
+
+Evaluation outputs are reviewer evidence, not canonical kernel law.
 
 ## Schemas, Commentary, and Examples
 
