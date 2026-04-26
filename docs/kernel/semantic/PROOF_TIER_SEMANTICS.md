@@ -50,6 +50,8 @@ If `D(P)` returns `Unknown`, the property CANNOT be classified as Tier 1.
 
 > **Tier 2 MUST NOT silently satisfy a Tier 1 obligation slot.** Explicit ICC `risk_accepted` recording plus human approval is required for any Tier 2 downgrade of a Tier 1 slot.
 
+Tier 2 evidence, including model-bounded evidence with high confidence, cannot make a failed or undischarged Tier 1 obligation proof-compliant. If risk is accepted through HAIG or ICC risk acceptance, the resulting artifact must be marked with the accepted-risk scope rather than described as satisfying the Tier 1 obligation.
+
 ---
 
 ## 3. Tier 2 — Probabilistic / Model-Bounded

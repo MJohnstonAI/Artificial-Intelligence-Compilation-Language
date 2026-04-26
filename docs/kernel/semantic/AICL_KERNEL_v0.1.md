@@ -4,6 +4,8 @@
 **Grounded in:** `spec/programming-reference-manual.md` (v0.3), `wkg/core/aicl-core-ontology-spec.md` (v1.2)
 **Supersedes:** No prior kernel document (this is the inaugural kernel specification)
 
+**Kernel v0.1.1 companion documents:** [`../SHG_SCHEMA.md`](../SHG_SCHEMA.md), [`../HAIG_SPEC.md`](../HAIG_SPEC.md), [`../PACT_COORDINATION_SPEC.md`](../PACT_COORDINATION_SPEC.md), and [`../MATERIALIZER_INTERFACE.md`](../MATERIALIZER_INTERFACE.md) define the SHG schema, HAIG arbitration, PACT coordination, and materializer interface for the current contract layer.
+
 ---
 
 ## 1. Scope
@@ -222,7 +224,7 @@ AutonomyProfile ::= {
 `goal` must resolve to a `Goal` anchor. Each element of `capabilities` must resolve to a `Capability` anchor.
 
 **Note on coordination:**
-`PACT` is referenced as a coordination protocol but is not formally defined in the fetched source materials. This is an open specification gap (see Consistency Report).
+`PACT` is defined by the Kernel v0.1.1 contract document [`../PACT_COORDINATION_SPEC.md`](../PACT_COORDINATION_SPEC.md). This first-pass kernel document preserves the original Agent structure and delegates coordination protocol details to that companion specification.
 
 ---
 

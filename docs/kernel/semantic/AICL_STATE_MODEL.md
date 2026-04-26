@@ -86,7 +86,7 @@ SHG ::= {
 }
 ```
 
-**Note:** The internal schema of SHG nodes and hyperedges is an open specification gap (see Consistency Report). This document defines the SHG as a named component of the state tuple and specifies its role, but does not yet fully specify its internal structure.
+**Reference:** The internal schema of SHG nodes and hyperedges is defined by the Kernel v0.1.1 contract document [`../SHG_SCHEMA.md`](../SHG_SCHEMA.md). This document defines the SHG as a named component of the state tuple and specifies its role in compilation state transitions.
 
 **Role of G:**
 - Receives normalized constraints from kernel compilation

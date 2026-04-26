@@ -36,6 +36,26 @@ Start with these documents, in roughly this order:
 11. [`spec/History/AICL_Consortium_Decision_History.md`](spec/History/AICL_Consortium_Decision_History.md) - project decision history and lineage
 12. [`commentary/claude/latest-review.md`](commentary/claude/latest-review.md) - authoritative review commentary
 
+## Kernel Specification
+
+The formal AICL kernel specification lives in:
+
+* [`docs/kernel/`](docs/kernel/)
+
+Kernel v0.1.1 defines the current contract layer:
+
+* SHG schema
+* HAIG arbitration
+* PACT agent coordination
+* materializer interface
+* kernel patch notes
+
+Detailed semantic support documents live in:
+
+* [`docs/kernel/semantic/`](docs/kernel/semantic/)
+
+The root-level [`kernel/`](kernel/) directory is reserved for future executable kernel/compiler implementation artifacts.
+
 ## Schemas, Commentary, and Examples
 
 - Draft machine-readable schemas live in [`spec/schemas/`](spec/schemas/).
@@ -67,6 +87,15 @@ The public emphasis should remain on policy-aware, multimodal, cross-platform, a
 |-- CITATION.cff
 |-- LICENSE
 |-- LICENSE-docs
+|-- docs/
+|   `-- kernel/
+|       |-- semantic/
+|       |-- README.md
+|       |-- SHG_SCHEMA.md
+|       |-- HAIG_SPEC.md
+|       |-- PACT_COORDINATION_SPEC.md
+|       |-- MATERIALIZER_INTERFACE.md
+|       `-- KERNEL_v0.1.1_PATCH_NOTES.md
 |-- spec/
 |   |-- programming-reference-manual.md
 |   |-- unified-spec-v1.0-draft.md

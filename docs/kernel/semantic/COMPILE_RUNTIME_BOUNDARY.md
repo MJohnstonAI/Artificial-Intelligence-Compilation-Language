@@ -3,6 +3,8 @@
 **Status:** Formal specification
 **Purpose:** Define what belongs at compile time, what belongs at runtime, and the Residual Obligation Manifest
 
+**Kernel v0.1.1 contract reference:** HAIG runtime escalation and risk acceptance semantics are defined in [`../HAIG_SPEC.md`](../HAIG_SPEC.md).
+
 ---
 
 ## 1. Boundary Principle

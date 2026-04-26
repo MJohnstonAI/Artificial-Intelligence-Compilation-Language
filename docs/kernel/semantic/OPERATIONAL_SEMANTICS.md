@@ -3,6 +3,8 @@
 **Status:** Formal specification
 **Purpose:** Define the full compilation pipeline as a sequence of named stages with inputs, outputs, and guards
 
+**Kernel v0.1.1 contract references:** SHG internals are defined in [`../SHG_SCHEMA.md`](../SHG_SCHEMA.md), HAIG escalation is defined in [`../HAIG_SPEC.md`](../HAIG_SPEC.md), and materializer inputs/outputs are defined in [`../MATERIALIZER_INTERFACE.md`](../MATERIALIZER_INTERFACE.md).
+
 ---
 
 ## 1. Pipeline Overview
@@ -124,7 +126,7 @@ Stage2(I, W) → I' | CompileError
    - `χ_{P,P}`: test all policy pairs for predicate-level conflicts
 6. For each detected contradiction:
    - If in `I'.risk_accepted`: log and continue
-   - If equal-priority policy conflict: escalate to HAIG
+   - If equal-priority policy conflict: escalate to HAIG as defined in [`../HAIG_SPEC.md`](../HAIG_SPEC.md)
    - If unresolvable: compile error
 
 **Output:** SHG `G` with nodes, hyperedges, normalized constraints, and contradiction log.
@@ -200,7 +202,7 @@ Stage5(P, G, W) → (P', R) | CompileError
 
 **Process:**
 1. For each declared materialization target in `M`:
-   - Invoke the target emitter on the SHG
+   - Invoke the target emitter on the SHG under the [`../MATERIALIZER_INTERFACE.md`](../MATERIALIZER_INTERFACE.md) contract
    - Emit target language artifact (Python module, TypeScript file, SQL schema, etc.)
    - Attach the Residual Obligation Manifest `R` to the artifact (as metadata, sidecar file, or embedded)
    - Emit provenance record linking: ICC hash → SHG hash → artifact hash
