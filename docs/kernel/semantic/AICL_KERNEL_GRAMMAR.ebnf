@@ -1,0 +1,53 @@
+/* AICL Kernel Grammar v0.2.0 - EBNF Draft */
+
+program = { declaration } ;
+
+declaration = app_decl | module_decl | import_decl | goal_decl | constraint_decl | agent_decl | flow_decl | capability_decl | policy_decl | entity_decl | metric_decl ;
+
+app_decl = 'app' string_literal '{' { declaration } '}' ;
+module_decl = 'module' identifier '{' { declaration } '}' ;
+import_decl = 'import' import_type identifier ;
+import_type = 'module' | 'capabilitypack' | 'policypack' | 'targetpack' ;
+
+goal_decl = 'goal' identifier ;
+constraint_decl = ('maintain' | 'avoid' | 'optimize') identifier [ constraint_annotation ] ;
+budget_decl = 'budget' '{' { budget_item } '}' ;
+budget_item = identifier '.' identifier comparison_op literal [ constraint_annotation ] ;
+
+agent_decl = 'agent' identifier '{' agent_body '}' ;
+agent_body = 'goal:' identifier '
+' 'capabilities:' '[' identifier_list ']' '
+' 'coordination:' identifier '
+' [ 'autonomy' '{' autonomy_body '}' ] ;
+autonomy_body = 'action:' float_literal '
+' 'goal:' float_literal '
+' 'resource:' float_literal '
+' 'delegation:' boolean_literal ;
+
+flow_decl = 'flow' identifier '{' flow_expr '}' ;
+flow_expr = flow_term { '->' flow_term } ;
+flow_term = identifier | '(' flow_expr { '||' flow_expr } ')' | proof_gate | conditional_route ;
+proof_gate = '[' 'proof:' identifier '.' identifier '(' identifier ')' ']' ;
+conditional_route = '[' 'if' identifier ':' identifier '|' 'else:' identifier ']' ;
+
+capability_decl = 'capability' identifier '{' 'effects:' '[' effect_list ']' [ 'limits:' '[' budget_item_list ']' ] '}' ;
+effect_list = effect { ',' effect } ;
+effect = identifier ':' identifier ;
+
+policy_decl = 'policy' identifier '{' { identifier ':' identifier } '}' ;
+
+identifier = letter { letter | digit | '_' | '.' } ;
+identifier_list = identifier { ',' identifier } ;
+budget_item_list = budget_item { ',' budget_item } ;
+
+string_literal = '"' { any_char } '"' ;
+literal = float_literal | integer_literal | boolean_literal | string_literal ;
+float_literal = digit { digit } '.' digit { digit } ;
+integer_literal = digit { digit } ;
+boolean_literal = 'true' | 'false' ;
+
+comparison_op = '<=' | '>=' | '==' | '<' | '>' ;
+constraint_annotation = '[' 'tier:' integer_literal ',' 'mechanism:' identifier [ ',' 'model:' identifier ] ']' ;
+
+letter = 'A'..'Z' | 'a'..'z' ;
+digit = '0'..'9' ;
