@@ -56,6 +56,14 @@ Detailed semantic support documents live in:
 
 The root-level [`kernel/`](kernel/) directory is reserved for future executable kernel/compiler implementation artifacts.
 
+## Research Tracks
+
+Experimental frontier proposals live in:
+
+* [`docs/research/`](docs/research/)
+
+Research tracks are not canonical kernel law. They exist to evaluate future ideas such as SHG-TENSOR, MachineICC, neural-symbolic projection, adversarial PACT testing, meta-circular WKG grammar anchoring, and rejected proposals before any kernel adoption is considered.
+
 ## Schemas, Commentary, and Examples
 
 - Draft machine-readable schemas live in [`spec/schemas/`](spec/schemas/).
@@ -88,7 +96,7 @@ The public emphasis should remain on policy-aware, multimodal, cross-platform, a
 |-- LICENSE
 |-- LICENSE-docs
 |-- docs/
-|   `-- kernel/
+|   |-- kernel/
 |       |-- semantic/
 |       |-- README.md
 |       |-- SHG_SCHEMA.md
@@ -96,6 +104,13 @@ The public emphasis should remain on policy-aware, multimodal, cross-platform, a
 |       |-- PACT_COORDINATION_SPEC.md
 |       |-- MATERIALIZER_INTERFACE.md
 |       `-- KERNEL_v0.1.1_PATCH_NOTES.md
+|   `-- research/
+|       |-- shg-tensor/
+|       |-- machine-autonomy/
+|       |-- neural-symbolic-bridge/
+|       |-- pact-sandbox/
+|       |-- meta-circularity/
+|       `-- rejected/
 |-- spec/
 |   |-- programming-reference-manual.md
 |   |-- unified-spec-v1.0-draft.md
